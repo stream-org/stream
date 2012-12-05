@@ -1,0 +1,89 @@
+user.php œôøº
+input: phone number
+output: first, last, profile pic, timestamp
+
+signup.php (Rousseau) œôøº 
+input: first, last, phone, password
+output: boolean T/F
+
+signin.php œôøº
+input: phoneNumber, password
+output: boolean T/F
+
+streamNewsfeed.php (Suman)œôøº 
+input: phoneNumber
+output:
+- stream_id
+- stream_name  
+- # of participants 
+- # of pictures 
+- most recent photo 
+
+createStream.php(Rousseau) œôøº
+input: streamName
+output: stream_id
+
+invite.php œôøº 
+input: stream_id, phoneNumber
+output: boolean T/F
+
+photoUpload.php (Suman) œôøº
+input: phoneNumber,picture_URL
+output: Boolean
+
+streamProfile.php (Suman) œôøº 
+input:stream_id
+output:arrayOfPhotos ranked chronologically, numberOfParticipants 
+
+picture.php (Suman) 
+input: picture_url 
+output: picture_url, count of people who like, name 
+
+like.php (Rousseau) œôøº
+input: picture_url, streamID, phonenumber
+output: count 
+
+unlike.php (Rousseau) œôøº 
+input: picture_url, streamID, phonenumber 
+output: count 
+
+peopleWhoLike.php (Rousseau)œôøº 
+input: picture_url, streamID 
+output: array of phone numbers
+
+peopleInStream.php (Suman) 
+input: stream_id  
+output: array of people(name and phone number) in stream, how many photos each person has uploaded 
+
+
+
+
+
+
+usertable 
+- phone number
+- first name
+- last name 
+- profile picture
+- password 
+
+user streams 
+- phone number 
+- stream name 
+- 
+
+stream
+- streamname 
+- people in the stream 
+- created by 
+
+stream activity 
+- stream name 
+- phone number 
+- link to picture
+- timestamp 
+- array of people who liked it 
+
+
+
+
