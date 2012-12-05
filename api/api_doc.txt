@@ -35,7 +35,7 @@ streamProfile.php (Suman) √
 input:stream_id
 output:arrayOfPhotos ranked chronologically, numberOfParticipants 
 
-picture.php (Suman)  
+getPictureMetadata.php (Suman) √
 input: picture_url 
 output: picture_url, count of people who like, name 
 
