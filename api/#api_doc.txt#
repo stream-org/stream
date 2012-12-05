@@ -1,16 +1,16 @@
-user.php (Rousseau) âˆš X
+user.php (Rousseau) œôøº X
 input: phone number
 output: first, last, profile pic, timestamp
 
-signup.php (Rousseau) âˆš X 
+signup.php (Rousseau) œôøº X 
 input: first, last, phone, password
 output: boolean T/F
 
-signin.php(Rousseau) âˆš X
+signin.php(Rousseau) œôøº X
 input: phoneNumber, password
 output: boolean T/F
 
-streamNewsfeed.php (Rousseau) âˆš X
+streamNewsfeed.php (Rousseau) œôøº X
 input: phoneNumber
 output:
 - stream_id
@@ -19,39 +19,39 @@ output:
 - # of pictures 
 - most recent photo 
 
-createStream.php(Rousseau) âˆš X
+createStream.php(Rousseau) œôøº X
 input: streamName
 output: stream_id
 
-invite.php(Rousseau) âˆš X
+invite.php(Rousseau) œôøº X
 input: stream_id, phoneNumber
 output: boolean T/F
 
-photoUpload.php (Rousseau) âˆš X
+photoUpload.php (Rousseau) œôøº X
 input: phoneNumber,picture_URL
 output: Boolean
 
-streamProfile.php (Rousseau) âˆš  
+streamProfile.php (Rousseau) œôøº X  
 input:stream_id
 output:arrayOfPhotos ranked chronologically, numberOfParticipants 
 
-getPictureMetadata.php (Suman) âˆš
+getPictureMetadata.php (Suman) œôøº X
 input: picture_url 
 output: picture_url, count of people who like, name 
 
-like.php (Rousseau) âˆš
+like.php (Rousseau) œôøº X
 input: picture_url, streamID, phonenumber
 output: count 
 
-unlike.php (Rousseau) âˆš 
+unlike.php (Rousseau) œôøº X 
 input: picture_url, streamID, phonenumber 
 output: count 
 
-peopleWhoLike.php (Rousseau) âˆš 
+peopleWhoLike.php (Rousseau) œôøº 
 input: picture_url, streamID 
 output: array of phone numbers
 
-peopleInStream.php (Suman) âˆš
+peopleInStream.php (Suman) œôøº
 input: stream_id  
 output: array of people(name and phone number) in stream, how many photos each person has uploaded 
 
