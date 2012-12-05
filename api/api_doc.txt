@@ -27,11 +27,11 @@ invite.php √
 input: stream_id, phoneNumber
 output: boolean T/F
 
-photoUpload.php (Suman)
+photoUpload.php (Suman) √
 input: phoneNumber,picture_URL
 output: Boolean
 
-streamProfile.php (Suman) 
+streamProfile.php (Suman) √ 
 input:stream_id
 output:arrayOfPhotos ranked chronologically, numberOfParticipants 
 
