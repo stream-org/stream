@@ -51,7 +51,7 @@ peopleWhoLike.php (Rousseau)√
 input: picture_url, streamID 
 output: array of phone numbers
 
-peopleInStream.php (Suman) 
+peopleInStream.php (Suman) √
 input: stream_id  
 output: array of people(name and phone number) in stream, how many photos each person has uploaded 
 
