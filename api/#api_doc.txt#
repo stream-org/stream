@@ -47,11 +47,11 @@ unlike.php (Rousseau) œôøº X
 input: picture_url, streamID, phonenumber 
 output: count 
 
-peopleWhoLike.php (Rousseau) œôøº 
+peopleWhoLike.php (Rousseau) œôøº X
 input: picture_url, streamID 
 output: array of phone numbers
 
-peopleInStream.php (Suman) œôøº
+peopleInStream.php (Suman) œôøº X
 input: stream_id  
 output: array of people(name and phone number) in stream, how many photos each person has uploaded 
 
