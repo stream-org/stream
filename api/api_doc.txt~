@@ -10,7 +10,7 @@ signin.php √
 input: phoneNumber, password
 output: boolean T/F
 
-streamNewsfeed.php (Suman)√ 
+streamNewsfeed.php (Suman) 
 input: phoneNumber
 output:
 - stream_id
@@ -19,11 +19,15 @@ output:
 - # of pictures 
 - most recent photo 
 
-createStream.php(Rousseau) √
+streamCreation.php (Rousseau) 
+input: streamName, array of participants (name and number) 
+output: stream_id
+
+//createStream.php(Rousseau) √
 input: streamName
 output: stream_id
 
-invite.php √ 
+//invite.php √ 
 input: stream_id, phoneNumber
 output: boolean T/F
 
