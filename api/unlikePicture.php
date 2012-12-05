@@ -1,5 +1,12 @@
 <?php
 
+//input::
+//	picture
+//	phone
+
+//output::
+//	number of likes after the photo was unliked
+
 include "connection.php";
 
 //grabbing the arguments 

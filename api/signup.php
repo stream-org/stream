@@ -1,8 +1,13 @@
 <?php
 
-//SIGNUP.PHP
-//input: first name, last name, phone, password 
-//output: boolean T/F
+//input::
+//	first name
+//	last name
+//	phone
+//	password 
+
+//output:: 
+//	Boolean (T/F)
 
 //connects to the database
 include "connection.php";

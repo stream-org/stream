@@ -1,10 +1,16 @@
 <?php
 
+//input::
+//	picture
+//	phone
+
+//output::
+//	number of people who like it 
+
 include "connection.php";
 
 //grabbing the arguments 
 $picture = $_GET['picture'];
-// $picture = urlencode($picture);
 $phone = $_GET['phone'];
 
 mysql_query("INSERT INTO PictureLikes (Picture, Phone) VALUES ('$picture', '$phone')");

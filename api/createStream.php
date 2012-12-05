@@ -1,5 +1,12 @@
 <?php
 
+//input:: 
+//	phone
+//	streamName
+
+//output::
+//	streamID
+
 include "connection.php";
 
 //grabbing the arguments 

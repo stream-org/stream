@@ -1,11 +1,15 @@
 <?php
 
+//input::
+//	picture
+
+//output::
+//  array of phone numbers of people who liked it 
+
 include "connection.php";
 
 //grabbing the arguments 
 $picture = $_GET['picture'];
-
-// $picture = urlencode($picture);
 
 $result = mysql_query("SELECT * FROM PictureLikes WHERE Picture='$picture'");
 $responseArray = array();

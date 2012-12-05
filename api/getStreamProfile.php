@@ -1,7 +1,8 @@
 <?php
 
 //input:: 
-//	streadID
+//	streamID
+
 //output::
 //	number of participants 
 //	array of photos ranked chronologically 

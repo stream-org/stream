@@ -1,6 +1,6 @@
 todo list 
 
-//normalize api's
+//normalize api's √
      - create custom naming schema 
        - verb, camelcase
        - variables are also camelcase 
@@ -8,8 +8,10 @@ todo list
      - put them all into github 
      - put them all into stream ssh 
 
+//add comments in api 
 //create api doc 
+//  - test api's
 //associate api with mocks
-//fix signup.php
-//fix signin.php
+//fix signup.php √
+//fix signin.php √
 //recreate the texting infrastructure using the api 

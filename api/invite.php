@@ -1,5 +1,12 @@
 <?php
 
+//input::
+//	streamID
+//	phone
+
+//output::
+//	boolean (T/F)
+
 include "connection.php";
 
 //grabbing the arguments 

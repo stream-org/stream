@@ -1,6 +1,11 @@
 <?php
 
-//SIGNIN.PHP takes in a phone number, and spits out all of the metadata associated with that user.
+//input::
+//	first name 
+//	password 
+
+//output::
+//	Boolean (T/F)
 
 //connects to the database
 include "connection.php";
