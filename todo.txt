@@ -1,0 +1,18 @@
+//rousseau 
+  - plan out what features we want to support for stream text 
+  - start implementing features using the mogreet api 
+  - 	
+
+//channing
+  - get uploading photos through jquery mobile working 
+  - get the basic website up and running 
+    - signup
+    - signin
+    - stream newsfeed
+    - stream profile
+    - liking photos
+    - unliking photos 
+    - people who liked a specific photo
+    - people who attended a particular stream
+
+//suman

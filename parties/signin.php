@@ -1,11 +1,6 @@
 <?php
 
-//input::
-//	first name 
-//	password 
-
-//output::
-//	Boolean (T/F)
+//SIGNIN.PHP takes in a phone number, and spits out all of the metadata associated with that user.
 
 //connects to the database
 include "connection.php";
@@ -17,7 +12,7 @@ $password = $_GET['password'];
 
 $responseArray = array();
 
-$result = mysql_query("SELECT * FROM Users WHERE First='$first' AND Phone='$password'");
+$result = mysql_query("SELECT * FROM Users WHERE First='$first' AND Password='$password'");
 $row = mysql_fetch_array($result);
 
 if(empty($row))
