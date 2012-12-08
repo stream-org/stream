@@ -1,7 +1,13 @@
 //rousseau 
   - plan out what features we want to support for stream text 
   - start implementing features using the mogreet api 
-  - 	
+  - texting interface
+    - replying with a photo (stream streamname)		
+      - successful upload
+      - wrong stream name 
+    - inviting people (invite streamname phonenumber) 	
+    - album streamname
+    - signup first name last name 
 
 //channing
   - get uploading photos through jquery mobile working 
