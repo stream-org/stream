@@ -15,7 +15,8 @@ $messageArray = explode(" ", $message);
 $messageArray[0] = strtolower($messageArray[0]);
 
 //function for sending a text
-function sendText($phoneNumber, $textString){
+function sendText($phoneNumber, $textString)
+{
   $textString = urlencode($textString);
   $phoneNumber = intval($phoneNumber);
   $url = 'https://api.mogreet.com/moms/transaction.send?client_id=1316&token=dbd7557a6a9d09ab13fda4b5337bc9c7&campaign_id=28420&to=' . $phoneNumber . '&message=' . $textString . '&format=json';
@@ -24,6 +25,23 @@ function sendText($phoneNumber, $textString){
   curl_close($ch);
 }
 
+function getStreamID($phoneNumber, $theStreamName)
+{
+  $url = 'http://75.101.134.112/api/getStreamID.php?phone=' . $phoneNumber . '&streamName=' . $theStreamName;
+  $ch = curl_init($url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  $response = curl_exec($ch);
+  curl_close($ch);
+  return $response;
+}
+
+// function test()
+// {
+//   $url = 'http://75.101.134.112/api/getStreamID.php?phone=16508420492&streamName=test';
+//   $ch = curl_init($url);
+//   $response = curl_exec($ch);
+//   curl_close($ch);
+// }
 
 //register
 
@@ -49,13 +67,17 @@ elseif ($messageArray[0] === "invite")
 //upload
 else 
 {
-	$streamID = 4;
-	$url = 'http://75.101.134.112/api/uploadPhoto.php?phone=' . $phone . '&picture=' . $picture . '&streamID=' . $streamID;
-  	$ch = curl_init($url);
-  	$response = curl_exec($ch);
-  	curl_close($ch);
+	unset($messageArray[0]);
+	if (count($messageArray) == 1)
+	{
+		$streamID = getStreamID($phone, $messageArray[0]);
+		$url = 'http://75.101.134.112/api/uploadPhoto.php?phone=' . $phone . '&picture=' . $picture . '&streamID=' . $streamID;
+	  	$ch = curl_init($url);
+	  	$response = curl_exec($ch);
+	  	curl_close($ch);
 
-  	sendText($phone, "Your photo photo has been uploaded!");
+	  	sendText($phone, "Your photo photo has been uploaded!");
+	}	
 }
 
 
