@@ -48,7 +48,7 @@
 
 <body> 
 	<!-- 1. first page a user sees -->
-	<div data-role="page" id="introPage">
+	<div data-role="page" id="introPage" data-theme="a">
 		<div data-role="header">
 		</div>
 
@@ -73,9 +73,9 @@
 		<h2>WELCOME BACK<h2>
 		<form>
 			<label for="username" class="ui-hidden-accessible">Username:</label>
-			<input type="text" name="username" id="username" value="" placeholder="Username"/>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px" type="text" name="username" id="username" value="" placeholder="Username"/>
 			<label for="password" class="ui-hidden-accessible">Password:</label>
-			<input type="password" name="password" id="password" value="" placeholder="Password"/>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="password" id="password" value="" placeholder="Password"/>
 			<a href="" class="ui-link">Forgot Password?</a>
 		</form>			
 		</div> 
@@ -92,7 +92,24 @@
 			<a href="#streams_your" data-icon="check" data-transition="pop">sign up</a>
 		</div>
 
-		<div data-role="content" align="center">			
+		<div data-role="content" data-theme="c">
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Profile</h4>
+			<label for="firstName" class="ui-hidden-accessible">First Name:</label>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px" type="text" name="firstName" id="firstName" value="" placeholder="First Name"/>
+			<label for="lastName" class="ui-hidden-accessible">Last Name:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px;" type="password" name="lastName" id="lastName" value="" placeholder="Last Name"/>
+			<label for="phoneNumber" class="ui-hidden-accessible">Phone Number:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="phoneNumber" id="phoneNumber" value="" placeholder="Phone Number"/>
+			</form>	
+			<br>
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Account</h4>
+			<label for="password" class="ui-hidden-accessible">Password:</label>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px;" type="password" name="password" id="password" value="" placeholder="Password"/>
+			<label for="password2" class="ui-hidden-accessible">Retype Password:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="password2" id="password2" value="" placeholder="Retype Password"/>
+			</form>			
 		</div> 
 
 		<div data-role="footer">
@@ -162,12 +179,24 @@
 	<!-- 6. new stream page -->
 	<div data-role="page" data-theme="a" id="newStream">
 		<div data-role="header">
-			<a href="#streams_your" data-icon="delete">cancel</a>
+			<a href="#streams_your">cancel</a>
 			<h1>NEW STREAM</h1>
 			<a href="#streamTemplate">create</a>
 		</div>
 
-		<div data-role="content" align="center">			
+		<div data-role="content" data-theme="c">
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Stream Details</h4>
+			<label for="streamName" class="ui-hidden-accessible">Name of stream:</label>
+			<input style="margin: 0px;" type="text" name="streamName" id="streamName" value="" placeholder="Name of Stream"/>
+			</form>	
+			<br>
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Add phone numbers:</h4>
+			<label for="recipients" class="ui-hidden-accessible">Name of stream:</label>
+			<input style="margin: 0px;" type="text" name="recipients" id="recipients" value="" placeholder="Add phone numbers"/>
+			</form>	
+			<p style="font-size:13px; color:gray; text-align:center">Recipients will be apple to add photos to your stream via the app and through MMS. Standard text and data rates apply.</p>
 		</div> 
 
 		<div data-role="footer">
@@ -182,7 +211,10 @@
 			<a href="" data-icon="star" data-iconpos="notext">CAMERA ICON</a>
 		</div>
 
-		<div data-role="content" align="center">
+		<div data-role="content" align="center" data-theme="c">
+			<a href="#participants" data-role="button">
+				3 participants
+			</a>
 			<div class="ui-grid-a">
 				<div class="ui-block-a frame"><a href="">
 					<div class="wrapper">
