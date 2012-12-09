@@ -10,6 +10,11 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
 	
 	<style>
+		.ui-link {
+			font-size : 12px;
+			color : black;
+		}
+
 		.ui-grid-a .frame {
 			padding:8px;
 		}
@@ -26,19 +31,30 @@
 			width:100px;
 			height:100px;
 		}
+
+		#introPage {
+			;
+		}
+
+		@font-face
+		{
+		font-family: myFirstFont;
+		src: url('Sansation_Light.ttf'),
+		     url('Sansation_Light.eot'); /* IE9 */
+		}
 	</style>
 
 </head>
 
 <body> 
 	<!-- 1. first page a user sees -->
-	<div data-role="page" data-theme="a" id="introPage">
+	<div data-role="page" id="introPage">
 		<div data-role="header">
 		</div>
 
-		<div data-role="content" align="center">
-			<a href="#signUp" data-role="button" data-transition="flip">SIGN UP</a>
-			<a href="#signIn" data-role="button" data-transition="flip">SIGN IN</a>					
+		<div data-role="content" align="center" style="background-image:url('assets/app_assets/Global/backgrounds/welcome@2x.png')">
+			<a href="#signUp" data-role="button" data-transition="flip" style="background-image:url('assets/app_assets/welcome/sign_up_button_normal@2x.png')">SIGN UP</a>
+			<a href="#signIn" data-role="button" data-transition="flip" style="background-image:url('assets/app_assets/welcome/sign_in_button_normal@2x.png')">SIGN IN</a>					
 		</div> 
 
 		<div data-role="footer">
@@ -53,7 +69,15 @@
 			<a href="#streams_your" data-icon="check" data-transition="pop">sign in</a>
 		</div>
 
-		<div data-role="content" align="center">			
+		<div data-role="content" align="center" data-theme="d">
+		<h2>WELCOME BACK<h2>
+		<form>
+			<label for="username" class="ui-hidden-accessible">Username:</label>
+			<input type="text" name="username" id="username" value="" placeholder="Username"/>
+			<label for="password" class="ui-hidden-accessible">Password:</label>
+			<input type="password" name="password" id="password" value="" placeholder="Password"/>
+			<a href="" class="ui-link">Forgot Password?</a>
+		</form>			
 		</div> 
 
 		<div data-role="footer">
