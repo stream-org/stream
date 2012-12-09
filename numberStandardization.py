@@ -1,61 +1,66 @@
+# Suman Venkataswamy
+# This script removes all non numeric characters from phone numbers as well as
+# adds the US international area code (1) to the beginning of a phone number
+
 import _mysql
 import sys
 import string
 import re
+import MySQLdb as mdb
 
-con = mdb.connect('174.120.60.130', 'suman', 
-    'ninjas1158!', 'suman_Stream')
+# Connect to Database
+con = mdb.connect('174.120.60.130', 'suman', 'ninjas1158!', 'suman_Stream')
 
 cur = con.cursor()
 cur.execute("SELECT VERSION()")
 
 
-cur.execute("SELECT Phone FROM Users")
-
-rows = cur.fetchall()
-
-for row in rows:
-    print row
-
-
-
+# Get list of all Tables
 cur.execute(
 
-"select * from information_schema.tables"
+"SHOW TABLES FROM suman_Stream"
 
 )
 
-rows = cur.fetchall()
+tables = cur.fetchall()
 
-for row in rows:
+# Applies script to every Phone Number is every table
 
-	table = row[0]
+for table in tables:
 
+	print table[0]
 	cur.execute(
 
-	"SELECT PHONE FROM %s", (table)
+	"""SELECT Phone FROM %s""" % table[0]
 
 	)
 
-    print row  
+	phoneNumbers = cur.fetchall()
+	
+	# Removes and non numeric characters and checks length of phone number
+	# If length is 10, add US international area code
+	# If not length of 11 leave blank
 
+	for phone in phoneNumbers:
 
-    for row in rows:
+		oldPhone = phone[0]
+		
+		newPhone = re.sub(r'\D', '', oldPhone)
+		
 
-    	oldPhone = row[0]
-		newPhone =  string(oldPhone)
-		newPhone = filter(newPhone.isdigit, s)
-		print newPhone
-
-		if (newPhone.length() == 10):
+		if (len(newPhone) == 10):
 			newPhone = "1" +newPhone
 
-		else:
+		elif (len(newPhone) != 11):
 			newPhone = ""
-			
+
+		print newPhone
+
+		# Update the record
+
 		cur.execute(
 
-		"UPDATE %s SET Phone = %s WHERE Phone = %s", (table, newPhone, oldPhone)
+		"""UPDATE %s SET Phone = %%s WHERE Phone = %%s""" % table[0], (newPhone, oldPhone)
 
 		)
 
