@@ -1,9 +1,16 @@
 todo list 
 
-create getUserPhotos.php
+//create getUserPhotos.php
 create one test user 
 test all the APIs 
 make a proposal for future tasks
+
+register through text
+invite through text
+upload photos through text
+view stream on mobile web
+like photos on mobile web 
+
 
 
 //normalize api's √
