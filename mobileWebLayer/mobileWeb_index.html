@@ -1,0 +1,237 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>photo upload</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+	
+	<style>
+		.ui-grid-a .frame {
+			padding:10px;
+		}
+		.ui-grid-a img {
+		    width  : 100%;
+		    height : auto;		    
+		}
+
+		.ui-grid-a .wrapper{
+			border : 5px solid white;
+		}
+
+		.streams img {
+			width:100px;
+			height:100px;
+		}
+	</style>
+
+</head>
+
+<body> 
+	<!-- 1. first page a user sees -->
+	<div data-role="page" data-theme="a" id="introPage">
+		<div data-role="header">
+		</div>
+
+		<div data-role="content" align="center">
+			<a href="#signUp" data-role="button" data-transition="flip">SIGN UP</a>
+			<a href="#signIn" data-role="button" data-transition="flip">SIGN IN</a>					
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div> 
+
+	<!-- 2. sign in page -->
+	<div data-role="page" data-theme="a" id="signIn">
+		<div data-role="header">
+			<a href="#introPage" data-icon="back">back</a>
+			<h1>SIGN IN</h1>
+			<a href="#streams_your" data-icon="check" data-transition="pop">sign in</a>
+		</div>
+
+		<div data-role="content" align="center">			
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- 3. sign up page -->
+	<div data-role="page" data-theme="a" id="signUp">
+		<div data-role="header">
+			<a href="#introPage" data-icon="back">back</a>
+			<h1>SIGN UP</h1>
+			<a href="#streams_your" data-icon="check" data-transition="pop">sign up</a>
+		</div>
+
+		<div data-role="content" align="center">			
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- 4. streams_your page -->
+	<div data-role="page" data-theme="a" id="streams_your">
+		<div data-role="header">
+			<h1>STREAMS</h1>
+			<a href="#newStream" data-icon="new" class="ui-btn-right" data-iconpos="notext">ADD</a>
+		</div>
+
+		<div data-role="content" id="streamBucket">
+			<!-- <div data-role="navbar">
+				<ul>
+					<li><a href="#streams_your" class="ui-btn-active ui-state-persist">Your</a></li>
+					<li><a href="#streams_participating">Participating</a></li>
+				</ul>
+			</div><! /navbar -->
+
+			<ul class="streams" data-role="listview" data-theme="d">
+				<li><a href="#streamTemplate">
+					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					<h1>Champagne &amp; Shackles</h1>
+					<p>33 participants   88 pictures</p>
+				</a></li>
+				<li><a href="#streamTemplate">
+					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					<h1>Sunday Hikes</h1>
+					<p>3 participants   13 pictures</p>
+				</a></li>
+				<li><a href="#streamTemplate">
+					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					<h1>Food</h1>
+					<p>5 participants   41 pictures</p>
+				</a></li>
+			</ul>
+			<!-- load using JS	 -->		
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- 5. streams_participating page -->
+	<!-- <div data-role="page" data-theme="a" id="streams_participating">
+		<div data-role="header">
+			<h1>STREAMS</h1>
+			<a href="#newStream" data-icon="new" class="ui-btn-right" data-iconpos="notext">ADD</a>
+		</div>
+
+		<div data-role="content" align="center" id="streamBucket">
+			<ul data-role="listview">
+				<li><a href="streamTemplate">
+					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					<h1>Champagne &amp; Shackles</h1>
+					<p>33 participants   88 pictures</p>
+				</a></li>
+			</ul>	
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div> -->
+
+	<!-- 6. new stream page -->
+	<div data-role="page" data-theme="a" id="newStream">
+		<div data-role="header">
+			<a href="#streams_your" data-icon="delete">cancel</a>
+			<h1>NEW STREAM</h1>
+			<a href="#streamTemplate">create</a>
+		</div>
+
+		<div data-role="content" align="center">			
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- template for individual stream -->
+	<div data-role="page" data-theme="a" id="streamTemplate">
+		<div data-role="header">
+			<a href="#streams_your" data-icon="back">back</a>
+			<h1>{stream_name}</h1>
+			<a href="" data-icon="star" data-iconpos="notext">CAMERA ICON</a>
+		</div>
+
+		<div data-role="content" align="center">
+			<div class="ui-grid-a">
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
+					</div>
+				</a></div>
+			</div><!-- /grid-a -->		
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>	
+</body>
+
+<script type="text/javascript">
+	//1. if nav["streams"] -> create bucket for each stream, icon = most recent photo, create page for each stream
+	//2. if click tile in "streams" -> add all photos to stream's page, all data about each photo 
+
+</script>
+
+</html>
