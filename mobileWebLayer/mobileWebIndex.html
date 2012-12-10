@@ -1,0 +1,366 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>photo upload</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+	
+	<style>
+		.ui-link {
+			font-size : 12px;
+			color : black;
+		}
+
+		.ui-grid-a .frame {
+			padding:8px;
+		}
+		.ui-grid-a img {
+		    width  : 100%;
+		    height : auto;		    
+		}
+
+		.ui-grid-a .wrapper{
+			border : 6px solid white;
+		}
+
+		.streams img {
+			width:100px;
+			height:100px;
+		}
+
+		#introPage {
+			;
+		}
+
+		@font-face
+		{
+		font-family: myFirstFont;
+		src: url('Sansation_Light.ttf'),
+		     url('Sansation_Light.eot'); /* IE9 */
+		}
+	</style>
+
+</head>
+
+<body> 
+	<!-- 1. first page a user sees -->
+	<div data-role="page" id="introPage" data-theme="a">
+		<div data-role="header">
+		</div>
+
+		<div data-role="content" align="center" style="background-image:url('assets/app_assets/Global/backgrounds/welcome@2x.png')">
+			<a href="#signUp" data-role="button" data-transition="flip" style="background-image:url('assets/app_assets/welcome/sign_up_button_normal@2x.png')">SIGN UP</a>
+			<a href="#signIn" data-role="button" data-transition="flip" style="background-image:url('assets/app_assets/welcome/sign_in_button_normal@2x.png')">SIGN IN</a>					
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div> 
+
+	<!-- 2. sign in page -->
+	<div data-role="page" data-theme="a" id="signIn">
+		<div data-role="header">
+			<a href="#introPage" data-icon="back">back</a>
+			<h1>SIGN IN</h1>
+			<a onClick = "signIn()" data-icon="check" data-transition="pop">sign in</a>
+		</div>
+
+		<div data-role="content" align="center" data-theme="d">
+		<h2>WELCOME BACK<h2>
+<!-- 		<form> -->
+			<label for="signIn_username" class="ui-hidden-accessible">Username:</label>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px" type="text" name="signIn_username" id="signIn_username" value="" placeholder="Username"/>
+			<label for="signIn_password" class="ui-hidden-accessible">Password:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="signIn_password" id="signIn_password" value="" placeholder="Password"/>
+			<a href="" class="ui-link">Forgot Password?</a>	
+<!-- 		</form>	 -->		
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- 3. sign up page -->
+	<div data-role="page" data-theme="a" id="signUp">
+		<div data-role="header">
+			<a href="#introPage" data-icon="back">back</a>
+			<h1>SIGN UP</h1>
+			<a onClick="signUp()" data-icon="check" data-transition="pop">sign up</a>
+		</div>
+
+		<div data-role="content" data-theme="c">
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Profile</h4>
+			<label for="firstName" class="ui-hidden-accessible">First Name:</label>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px" type="text" name="firstName" id="signUp_firstName" value="" placeholder="First Name"/>
+			<label for="lastName" class="ui-hidden-accessible">Last Name:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px;" type="password" name="lastName" id="signUp_lastName" value="" placeholder="Last Name"/>
+			<label for="phoneNumber" class="ui-hidden-accessible">Phone Number:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="phoneNumber" id="signUp_phoneNumber" value="" placeholder="Phone Number"/>
+			</form>	
+			<br>
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Account</h4>
+			<label for="password" class="ui-hidden-accessible">Password:</label>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px;" type="password" name="password" id="new_password1" value="" placeholder="Password"/>
+			<label for="password2" class="ui-hidden-accessible">Retype Password:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="password2" id="new_password2" value="" placeholder="Retype Password"/>
+			</form>			
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- 4. streams_your page -->
+	<div data-role="page" data-theme="a" id="streams_your">
+		<div data-role="header">
+			<h1>STREAMS</h1>
+			<a href="#newStream" data-icon="new" class="ui-btn-right" data-iconpos="notext">ADD</a>
+		</div>
+
+		<div data-role="content" id="streamBucket">
+			<!-- <div data-role="navbar">
+				<ul>
+					<li><a href="#streams_your" class="ui-btn-active ui-state-persist">Your</a></li>
+					<li><a href="#streams_participating">Participating</a></li>
+				</ul>
+			</div><! /navbar -->
+
+			<ul class="streams" data-role="listview" data-theme="d">
+				<li><a href="#streamTemplate">
+					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					<h1>Champagne &amp; Shackles</h1>
+					<p>33 participants   88 pictures</p>
+				</a></li>
+				<li><a href="#streamTemplate">
+					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					<h1>Sunday Hikes</h1>
+					<p>3 participants   13 pictures</p>
+				</a></li>
+				<li><a href="#streamTemplate">
+					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					<h1>Food</h1>
+					<p>5 participants   41 pictures</p>
+				</a></li>
+			</ul>
+			<!-- load using JS	 -->		
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- 5. streams_participating page -->
+	<!-- <div data-role="page" data-theme="a" id="streams_participating">
+		<div data-role="header">
+			<h1>STREAMS</h1>
+			<a href="#newStream" data-icon="new" class="ui-btn-right" data-iconpos="notext">ADD</a>
+		</div>
+
+		<div data-role="content" align="center" id="streamBucket">
+			<ul data-role="listview">
+				<li><a href="streamTemplate">
+					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					<h1>Champagne &amp; Shackles</h1>
+					<p>33 participants   88 pictures</p>
+				</a></li>
+			</ul>	
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div> -->
+
+	<!-- 6. new stream page -->
+	<div data-role="page" data-theme="a" id="newStream">
+		<div data-role="header">
+			<a href="#streams_your">cancel</a>
+			<h1>NEW STREAM</h1>
+			<a href="#streamTemplate">create</a>
+		</div>
+
+		<div data-role="content" data-theme="c">
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Stream Details</h4>
+			<label for="streamName" class="ui-hidden-accessible">Name of stream:</label>
+			<input style="margin: 0px;" type="text" name="streamName" id="streamName" value="" placeholder="Name of Stream"/>
+			</form>	
+			<br>
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Add phone numbers:</h4>
+			<label for="recipients" class="ui-hidden-accessible">Name of stream:</label>
+			<input style="margin: 0px;" type="text" name="recipients" id="recipients" value="" placeholder="Add phone numbers"/>
+			</form>	
+			<p style="font-size:13px; color:gray; text-align:center">Recipients will be apple to add photos to your stream via the app and through MMS. Standard text and data rates apply.</p>
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- template for individual stream -->
+	<div data-role="page" data-theme="a" id="streamTemplate">
+		<div data-role="header">
+			<a href="#streams_your" data-icon="back">back</a>
+			<h1>{stream_name}</h1>
+			<a href="" data-icon="star" data-iconpos="notext">CAMERA ICON</a>
+		</div>
+
+		<div data-role="content" align="center" data-theme="c">
+			<a href="#participants" data-role="button">
+				3 participants
+			</a>
+			<div class="ui-grid-a">
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
+					</div>
+				</a></div>
+			</div><!-- /grid-a -->		
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>	
+</body>
+
+<script type="text/javascript">
+	//1. if nav["streams"] -> create bucket for each stream, icon = most recent photo, create page for each stream
+	//2. if click tile in "streams" -> add all photos to stream's page, all data about each photo 
+
+	// sign in to Stream (for existing users)
+	function signIn () {
+		console.log ("signIn() initialized...");
+		
+		var username = $("#signIn_username").val();
+		var password = $("#signIn_password").val();
+		console.log(username);
+		console.log(password);
+
+		var API_URL = "http://75.101.134.112/api/signin.php?first=" + username + "&password=" + password;
+		console.log(API_URL);
+
+		$.getJSON(API_URL, function (data) {
+			console.log(data);
+			console.log(data["value"]);
+
+			if( data["value"] === "true"){
+				console.log(data["value"]);
+				$.mobile.changePage( "#streams_your", {
+				    transition: "pop",
+				    reverse: true
+				});
+			}else{
+				alert("Whoops! That doesn't look like a username/password combination that we have stored.");
+			};
+		});
+	};
+
+	// sign up for Stream (for new users)
+	function signUp () {
+		console.log ("signIn() initialized...");
+		
+		var firstName = $("#signUp_firstName").val();
+		var lastName = $("#signUp_lastName").val();
+		var phoneNumber = $("#signUp_phoneNumber").val();
+		var password1 = $("#new_password1").val();
+		var password2 = $("#new_password2").val();
+		var password; 
+
+			function passwordCheck() {
+				if (password1 === password2){
+					password = password1;
+				}else{
+					alert("Whoops!  Look like your passwords are different.");
+				}};
+
+		passwordCheck();
+
+		//variable test
+		console.log(firstName);
+		console.log(lastName);
+		console.log(phoneNumber);
+		console.log(password);
+
+		var API_URL = "http://75.101.134.112/api/signup.php?first=" + firstName + "&last=" + lastName + "&phone=" + phoneNumber + "&password=" + password;
+		console.log(API_URL);
+
+		$.getJSON(API_URL, function (data) {
+			console.log(data);
+			console.log(data["value"]);
+
+			if( data["value"] === "true"){
+				console.log(data["value"]);
+				$.mobile.changePage( "#streams_your", {
+				    transition: "pop",
+				    reverse: true
+				});
+			}else{
+				alert("Whoops! It looks like somthing is wrong.");
+			};
+		});
+	};
+
+</script>
+
+</html>
