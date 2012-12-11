@@ -73,9 +73,9 @@
 		<h2>WELCOME BACK<h2>
 <!-- 		<form> -->
 			<label for="signIn_username" class="ui-hidden-accessible">Username:</label>
-			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px" type="text" name="signIn_username" id="signIn_username" value="" placeholder="Username"/>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px" type="text" name="signIn_username" id="signIn_username" value="Rousseau" placeholder="Username"/>
 			<label for="signIn_password" class="ui-hidden-accessible">Password:</label>
-			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="signIn_password" id="signIn_password" value="" placeholder="Password"/>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="signIn_password" id="signIn_password" value="16508420492" placeholder="Password"/>
 			<a href="" class="ui-link">Forgot Password?</a>	
 <!-- 		</form>	 -->		
 		</div> 
@@ -131,12 +131,12 @@
 				</ul>
 			</div><! /navbar -->
 
-			<ul class="streams" data-role="listview" data-theme="d">
-				<li><a href="#streamTemplate">
+			<ul class="streams" data-role="listview" data-theme="d" id="streamNF">
+				<!-- <li><a href="#streamTemplate">
 					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
 					<h1>Champagne &amp; Shackles</h1>
 					<p>33 participants   88 pictures</p>
-				</a></li>
+				</a></li>	
 				<li><a href="#streamTemplate">
 					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
 					<h1>Sunday Hikes</h1>
@@ -146,7 +146,7 @@
 					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
 					<h1>Food</h1>
 					<p>5 participants   41 pictures</p>
-				</a></li>
+				</a></li> -->
 			</ul>
 			<!-- load using JS	 -->		
 		</div> 
@@ -154,6 +154,27 @@
 		<div data-role="footer">
 		</div>
 	</div>
+
+	<!-- 5. streams_participating page -->
+	<!-- <div data-role="page" data-theme="a" id="streams_participating">
+		<div data-role="header">
+			<h1>STREAMS</h1>
+			<a href="#newStream" data-icon="new" class="ui-btn-right" data-iconpos="notext">ADD</a>
+		</div>
+
+		<div data-role="content" align="center" id="streamBucket">
+			<ul data-role="listview">
+				<li><a href="streamTemplate">
+					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					<h1>Champagne &amp; Shackles</h1>
+					<p>33 participants   88 pictures</p>
+				</a></li>
+			</ul>	
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div> -->
 
 	<!-- 6. new stream page -->
 	<div data-role="page" data-theme="a" id="newStream">
@@ -264,8 +285,66 @@
 </body>
 
 <script type="text/javascript">
-	//1. if nav["streams"] -> create bucket for each stream, icon = most recent photo, create page for each stream
-	//2. if click tile in "streams" -> add all photos to stream's page, all data about each photo 
+	// create global phoneNumber variable - this will drive many of the APIs and will be returned when the user signs in || signs up
+	var phoneNumber;
+
+	// make sure the phoneNumber global var is workin - call dis urrwhere
+	function checkPhoneNumber() {
+		console.log(phoneNumber);
+	};
+
+	// function to populate Stream news feed (will be called by signIn and signUp)
+	function popStreamNF () {
+		console.log ("popStreamNF() initialized...");
+
+		var API_URL = "http://75.101.134.112/api/populateStreamNewsfeed.php?phone=" + phoneNumber;
+		console.log(API_URL);
+
+		$.getJSON(API_URL, function (data) {
+			// console.log(data.length);
+			var streamArray = [];
+			$.each(data, function(i){
+				// console.log(data[i]);
+				var streamName = data[i]['streamName'];
+				var numberOfParticipants = data[i]['numberOfParticipants'];
+				var numberOfPictures = data[i]['numberOfPictures'];
+				var latestPicture = data[i]['lastestPicture'];
+				var tempArray = [streamName, numberOfParticipants, numberOfPictures, latestPicture];
+				streamArray.push(tempArray);
+			});
+			streamNewsfeed(streamArray);
+		});
+	}
+				
+			
+		// $("#streamNF").append('<li><a href="#streamTemplate"> <img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" /> <h1>Champagne &amp; Shackles</h1> <p>33 participants   88 pictures</p> </a></li> };');
+
+	// output from populateStreamNewsFeed.php:
+	// streamID
+	// streamName
+	// # of participants
+	// # of pictures
+	// link to most_recent_photo
+
+	function streamNewsfeed(theStream)
+	{
+		for (var i = 0; i < theStream.length; i++)
+		{
+			console.log(theStream[i][3]);
+			var streamName = theStream[i][0];
+			var numberOfParticipants = theStream[i][1];
+			var numberOfPictures = theStream[i][2];
+			var latestPicture = theStream[i][3];
+			$("#streamNF").append('<li><a href="#streamTemplate"> <img src="'+ latestPicture +'" /> <h1>'+  streamName +'</h1> <p>'+ numberOfParticipants +' participants   '+ numberOfPictures +' pictures</p> </a></li>');
+
+			// $("#streamNF").append('<div data-theme="d"><li><a href="#streamTemplate"><img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" /><h1>Champagne &amp; Shackles</h1><p>33 participants   88 pictures</p></a></li></div>').trigger('create');
+
+			
+		}
+
+		// $("#streamNF").trigger('create');
+		$('ul').listview('refresh');
+	}
 
 	// sign in to Stream (for existing users)
 	function signIn () {
@@ -282,9 +361,15 @@
 		$.getJSON(API_URL, function (data) {
 			console.log(data);
 			console.log(data["value"]);
+			
+			// set global var "phoneNumber" equal to user's phone number - this will drive mennay APIs
+			phoneNumber = data["value"];
+			console.log(phoneNumber);
 
-			if( data["value"] === "true"){
+			// transition to Stream News Feed - logic
+			if( data["value"] !== "false"){
 				console.log(data["value"]);
+				popStreamNF();
 				$.mobile.changePage( "#streams_your", {
 				    transition: "pop",
 				    reverse: true
@@ -292,6 +377,8 @@
 			}else{
 				alert("Whoops! That doesn't look like a username/password combination that we have stored.");
 			};
+
+			checkPhoneNumber();
 		});
 	};
 
@@ -299,19 +386,23 @@
 	function signUp () {
 		console.log ("signIn() initialized...");
 		
+		// store dem inputs as varbulls
 		var firstName = $("#signUp_firstName").val();
 		var lastName = $("#signUp_lastName").val();
-		var phoneNumber = $("#signUp_phoneNumber").val();
 		var password1 = $("#new_password1").val();
 		var password2 = $("#new_password2").val();
 		var password; 
 
-			function passwordCheck() {
-				if (password1 === password2){
-					password = password1;
-				}else{
-					alert("Whoops!  Look like your passwords are different.");
-				}};
+		// set global var "phoneNumber" equal to user's phone number - this will drive mennay APIs
+		phoneNumber = $("#signUp_phoneNumber").val();
+
+		// make sure their password & confirmation password are the same
+		function passwordCheck() {
+			if (password1 === password2){
+				password = password1;
+			}else{
+				alert("Whoops!  Look like your passwords are different.");
+			}};
 
 		passwordCheck();
 
@@ -321,14 +412,16 @@
 		console.log(phoneNumber);
 		console.log(password);
 
+		// store the API HTTP request as a variable
 		var API_URL = "http://75.101.134.112/api/signup.php?first=" + firstName + "&last=" + lastName + "&phone=" + phoneNumber + "&password=" + password;
 		console.log(API_URL);
+
 
 		$.getJSON(API_URL, function (data) {
 			console.log(data);
 			console.log(data["value"]);
 
-			if( data["value"] === "true"){
+			if( data["value"] !== "false"){
 				console.log(data["value"]);
 				$.mobile.changePage( "#streams_your", {
 				    transition: "pop",
@@ -337,6 +430,8 @@
 			}else{
 				alert("Whoops! It looks like somthing is wrong.");
 			};
+
+			checkPhoneNumber();
 		});
 	};
 
