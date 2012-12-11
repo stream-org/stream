@@ -132,7 +132,7 @@
 			</div><! /navbar -->
 
 			<ul class="streams" data-role="listview" data-theme="d" id="streamNF">
-				<li><a href="#streamTemplate">
+				<!-- <li><a href="#streamTemplate">
 					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
 					<h1>Champagne &amp; Shackles</h1>
 					<p>33 participants   88 pictures</p>
@@ -146,7 +146,7 @@
 					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
 					<h1>Food</h1>
 					<p>5 participants   41 pictures</p>
-				</a></li>
+				</a></li> -->
 			</ul>
 			<!-- load using JS	 -->		
 		</div> 
@@ -300,30 +300,24 @@
 		var API_URL = "http://75.101.134.112/api/populateStreamNewsfeed.php?phone=" + phoneNumber;
 		console.log(API_URL);
 
-		var streamArray = [];
 		$.getJSON(API_URL, function (data) {
-				$.each(data, function(i){
-					var streamName = data[i]['streamName'];
-					var numberOfParticipants = data[i]['numberOfParticipants'];
-					var numberOfPictures = data[i]['numberOfPictures'];
-					var latestPicture = data[i]['latestPicture'];
-
-					
-				// 	streamArray.push(data[i]);
-				// console.log(streamArray.length);
+			// console.log(data.length);
+			var streamArray = [];
+			$.each(data, function(i){
+				// console.log(data[i]);
+				var streamName = data[i]['streamName'];
+				var numberOfParticipants = data[i]['numberOfParticipants'];
+				var numberOfPictures = data[i]['numberOfPictures'];
+				var latestPicture = data[i]['lastestPicture'];
+				var tempArray = [streamName, numberOfParticipants, numberOfPictures, latestPicture];
+				streamArray.push(tempArray);
 			});
-			});
+			streamNewsfeed(streamArray);
+		});
 	}
 				
-				// 	$.each(data[i], function(k){
-				// 		streamArray[i].push(data[i][k])
-				// 	})				
-				// });
-			// console.log(streamArray);
-		
-
+			
 		// $("#streamNF").append('<li><a href="#streamTemplate"> <img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" /> <h1>Champagne &amp; Shackles</h1> <p>33 participants   88 pictures</p> </a></li> };');
-	// };
 
 	// output from populateStreamNewsFeed.php:
 	// streamID
@@ -331,6 +325,25 @@
 	// # of participants
 	// # of pictures
 	// link to most_recent_photo
+
+	function streamNewsfeed(theStream)
+	{
+		for (var i = 0; i < theStream.length; i++)
+		{
+			console.log(theStream[i][3]);
+			var streamName = theStream[i][0];
+			var numberOfParticipants = theStream[i][1];
+			var numberOfPictures = theStream[i][2];
+			var latestPicture = theStream[i][3];
+			$("#streamNF").append('<li><a href="#streamTemplate"> <img src="'+ latestPicture +'" /> <h1>'+  streamName +'</h1> <p>'+ numberOfParticipants +' participants   '+ numberOfPictures +' pictures</p> </a></li>');
+
+			// $("#streamNF").append('<div data-theme="d"><li><a href="#streamTemplate"><img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" /><h1>Champagne &amp; Shackles</h1><p>33 participants   88 pictures</p></a></li></div>').trigger('create');
+
+			
+		}
+
+		$("#streamNF").trigger('create');
+	}
 
 	// sign in to Stream (for existing users)
 	function signIn () {
