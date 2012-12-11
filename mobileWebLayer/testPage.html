@@ -1,11 +1,41 @@
 <html>
-<ul class="streams" data-role="listview" data-theme="d">
-	<li>
-		<a href="#streamTemplate">
-			<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
-			<h1>Champagne &amp; Shackles</h1>
-			<p>33 participants   88 pictures</p>
-		</a>
-	</li>
-</ul>
+
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+
+
+	<a onClick="addStreamer()" data-role="button" data-icon="plus"> Add Streamer </a>
+	<a onClick="invitePeople()" data-role="button" data-icon="delete"> Submit! </a>
+	<form id="addStreamer">
+	</form>
+
+<script>
+
+var inviteCounter = 0;
+
+function addStreamer()
+{
+	$('#addStreamer').prepend('<input type="text" name="name" id="'+ inviteCounter +'" value=""  />').trigger('create');
+	inviteCounter++;
+}
+
+function invitePeople() 
+{
+	var tempCounter = inviteCounter-1;
+	while (tempCounter >= 0)
+	{
+		var tempNum = tempCounter.toString();
+		console.log(document.getElementById(tempNum).value);
+		tempCounter--;
+	}
+}
+
+
+</script>
+
+
+
 </html>

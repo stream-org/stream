@@ -18,6 +18,7 @@ $password = $_GET['password'];
 $responseArray = array();
 
 $result = mysql_query("SELECT * FROM Users WHERE First='$first' AND Phone='$password'");
+
 $row = mysql_fetch_array($result);
 
 if(empty($row))
@@ -26,7 +27,7 @@ if(empty($row))
 }
 else 
 {
-	$responseArray['value'] = 'true';
+	$responseArray['value'] = $row['Phone'];
 }
 
 echo json_encode($responseArray);

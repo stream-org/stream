@@ -1,0 +1,15 @@
+//rousseau
+- createStream 
+
+
+
+//channing
+- populateStreamNewsfeed
+- populateStreamProfile 
+
+
+
+general notes
+
+pull variable from the JS return && input them into the html
+

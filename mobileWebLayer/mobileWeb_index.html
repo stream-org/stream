@@ -302,21 +302,28 @@
 
 		var streamArray = [];
 		$.getJSON(API_URL, function (data) {
-			console.log(data);
 				$.each(data, function(i){
-					streamArray.push(data[i]);
-				console.log(streamArray.length);
+					var streamName = data[i]['streamName'];
+					var numberOfParticipants = data[i]['numberOfParticipants'];
+					var numberOfPictures = data[i]['numberOfPictures'];
+					var latestPicture = data[i]['latestPicture'];
+
+					
+				// 	streamArray.push(data[i]);
+				// console.log(streamArray.length);
+			});
+			});
+	}
 				
-					// $.each(data[i], function(k){
-					// 	streamArray[i].push(data[i][k])
-					// })				
-				});
-			console.log(streamArray);
-		});
+				// 	$.each(data[i], function(k){
+				// 		streamArray[i].push(data[i][k])
+				// 	})				
+				// });
+			// console.log(streamArray);
 		
 
 		// $("#streamNF").append('<li><a href="#streamTemplate"> <img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" /> <h1>Champagne &amp; Shackles</h1> <p>33 participants   88 pictures</p> </a></li> };');
-	};
+	// };
 
 	// output from populateStreamNewsFeed.php:
 	// streamID

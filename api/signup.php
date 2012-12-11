@@ -33,7 +33,7 @@ if(empty($row))
 }
 else 
 {
-	$responseArray['value'] = 'true';
+	$responseArray['value'] = $row['Phone'];
 }
 
 echo json_encode($responseArray);
