@@ -6,7 +6,7 @@
 //	phone
 //	password 
 
-//output:: 
+//output::
 //	Boolean (T/F)
 
 //connects to the database

@@ -132,21 +132,6 @@
 			</div><! /navbar -->
 
 			<ul class="streams" data-role="listview" data-theme="d" id="streamNF">
-				<!-- <li><a href="#streamTemplate">
-					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
-					<h1>Champagne &amp; Shackles</h1>
-					<p>33 participants   88 pictures</p>
-				</a></li>	
-				<li><a href="#streamTemplate">
-					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
-					<h1>Sunday Hikes</h1>
-					<p>3 participants   13 pictures</p>
-				</a></li>
-				<li><a href="#streamTemplate">
-					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
-					<h1>Food</h1>
-					<p>5 participants   41 pictures</p>
-				</a></li> -->
 			</ul>
 			<!-- load using JS	 -->		
 		</div> 
@@ -184,7 +169,16 @@
 			<a href="#streamTemplate">create</a>
 		</div>
 
-		<div data-role="content" data-theme="c">
+		<fieldset class="ui-grid-a">
+			<div class="ui-block-a">
+				<button onClick="addStreamer()" data-theme="c">Add Streamer</button>
+			</div>
+			<div class="ui-block-b">
+				<button onClick="invitePeople()" data-theme="e">Submit</button>
+			</div>	   
+		</fieldset>
+
+		<div data-role="content" data-theme="c" id="inviteList">
 			<form>
 			<h4 style="margin:0px 0px 3px 5px">Stream Details</h4>
 			<label for="streamName" class="ui-hidden-accessible">Name of stream:</label>
@@ -194,7 +188,7 @@
 			<form>
 			<h4 style="margin:0px 0px 3px 5px">Add phone numbers:</h4>
 			<label for="recipients" class="ui-hidden-accessible">Name of stream:</label>
-			<input style="margin: 0px;" type="text" name="recipients" id="recipients" value="" placeholder="Add phone numbers"/>
+			<div id="inviteBox"><input style="margin: 0px;" type="text" name="recipients" id="0" value="" placeholder="Add phone numbers"/></div>
 			</form>	
 			<p style="font-size:13px; color:gray; text-align:center">Recipients will be apple to add photos to your stream via the app and through MMS. Standard text and data rates apply.</p>
 		</div> 
@@ -223,62 +217,6 @@
 						</div>
 					</a>
 				</div>
-
-				<!-- <div class="ui-block-b frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-a frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-b frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-a frame"><a href="">
-					<div class="wrapper">
-						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-b frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-a frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-b frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-a frame"><a href="">
-					<div class="wrapper">
-						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-b frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-a frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-b frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
-					</div>
-				</a></div> -->
 			</div><!-- /grid-a -->		
 		</div> 
 
@@ -295,6 +233,38 @@
 	function checkPhoneNumber() {
 		console.log(phoneNumber);
 	};
+
+
+	var inviteCounter = 1;
+	function addStreamer()
+	{
+		$('#inviteBox').prepend('<input type="text" name="name" id="'+ inviteCounter +'" value="" placeholder="Add phone numbers"  />').trigger('create');
+		inviteCounter++;
+	}
+
+	function invitePeople() 
+	{
+
+		var theStreamID;
+		var theStreamName = document.getElementById('streamName').value;
+		var API_URL = 'http://75.101.134.112/api/createStream.php?phone=' + phoneNumber + '&streamName=' + theStreamName;
+
+		$.getJSON(API_URL, function (data) {
+			
+			theStreamID 
+		
+			});
+
+		var tempCounter = inviteCounter-1;
+		while (tempCounter >= 0)
+		{
+			var tempNum = tempCounter.toString();
+			console.log(document.getElementById(tempNum).value);
+			tempCounter--;
+		}
+	}
+
+
 
 	// function to populate Stream news feed (will be called by signIn and signUp)
 	function popStreamNF () {
