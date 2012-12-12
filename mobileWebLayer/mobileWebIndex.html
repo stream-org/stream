@@ -207,41 +207,24 @@
 	<div data-role="page" data-theme="a" id="streamTemplate">
 		<div data-role="header">
 			<a href="#streams_your" data-icon="back">back</a>
-			<h1>{stream_name}</h1>
+			<h1 id="streamTitle">{stream_name}</h1>
 			<a href="" data-icon="star" data-iconpos="notext">CAMERA ICON</a>
 		</div>
 
 		<div data-role="content" align="center" data-theme="c">
-			<a href="#participants" data-role="button">
+			<a href="#participants" data-role="button" id="numParticipants">
 				3 participants
 			</a>
-			<div class="ui-grid-a">
-				<div class="ui-block-a frame"><a href="">
-					<div class="wrapper">
-						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-b frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-a frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-b frame"><a href="">
-					<div class="wrapper">
-					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-a frame"><a href="">
-					<div class="wrapper">
-						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
-					</div>
-				</a></div>
-				<div class="ui-block-b frame"><a href="">
+			<div class="ui-grid-a" id="streamPictures">
+				<div class="ui-block-a frame">
+					<a href="">
+						<div class="wrapper">
+							<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+						</div>
+					</a>
+				</div>
+
+				<!-- <div class="ui-block-b frame"><a href="">
 					<div class="wrapper">
 					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
 					</div>
@@ -276,6 +259,26 @@
 					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
 					</div>
 				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+						<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-a frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210389_1670732.jpeg" />
+					</div>
+				</a></div>
+				<div class="ui-block-b frame"><a href="">
+					<div class="wrapper">
+					<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210090_1670664.jpeg" />
+					</div>
+				</a></div> -->
 			</div><!-- /grid-a -->		
 		</div> 
 
@@ -305,45 +308,69 @@
 			var streamArray = [];
 			$.each(data, function(i){
 				// console.log(data[i]);
+				var streamID = i;
 				var streamName = data[i]['streamName'];
 				var numberOfParticipants = data[i]['numberOfParticipants'];
 				var numberOfPictures = data[i]['numberOfPictures'];
 				var latestPicture = data[i]['lastestPicture'];
-				var tempArray = [streamName, numberOfParticipants, numberOfPictures, latestPicture];
+				var tempArray = [streamID, streamName, numberOfParticipants, numberOfPictures, latestPicture];
 				streamArray.push(tempArray);
 			});
 			streamNewsfeed(streamArray);
 		});
 	}
-				
-			
-		// $("#streamNF").append('<li><a href="#streamTemplate"> <img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" /> <h1>Champagne &amp; Shackles</h1> <p>33 participants   88 pictures</p> </a></li> };');
-
-	// output from populateStreamNewsFeed.php:
-	// streamID
-	// streamName
-	// # of participants
-	// # of pictures
-	// link to most_recent_photo
 
 	function streamNewsfeed(theStream)
 	{
 		for (var i = 0; i < theStream.length; i++)
 		{
-			console.log(theStream[i][3]);
-			var streamName = theStream[i][0];
-			var numberOfParticipants = theStream[i][1];
-			var numberOfPictures = theStream[i][2];
-			var latestPicture = theStream[i][3];
-			$("#streamNF").append('<li><a href="#streamTemplate"> <img src="'+ latestPicture +'" /> <h1>'+  streamName +'</h1> <p>'+ numberOfParticipants +' participants   '+ numberOfPictures +' pictures</p> </a></li>');
-
-			// $("#streamNF").append('<div data-theme="d"><li><a href="#streamTemplate"><img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" /><h1>Champagne &amp; Shackles</h1><p>33 participants   88 pictures</p></a></li></div>').trigger('create');
-
-			
+			var streamID = theStream[i][0];
+			var streamName = theStream[i][1];
+			var numberOfParticipants = theStream[i][2];
+			var numberOfPictures = theStream[i][3];
+			var latestPicture = theStream[i][4];
+			$("#streamNF").append('<li onClick="popStreamProfile(this.id)" id='+ streamID +'><a><img src="'+ latestPicture +'" /> <h1>'+  streamName +'</h1> <p>'+ numberOfParticipants +' participants   '+ numberOfPictures +' pictures</p></a></li>');
 		}
-
-		// $("#streamNF").trigger('create');
 		$('ul').listview('refresh');
+	}
+
+	// function to populate Stream profile. will get called when a user clicks on a stream object in stream newsfeed. {{rousseau built this}}
+	function popStreamProfile(theID)
+	{
+		console.log('popStreamProfile initialized...');
+		$('#streamTitle').html('');
+		$('#numParticipants').html('');
+		var API_URL = "http://75.101.134.112/api/populateStreamProfile.php?phone=" + phoneNumber + "&streamID=" + theID;
+		$.getJSON(API_URL, function (data) {
+			console.log(data);
+			console.log(data['pictures']);
+			$('#streamTitle').html(data['streamName']);
+			$('#numParticipants').html(data['numberOfParticipants'] + ' Participants');
+			var lengthOfPictures = data['pictures'].length;
+			var pictureIndex = 0;
+
+			while (pictureIndex < lengthOfPictures-1)
+			{
+				console.log(data['pictures'][pictureIndex]);
+				pictureIndex++;
+				if (pictureIndex%2==0)
+				{
+					$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="wrapper" style="width:100%; height:500px"><img class="thumb" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
+				} 
+				else 
+				{
+					$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="wrapper"><img style="width:100%; height:500px" class="thumb" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
+				}
+				
+			}
+
+		});
+
+		$.mobile.changePage( "#streamTemplate", {
+				    transition: "pop",
+				    reverse: true
+				});
+		
 	}
 
 	// sign in to Stream (for existing users)
@@ -407,10 +434,10 @@
 		passwordCheck();
 
 		//variable test
-		console.log(firstName);
-		console.log(lastName);
-		console.log(phoneNumber);
-		console.log(password);
+		// console.log(firstName);
+		// console.log(lastName);
+		// console.log(phoneNumber);
+		// console.log(password);
 
 		// store the API HTTP request as a variable
 		var API_URL = "http://75.101.134.112/api/signup.php?first=" + firstName + "&last=" + lastName + "&phone=" + phoneNumber + "&password=" + password;

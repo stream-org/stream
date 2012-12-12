@@ -4,6 +4,7 @@
 //	streamID
 
 //output::
+//  streamName
 //	number of participants 
 //	array of photos ranked chronologically 
 
@@ -29,6 +30,14 @@ while($pictureRow = mysql_fetch_array($pictureResult))
 	array_push($pictureArray, $pictureRow['Picture']);
 }
 
+$streamNameResult = mysql_query("SELECT * FROM Streams WHERE StreamID='$streamID'");
+while($streamNameRow=mysql_fetch_array($streamNameResult))
+{
+	$streamName = $streamNameRow['StreamName'];
+
+}
+
+$responseArray['streamName'] = $streamName;
 $responseArray['numberOfParticipants'] = $numberOfParticipants;
 $responseArray['pictures'] = $pictureArray;
 
