@@ -24,7 +24,7 @@ while($participantRow = mysql_fetch_array($participantResult))
 }
 
 
-$pictureResult = mysql_query("SELECT * FROM StreamActivity WHERE StreamID='$streamID' ORDER BY Created DESC");
+$pictureResult = mysql_query("SELECT * FROM StreamActivity WHERE StreamID='$streamID' ORDER BY Created ASC");
 while($pictureRow = mysql_fetch_array($pictureResult))
 {
 	array_push($pictureArray, $pictureRow['Picture']);
