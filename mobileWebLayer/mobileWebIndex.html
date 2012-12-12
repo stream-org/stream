@@ -23,7 +23,7 @@
 		    height : auto;		    
 		}
 
-		.ui-grid-a .wrapper{
+		.pictureFrame {
 			border : 6px solid white;
 		}
 
@@ -34,6 +34,11 @@
 
 		#introPage {
 			;
+		}
+
+		.mainPic {
+			width  : 100%;
+		    height : auto;
 		}
 
 		@font-face
@@ -223,6 +228,28 @@
 		<div data-role="footer">
 		</div>
 	</div>	
+
+		<!-- 8. photo view page -->
+	<div data-role="page" data-theme="a" id="photoView">
+		<div data-role="header">
+			<h1>{photographer's name?}</h1>
+			<a href="#streamTemplate" data-icon="delete" class="ui-btn-right" data-iconpos="notext">cancel</a>
+		</div>
+
+		<div data-role="content" data-theme="a">
+			<div class="pictureFrame" id="thePictureFrame">
+				<!-- <img class="mainPic" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" /> -->
+			</div>
+			<div>
+
+			</div>
+		</div> 
+
+		<div data-role="footer">
+			<a class="ui-btn-left">Like</a>
+			<a data-icon="check" class="ui-btn-right">7 likes</a>
+		</div>
+	</div>	
 </body>
 
 <script type="text/javascript">
@@ -325,11 +352,11 @@
 				pictureIndex++;
 				if (pictureIndex%2==0)
 				{
-					$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="wrapper"><img class="thumb" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
+					$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="wrapper"><img class="thumb" onClick="showPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
 				} 
 				else 
 				{
-					$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="wrapper"><img class="thumb" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
+					$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="wrapper"><img class="thumb" onClick="showPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
 				}
 				
 			}
@@ -341,6 +368,18 @@
 				    reverse: true
 				});
 		
+	}
+
+	function showPicture(pictureID)
+	{
+		$.mobile.changePage( "#photoView", {
+				    transition: "pop",
+				    reverse: true
+				});
+
+		$('#thePictureFrame').append('<img class="mainPic" src="' + pictureID + '" />'); 
+
+
 	}
 
 	// sign in to Stream (for existing users)

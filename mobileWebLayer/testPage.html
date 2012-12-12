@@ -7,31 +7,40 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
 
 
-	<a onClick="addStreamer()" data-role="button" data-icon="plus"> Add Streamer </a>
+<!-- 	<a onClick="addStreamer()" data-role="button" data-icon="plus"> Add Streamer </a>
 	<a onClick="invitePeople()" data-role="button" data-icon="delete"> Submit! </a>
 	<form id="addStreamer">
-	</form>
+	</form> -->
+
+	<div class="pictureFrame">
+		<img class="mainPic" id="mainPicId" onClick="showPic(this.src)" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" />
+	</div>
 
 <script>
 
-var inviteCounter = 0;
-
-function addStreamer()
+function showPic(argument) 
 {
-	$('#addStreamer').prepend('<input type="text" name="name" id="'+ inviteCounter +'" value=""  />').trigger('create');
-	inviteCounter++;
+	console.log(argument);
 }
 
-function invitePeople() 
-{
-	var tempCounter = inviteCounter-1;
-	while (tempCounter >= 0)
-	{
-		var tempNum = tempCounter.toString();
-		console.log(document.getElementById(tempNum).value);
-		tempCounter--;
-	}
-}
+// var inviteCounter = 0;
+
+// function addStreamer()
+// {
+// 	$('#addStreamer').prepend('<input type="text" name="name" id="'+ inviteCounter +'" value=""  />').trigger('create');
+// 	inviteCounter++;
+// }
+
+// function invitePeople() 
+// {
+// 	var tempCounter = inviteCounter-1;
+// 	while (tempCounter >= 0)
+// 	{
+// 		var tempNum = tempCounter.toString();
+// 		console.log(document.getElementById(tempNum).value);
+// 		tempCounter--;
+// 	}
+// }
 
 
 </script>
