@@ -179,7 +179,7 @@
 				<button onClick="addStreamer()" data-theme="c">Add Streamer</button>
 			</div>
 			<div class="ui-block-b">
-				<button onClick="invitePeople()" data-theme="e">Submit</button>
+				<button onClick="createStream()" data-theme="e">Submit</button>
 			</div>	   
 		</fieldset>
 
@@ -218,7 +218,7 @@
 				<div class="ui-block-a frame">
 					<a href="">
 						<div class="wrapper">
-							<img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+							<!-- <img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" /> -->
 						</div>
 					</a>
 				</div>
@@ -232,13 +232,12 @@
 		<!-- 8. photo view page -->
 	<div data-role="page" data-theme="a" id="photoView">
 		<div data-role="header">
-			<h1>{photographer's name?}</h1>
+			<h1 id="photographersName"></h1>
 			<a href="#streamTemplate" data-icon="delete" class="ui-btn-right" data-iconpos="notext">cancel</a>
 		</div>
 
 		<div data-role="content" data-theme="a">
 			<div class="pictureFrame" id="thePictureFrame">
-				<!-- <img class="mainPic" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210431_1670789.jpeg" /> -->
 			</div>
 			<div>
 
@@ -247,7 +246,7 @@
 
 		<div data-role="footer">
 			<a class="ui-btn-left">Like</a>
-			<a data-icon="check" class="ui-btn-right">7 likes</a>
+			<a data-icon="check" class="ui-btn-right" id="numberOfLikes"></a>
 		</div>
 	</div>	
 </body>
@@ -269,27 +268,61 @@
 		inviteCounter++;
 	}
 
-	function invitePeople() 
+
+	function invitePeople(aStreamId)
+	{
+		var tempCounter = inviteCounter;
+		console.log(tempCounter);
+		var phoneNumberString = '';
+
+		while (tempCounter >= 0)
+		{
+			console.log(tempCounter);
+			var tempNum = tempCounter.toString();
+			var tempPhoneNumber = document.getElementById(tempNum).value;
+			if (tempCounter == 0)
+			{
+				phoneNumberString = phoneNumberString + tempPhoneNumber;
+			} 
+			else 
+			{
+				phoneNumberString = phoneNumberString + tempPhoneNumber + ',';
+			}
+			tempCounter--;
+		}
+
+		var API_URL = 'http://75.101.134.112/api/invitePeople.php?phone=' + phoneNumberString + '&streamID=' + aStreamId;
+		console.log(API_URL);
+		// $.getJSON(API_URL, function (data) {
+
+		// 	if (data['value'] === 'true')
+		// 	{
+		// 		console.log(data['value']);
+		// 	}
+		
+		// });
+
+
+	}
+
+	function createStream() 
 	{
 
 		var theStreamID;
 		var theStreamName = document.getElementById('streamName').value;
 		var API_URL = 'http://75.101.134.112/api/createStream.php?phone=' + phoneNumber + '&streamName=' + theStreamName;
+		console.log(API_URL);
 
 		$.getJSON(API_URL, function (data) {
-			
-			theStreamID 
-		
-			});
+			theStreamID = data['StreamID'];
+			console.log(theStreamID);
+			invitePeople(theStreamID);
+		});
 
-		var tempCounter = inviteCounter-1;
-		while (tempCounter >= 0)
-		{
-			var tempNum = tempCounter.toString();
-			console.log(document.getElementById(tempNum).value);
-			tempCounter--;
-		}
+		// invitePeople(theStreamID, phoneNumberString);
+		
 	}
+
 
 
 
@@ -337,6 +370,8 @@
 		console.log('popStreamProfile initialized...');
 		$('#streamTitle').html('');
 		$('#numParticipants').html('');
+		$('#streamPictures').html('');
+
 		var API_URL = "http://75.101.134.112/api/populateStreamProfile.php?phone=" + phoneNumber + "&streamID=" + theID;
 		$.getJSON(API_URL, function (data) {
 			console.log(data);
@@ -372,6 +407,25 @@
 
 	function showPicture(pictureID)
 	{
+		$('#thePictureFrame').html('');
+		$('#numberOfLikes').html('');
+		var API_URL = 'http://75.101.134.112/api/getPictureMetadata.php?picture=' + pictureID;
+		$.getJSON(API_URL, function (data) {
+			
+			console.log(data);
+			var first = data['uploaderFirstName'];
+			var last = data['uploaderLastName'];
+			var fullName = first + ' ' + last;
+			var phone = data['uploaderPhone'];
+			var likes = data['numberOfLikes'];
+
+			$('#photographersName').html(fullName);
+			$('#numberOfLikes').html(likes + ' likes');
+
+
+
+			});
+
 		$.mobile.changePage( "#photoView", {
 				    transition: "pop",
 				    reverse: true
