@@ -34,6 +34,7 @@ for ($i=0; $i < count($phoneArray) ; $i++) {
 	$row = mysql_fetch_array($result);
 
 	sendText($phone, "You have been invited to a stream! Reply with 'register', your_first_name, and your_last_name to signup!");
+	array_push($responseArray, $currentPhone . ' : true');
 
 	echo json_encode($responseArray);
 }

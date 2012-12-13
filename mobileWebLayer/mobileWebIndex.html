@@ -192,8 +192,9 @@
 			<br>
 			<form>
 			<h4 style="margin:0px 0px 3px 5px">Add phone numbers:</h4>
-			<label for="recipients" class="ui-hidden-accessible">Name of stream:</label>
-			<div id="inviteBox"><input style="margin: 0px;" type="text" name="recipients" id="0" value="" placeholder="Add phone numbers"/></div>
+			<label for="recipients" class="ui-hidden-accessible"xww>Name of stream:</label>
+			<div id="inviteBox"> </div>
+			<div id="inviteBox"><input style="margin: 0px;" type="text" name="Name" id="00" value="" placeholder="Add phone numbers"/></div>
 			</form>	
 			<p style="font-size:13px; color:gray; text-align:center">Recipients will be apple to add photos to your stream via the app and through MMS. Standard text and data rates apply.</p>
 		</div> 
@@ -264,23 +265,24 @@
 	var inviteCounter = 1;
 	function addStreamer()
 	{
-		$('#inviteBox').prepend('<input type="text" name="name" id="'+ inviteCounter +'" value="" placeholder="Add phone numbers"  />').trigger('create');
+		var tempId = inviteCounter.toString() + inviteCounter.toString();
+		$('#inviteBox').prepend('<input type="text" id="'+ tempId +'" value="" placeholder="Add phone numbers"  />').trigger('create');
 		inviteCounter++;
 	}
 
 
 	function invitePeople(aStreamId)
 	{
-		var tempCounter = inviteCounter;
+		var tempCounter = inviteCounter.toString() + inviteCounter.toString();
 		console.log(tempCounter);
 		var phoneNumberString = '';
+		inviteCounter = inviteCounter-1; //this is because one last ++ was added at the end of addStreamer
 
-		while (tempCounter >= 0)
+		while (inviteCounter >= 0)
 		{
-			console.log(tempCounter);
-			var tempNum = tempCounter.toString();
+			var tempNum = inviteCounter.toString() + inviteCounter.toString();
 			var tempPhoneNumber = document.getElementById(tempNum).value;
-			if (tempCounter == 0)
+			if (inviteCounter == 0)
 			{
 				phoneNumberString = phoneNumberString + tempPhoneNumber;
 			} 
@@ -288,26 +290,24 @@
 			{
 				phoneNumberString = phoneNumberString + tempPhoneNumber + ',';
 			}
-			tempCounter--;
+			inviteCounter--;
 		}
 
-		var API_URL = 'http://75.101.134.112/api/invitePeople.php?phone=' + phoneNumberString + '&streamID=' + aStreamId;
-		console.log(API_URL);
-		// $.getJSON(API_URL, function (data) {
+		console.log(phoneNumberString);
 
-		// 	if (data['value'] === 'true')
-		// 	{
-		// 		console.log(data['value']);
-		// 	}
+		var API_URL = 'http://75.101.134.112/api/invitePeople.php?phone=' + phoneNumberString + '&streamID=' + aStreamId;
+	
+		$.getJSON(API_URL, function (data) {
+
+			console.log(data);
 		
-		// });
+		});
 
 
 	}
 
 	function createStream() 
 	{
-
 		var theStreamID;
 		var theStreamName = document.getElementById('streamName').value;
 		var API_URL = 'http://75.101.134.112/api/createStream.php?phone=' + phoneNumber + '&streamName=' + theStreamName;
@@ -318,7 +318,6 @@
 			console.log(theStreamID);
 			invitePeople(theStreamID);
 		});
-
 		// invitePeople(theStreamID, phoneNumberString);
 		
 	}
