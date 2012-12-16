@@ -12,18 +12,32 @@ include "connection.php";
 
 //grabbing the arguments 
 $picture = $_GET['picture'];
+$phone = $_GET['phone'];
 $numberOfLikes;
 $uploaderPhone;
 $uploaderNameFirst;
 $uploaderNameLast;
+$hasLiked = "False";
 
 $responseArray = array();
+
+$responseArray['hasLiked'] = $hasLiked;
 
 $likeResult = mysql_query("SELECT COUNT(Distinct Phone) FROM PictureLikes WHERE Picture='$picture'");
 while ($likeRow = mysql_fetch_array($likeResult))
 {
 	$numberOfLikes = $likeRow[0];
 	$responseArray['numberOfLikes'] = $numberOfLikes;
+}
+
+$hasLikedResult = mysql_query("SELECT * FROM PictureLikes WHERE Picture='$picture' AND Phone='$phone'");
+while ($hasLikedRow = mysql_fetch_array($hasLikedResult))
+{
+	if(!empty($hasLikedRow))
+	{
+		$hasLiked = 'True';
+		$responseArray['hasLiked'] = $hasLiked;
+	}
 }
 
 $uploaderPhoneResult = mysql_query("SELECT * FROM StreamActivity WHERE Picture='$picture'");

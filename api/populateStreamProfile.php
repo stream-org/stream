@@ -37,6 +37,7 @@ while($streamNameRow=mysql_fetch_array($streamNameResult))
 
 }
 
+$responseArray['streamID'] = $streamID;
 $responseArray['streamName'] = $streamName;
 $responseArray['numberOfParticipants'] = $numberOfParticipants;
 $responseArray['pictures'] = $pictureArray;

@@ -15,12 +15,18 @@
 			color : black;
 		}
 
-		.ui-grid-a .frame {
-			padding:8px;
+		#streamContent {
+			background-color: #DFDFDF;
 		}
+
+		.ui-grid-a .frame {
+			padding:4px;
+
+		}
+
 		.ui-grid-a img {
 		    width  : 100%;
-		    height : auto;		    
+		    overflow : hidden;		    
 		}
 
 		.pictureFrame {
@@ -36,7 +42,15 @@
 			;
 		}
 
-		.mainPic {
+		#likeButton {
+			/*width:100%;*/
+		}
+
+		#numberOfLikes {
+			/*width:100%;*/
+		}
+
+		#mainPic {
 			width  : 100%;
 		    height : auto;
 		}
@@ -192,9 +206,8 @@
 			<br>
 			<form>
 			<h4 style="margin:0px 0px 3px 5px">Add phone numbers:</h4>
-			<label for="recipients" class="ui-hidden-accessible"xww>Name of stream:</label>
-			<div id="inviteBox"> </div>
-			<div id="inviteBox"><input style="margin: 0px;" type="text" name="Name" id="00" value="" placeholder="Add phone numbers"/></div>
+			<label for="recipients" class="ui-hidden-accessible">Name of stream:</label>
+			<div id="inviteBox"><input style="margin: 0px;" type="text" name="recipients" id="00" value="" placeholder="Add phone numbers"/></div>
 			</form>	
 			<p style="font-size:13px; color:gray; text-align:center">Recipients will be apple to add photos to your stream via the app and through MMS. Standard text and data rates apply.</p>
 		</div> 
@@ -204,25 +217,18 @@
 	</div>
 
 	<!-- template for individual stream -->
-	<div data-role="page" data-theme="a" id="streamTemplate">
+	<div data-role="page" data-theme="c" id="streamTemplate">
 		<div data-role="header">
 			<a href="#streams_your" data-icon="back">back</a>
 			<h1 id="streamTitle">{stream_name}</h1>
 			<a href="" data-icon="star" data-iconpos="notext">CAMERA ICON</a>
 		</div>
 
-		<div data-role="content" align="center" data-theme="c">
+		<div data-role="content" align="center" id="streamContent">
 			<a href="#participants" data-role="button" id="numParticipants">
-				3 participants
 			</a>
 			<div class="ui-grid-a" id="streamPictures">
-				<div class="ui-block-a frame">
-					<a href="">
-						<div class="wrapper">
-							<!-- <img class="thumb" src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" /> -->
-						</div>
-					</a>
-				</div>
+				<!-- inject pics here -->
 			</div><!-- /grid-a -->		
 		</div> 
 
@@ -238,16 +244,23 @@
 		</div>
 
 		<div data-role="content" data-theme="a">
-			<div class="pictureFrame" id="thePictureFrame">
-			</div>
-			<div>
-
-			</div>
+				<div class="pictureFrame" id="thePictureFrame">
+				</div>
 		</div> 
 
 		<div data-role="footer">
-			<a class="ui-btn-left">Like</a>
-			<a data-icon="check" class="ui-btn-right" id="numberOfLikes"></a>
+			<div class="ui-grid-b">
+				<div class="ui-block-a" id="likeButton">
+					<!-- <a data-role="button" onClick="likePicture()">Like</a> -->
+				</div>
+
+				<div class="ui-block-b">
+				</div>
+
+				<div class="ui-block-c">
+					<a data-icon="check" data-role="button" id="numberOfLikes"></a>
+				</div>
+			</div>
 		</div>
 	</div>	
 </body>
@@ -265,8 +278,7 @@
 	var inviteCounter = 1;
 	function addStreamer()
 	{
-		var tempId = inviteCounter.toString() + inviteCounter.toString();
-		$('#inviteBox').prepend('<input type="text" id="'+ tempId +'" value="" placeholder="Add phone numbers"  />').trigger('create');
+		$('#inviteBox').prepend('<input type="text" name="name" id="'+ inviteCounter +'" value="" placeholder="Add phone numbers"  />').trigger('create');
 		inviteCounter++;
 	}
 
@@ -321,7 +333,6 @@
 		// invitePeople(theStreamID, phoneNumberString);
 		
 	}
-
 
 
 
@@ -386,12 +397,15 @@
 				pictureIndex++;
 				if (pictureIndex%2==0)
 				{
-					$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="wrapper"><img class="thumb" onClick="showPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
+					$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="showPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
 				} 
 				else 
 				{
-					$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="wrapper"><img class="thumb" onClick="showPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
+					$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="showPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
 				}
+
+				var cw = $('.ui-grid-a img').width();
+				$('.ui-grid-a img').css({'height':cw+'px'});
 				
 			}
 
@@ -404,11 +418,40 @@
 		
 	}
 
+	function likePicture()
+	{
+		var picture = document.getElementById("mainPic").getElementsByTagName("img")[0].src;
+		console.log(picture);
+
+		var API_URL = 'http://75.101.134.112/api/likePicture.php?picture=' + picture + '&phone=' + phoneNumber;
+		console.log(API_URL);
+		$.getJSON(API_URL, function (data) {
+			$('#likeButton').html('');
+			$('#likeButton').append('<a data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
+
+			if (data['likes'] == '1')
+			{
+				$('#numberOfLikes').html('');
+				$('#numberOfLikes').html(data['likes'] + ' like').trigger('create');
+			}
+			else
+			{
+				$('#numberOfLikes').html('');
+				$('#numberOfLikes').html(data['likes'] + ' likes').trigger('create');
+			}
+			});
+	}
+
+	function unlikePicture() 
+	{
+		console.log('unlikePicture function');
+	}
+
 	function showPicture(pictureID)
 	{
 		$('#thePictureFrame').html('');
 		$('#numberOfLikes').html('');
-		var API_URL = 'http://75.101.134.112/api/getPictureMetadata.php?picture=' + pictureID;
+		var API_URL = 'http://75.101.134.112/api/getPictureMetadata.php?picture=' + pictureID + '&phone=' + phoneNumber;
 		$.getJSON(API_URL, function (data) {
 			
 			console.log(data);
@@ -417,23 +460,35 @@
 			var fullName = first + ' ' + last;
 			var phone = data['uploaderPhone'];
 			var likes = data['numberOfLikes'];
+			var hasLiked = data['hasLiked'];
 
-			$('#photographersName').html(fullName);
-			$('#numberOfLikes').html(likes + ' likes');
+			$('#photographersName').html(fullName).trigger('create');
+			$('#numberOfLikes').html(likes + ' likes').trigger('create');
 
+			var cw = $('#photographersName').height();
+			$('#numberOfLikes').css({'height':cw+'px'});
 
-
-			});
-
-		$.mobile.changePage( "#photoView", {
+			$.mobile.changePage( "#photoView", {
 				    transition: "pop",
 				    reverse: true
 				});
 
-		$('#thePictureFrame').append('<img class="mainPic" src="' + pictureID + '" />'); 
-
-
-	}
+			if(hasLiked == 'True')
+			{
+				$('#thePictureFrame').html('');
+				$('#likeButton').html('');
+				$('#thePictureFrame').append('<div id="mainPic"><img src="' + pictureID + '" /></div>').trigger('create'); 
+				$('#likeButton').append('<a data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
+			}
+			else
+			{
+				$('#thePictureFrame').html('');
+				$('#likeButton').html('');
+				$('#thePictureFrame').append('<div id="mainPic"><img src="' + pictureID + '" /></div>').trigger('create'); 
+				$('#likeButton').append('<a data-role="button" onClick="likePicture()">Like</a>').trigger('create');
+			}
+				});
+		}
 
 	// sign in to Stream (for existing users)
 	function signIn () {
