@@ -14,6 +14,8 @@ include "connection.php";
 $phone = $_GET['phone'];
 $picture = $_GET['picture'];
 $streamID = $_GET['streamID'];
+$pictureID = $picture . $phone . $streamID . time();
+$pictureID = hash('sha512', $pictureID);
 
 mysql_query("INSERT INTO StreamActivity (StreamID, Phone, Picture) VALUES ('$streamID', '$phone','$picture')");
 
@@ -28,9 +30,11 @@ if (empty($row))
 } 
 else 
 {
-	$responseArray['value'] = 'true';
+	$responseArray['pictureID'] = $pictureID;
 }
 
 echo json_encode($responseArray);
+
+
 
 ?>

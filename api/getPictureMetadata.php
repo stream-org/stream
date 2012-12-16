@@ -56,6 +56,8 @@ while($uploaderNameRow = mysql_fetch_array($uploaderNameResult))
 	$responseArray['uploaderLastName'] = $uploaderNameLast;
 }
 
+$responseArray['picture_url'] = $picture;
+
 echo json_encode($responseArray);
 
 ?>

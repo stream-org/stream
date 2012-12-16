@@ -27,7 +27,10 @@ if(empty($row))
 }
 else 
 {
-	$responseArray['value'] = $row['Phone'];
+	$responseArray['first'] = $row['First'];
+	$responseArray['last'] = $row['Last'];
+	$responseArray['phone'] = $row['Phone'];
+	$responseArray['value'] = 'true';
 }
 
 echo json_encode($responseArray);

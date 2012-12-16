@@ -352,7 +352,7 @@
 				var streamName = data[i]['streamName'];
 				var numberOfParticipants = data[i]['numberOfParticipants'];
 				var numberOfPictures = data[i]['numberOfPictures'];
-				var latestPicture = data[i]['lastestPicture'];
+				var latestPicture = data[i]['latestPicture'];
 				var tempArray = [streamID, streamName, numberOfParticipants, numberOfPictures, latestPicture];
 				streamArray.push(tempArray);
 			});
@@ -439,12 +439,32 @@
 				$('#numberOfLikes').html('');
 				$('#numberOfLikes').html(data['likes'] + ' likes').trigger('create');
 			}
-			});
+		});
 	}
 
 	function unlikePicture() 
 	{
 		console.log('unlikePicture function');
+		var picture = document.getElementById("mainPic").getElementsByTagName("img")[0].src;
+		console.log(picture);
+
+		var API_URL = 'http://75.101.134.112/api/unlikePicture.php?picture=' + picture + '&phone=' + phoneNumber;
+		console.log(API_URL);
+		$.getJSON(API_URL, function (data) {
+			$('#likeButton').html('');
+			$('#likeButton').append('<a data-role="button" onClick="likePicture()">Like</a>').trigger('create');
+
+			if (data['likes'] == '1')
+			{
+				$('#numberOfLikes').html('');
+				$('#numberOfLikes').html(data['likes'] + ' like').trigger('create');
+			}
+			else
+			{
+				$('#numberOfLikes').html('');
+				$('#numberOfLikes').html(data['likes'] + ' likes').trigger('create');
+			}
+		});
 	}
 
 	function showPicture(pictureID)
@@ -504,10 +524,10 @@
 
 		$.getJSON(API_URL, function (data) {
 			console.log(data);
-			console.log(data["value"]);
+			console.log(data["phone"]);
 			
 			// set global var "phoneNumber" equal to user's phone number - this will drive mennay APIs
-			phoneNumber = data["value"];
+			phoneNumber = data["phone"];
 			console.log(phoneNumber);
 
 			// transition to Stream News Feed - logic

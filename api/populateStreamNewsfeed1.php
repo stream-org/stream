@@ -50,8 +50,8 @@ while($streamidRow = mysql_fetch_array($streamidResult))
 	{
 		$latestPicture = $latestPictureRow['PictureID'];
 	}
-
-	$responseArray[$streamID] = array('streamName'=>$streamName, 'numberOfParticipants'=>$numberOfParticipants, 'numberOfPictures'=>$numberOfPictures, 'latestPicture'=>$latestPicture);
+	array_push($responseArray, array('streamID'=>$streamID, 'streamName'=>$streamName, 'numberOfParticipants'=>$numberOfParticipants, 'numberOfPictures'=>$numberOfPictures, 'lastestPicture'=>$latestPicture));
+	//$responseArray[$streamID] = array('streamName'=>$streamName, 'numberOfParticipants'=>$numberOfParticipants, 'numberOfPictures'=>$numberOfPictures, 'lastestPicture'=>$latestPicture);
 }
 
 echo json_encode($responseArray);
