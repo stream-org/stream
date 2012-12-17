@@ -13,9 +13,9 @@ include "connection.php";
 $picture = $_GET['picture'];
 $phone = $_GET['phone'];
 
-mysql_query("INSERT INTO PictureLikes (Picture, Phone) VALUES ('$picture', '$phone')");
+mysql_query("INSERT INTO PictureLikes (PictureID, Phone) VALUES ('$picture', '$phone')");
 
-$result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE Picture='$picture'");
+$result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE PictureID='$picture'");
 
 $count = mysql_fetch_row($result);
 
