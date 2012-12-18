@@ -38,12 +38,8 @@ function invitePeople(aStreamId)
 	var API_URL = 'http://75.101.134.112/api/invitePeople.php?phone=' + phoneNumberString + '&streamID=' + aStreamId;
 
 	$.getJSON(API_URL, function (data) {
-
 		console.log(data);
-	
 	});
-
-
 }
 
 function createStream() 
@@ -58,8 +54,6 @@ function createStream()
 		console.log(theStreamID);
 		invitePeople(theStreamID);
 	});
-	// invitePeople(theStreamID, phoneNumberString);
-	
 }
 
 
@@ -104,18 +98,41 @@ function streamNewsfeed(theStream)
 		var numberOfParticipants = theStream[i][2];
 		var numberOfPictures = theStream[i][3];
 		var latestPicture = theStream[i][4];
-		$("#streamNF").append('<li onClick="popStreamProfile(this.id)" id='+ streamID +'><a><img src="'+ latestPicture +'" /> <h1>'+  streamName +'</h1> <p>'+ numberOfParticipants +' participants   '+ numberOfPictures +' pictures</p></a></li>');
+		$("#streamNF").append('<li onClick="prePopStream(this.id)" id='+ streamID +'><a><img src="'+ latestPicture +'" /> <h1>'+  streamName +'</h1> <p>'+ numberOfParticipants +' participants   '+ numberOfPictures +' pictures</p></a></li>');
 	}
 	$('ul').listview('refresh');
 }
 
-// function to populate Stream profile. will get called when a user clicks on a stream object in stream newsfeed. {{rousseau built this}}
-function popStreamProfile(theID)
+//when you click on the <li> element it will call a certain function that will set the cookie, and then call popStreamProfile 
+//when the page loads it will just go off of the .live function 
+
+function prePopStream(theID)
 {
+	console.log('prePopStream initialized...');
+	setCookie("latestStreamID", theID, 365);
+
+	$.mobile.changePage( "#streamTemplate", {
+		transition: "pop",
+		reverse: true
+	});
+}
+
+// function to populate Stream profile. will get called when a user clicks on a stream object in stream newsfeed. {{rousseau built this}}
+function popStreamProfile(theID) 
+{
+	// var latestStreamID = theID;
 	console.log('popStreamProfile initialized...');
 	$('#streamTitle').html('');
 	$('#numParticipants').html('');
 	$('#streamPictures').html('');
+
+	$.mobile.changePage( "#streamTemplate", {
+		transition: "pop",
+		reverse: true
+	});
+
+	console.log(latestStreamID);
+	console.log(phoneNumber);
 
 	var API_URL = "http://75.101.134.112/api/populateStreamProfile.php?phone=" + phoneNumber + "&streamID=" + theID;
 	$.getJSON(API_URL, function (data) {
@@ -132,11 +149,11 @@ function popStreamProfile(theID)
 			pictureIndex++;
 			if (pictureIndex%2==0)
 			{
-				$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="showPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
+				$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="preShowPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
 			} 
 			else 
 			{
-				$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="showPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
+				$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="preShowPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
 			}
 
 			var cw = $('.ui-grid-a img').width();
@@ -145,11 +162,6 @@ function popStreamProfile(theID)
 		}
 
 	});
-
-	$.mobile.changePage( "#streamTemplate", {
-			    transition: "pop",
-			    reverse: true
-			});
 	
 }
 
@@ -202,6 +214,18 @@ function unlikePicture()
 	});
 }
 
+function preShowPicture(pictureID)
+{
+	console.log('preShowPicture initialized...');
+	setCookie("latestPicture", pictureID, 365);
+	$.mobile.changePage( "#photoView", {
+		transition: "pop",
+		reverse: true
+	});
+}
+
+
+
 function showPicture(pictureID)
 {
 	$('#thePictureFrame').html('');
@@ -223,10 +247,10 @@ function showPicture(pictureID)
 		var cw = $('#photographersName').height();
 		$('#numberOfLikes').css({'height':cw+'px'});
 
-		$.mobile.changePage( "#photoView", {
-			    transition: "pop",
-			    reverse: true
-			});
+		// $.mobile.changePage( "#photoView", {
+		// 	    transition: "pop",
+		// 	    reverse: true
+		// 	});
 
 		if(hasLiked == 'True')
 		{
@@ -269,7 +293,7 @@ function signIn () {
 		// transition to Stream News Feed - logic
 		if( data["value"] !== "false"){
 			console.log(data["value"]);
-			popStreamNF();
+			// popStreamNF();
 			$.mobile.changePage( "#streams_your", {
 			    transition: "pop",
 			    reverse: true
@@ -315,7 +339,7 @@ function signUp () {
 		console.log(data);
 		console.log(data["value"]);
 
-		if( data["value"] !== "false"){
+		if( data["value"] !== "false"){ //fix this 
 			console.log(data["value"]);
 			$.mobile.changePage( "#streams_your", {
 			    transition: "pop",
@@ -353,8 +377,7 @@ var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCStri
 document.cookie=c_name + "=" + c_value;
 }
 
-function checkCookie()
-{
+function checkPhoneCookie{
 var phoneNumber=getCookie("phoneNumber");
 if (phoneNumber!=null && phoneNumber!="")
   {
@@ -369,23 +392,35 @@ else
   }
 }
 
+function checkStreamIDCookie()
+{
+var latestStreamID = getCookie("latestStreamID");
+if (latestStreamID!=null && latestStreamID!="")
+  {
+  	return latestStreamID;
+  }
+else 
+  {
+  	$.mobile.changePage( "#introPage", {
+			    transition: "pop",
+			    reverse: true
+			});
+  }
+}
 
-// create global phoneNumber variable - this will drive many of the APIs and will be returned when the user signs in || signs up
-// var phoneNumber;
+function checkPictureCookie()
+{
+var latestPicture = getCookie("latestPicture");
+if (latestPicture!=null && latestPicture!="")
+  {
+  	return latestPicture;
+  }
+else 
+  {
+  	$.mobile.changePage( "#introPage", {
+			    transition: "pop",
+			    reverse: true
+			});
+  }
+}
 
-// make sure the phoneNumber global var is workin - call dis urrwhere
-
-// $('#streams_your').load(function (){
-// 	phoneNumber = getCookie('phoneNumber');
-// 	console.log('hi');
-// })
-
-
-// $(document).ready(function () {
-// 	var phoneNumber = checkCookie();
-// 	console.log("cookie " + phoneNumber);
-// });
-
-// $('#streams_your').live('pageshow',function(){
-// 	popStreamNF();
-// });

@@ -5,7 +5,7 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-	<script src="mobileWebIndex.js"></script>
+	<script src="mobileWebIndexCopy.js"></script>
 	<link REL=StyleSheet HREF="mobileWebIndex.css" TYPE="text/css" MEDIA=screen>
 
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
@@ -14,20 +14,34 @@
 
 	<script>
 
-	//have pages transition to one another 
-	//have live functions for each page 
-	//streams_your
-	//stream_profile
-	//picture
-
-	$(document).ready(function () {
-  		var phoneNumber = checkCookie();
-  		console.log("cookie " + phoneNumber);
-	});
+	var phoneNumber;
+	var latestStreamID;
+	var latestPicture;
 
 	$('#streams_your').live('pageshow',function(){
+		$('#streamNF').html('');
+		phoneNumber = checkPhoneCookie();
 		popStreamNF();
 	});
+
+	$('#streamTemplate').live('pageshow', function() {
+		phoneNumber = checkPhoneCookie();
+		latestStreamID = checkStreamIDCookie();
+		popStreamProfile(latestStreamID);
+	});
+
+	$('#photoView').live('pageshow', function(){
+		phoneNumber = checkPhoneCookie();
+		latestStreamID = checkStreamIDCookie();
+		console.log("this is the phoneNumber: " + phoneNumber);
+		console.log("this is the streadID: " + latestStreamID);
+		latestPicture = checkPictureCookie();
+		console.log("this is the latestPicture: " + latestPicture);
+		console.log('showing picture');
+		showPicture(latestPicture);
+
+
+	})
 
 	</script>
 	
@@ -39,9 +53,9 @@
 		<div data-role="header">
 		</div>
 
-		<div data-role="content" align="center" style="background-image:url('assets/app_assets/Global/backgrounds/welcome@2x.png')">
-			<a href="#signUp" data-role="button" data-transition="flip" style="background-image:url('assets/app_assets/welcome/sign_up_button_normal@2x.png')">SIGN UP</a>
-			<a href="#signIn" data-role="button" data-transition="flip" style="background-image:url('assets/app_assets/welcome/sign_in_button_normal@2x.png')">SIGN IN</a>					
+		<div data-role="content" align="center">
+			<a href="#signUp" data-role="button" data-transition="flip">SIGN UP</a>
+			<a href="#signIn" data-role="button" data-transition="flip">SIGN IN</a>					
 		</div> 
 
 		<div data-role="footer">
