@@ -19,21 +19,32 @@ $phone = $_GET['phone'];
 $password = $_GET['password'];
 $submit = $_GET['submit'];
 $profilePicture = $_GET['profilePicture'];
+$salt = rand();
 
-mysql_query("INSERT INTO Users (First, Last, Phone, Password, ProfilePic)
-	VALUES ('$first', '$last', '$phone', '$password', '$profilePicture')");
+$hash = hash('sha256', $password . $salt);
+
+for ($i = 0; $i < 10000; $i++)
+{
+	$hash = hash('sha256', $hash);
+}
+
+mysql_query("INSERT INTO Users (First, Last, Phone, ProfilePic, SALT, HashString)
+	VALUES ('$first', '$last', '$phone', '$profilePicture', '$salt', '$hash')");
 
 $responseArray = array();
-$result = mysql_query("SELECT * FROM Users WHERE First='$first' AND Last='$last' AND Password='$password' AND Phone='$phone'");
-$row = mysql_fetch_array($result);
+$result = mysql_query("SELECT * FROM Users WHERE Phone='$phone' AND HashString='$hash'");
 
-if(empty($row))
+while($row = mysql_fetch_array($result))
 {
-	$responseArray['value'] = 'false';
+	$responseArray['First'] = $row['First'];
+	$responseArray['Last'] = $row['Last'];
+	$responseArray['Phone'] = $row['Phone'];
+	$responseArray['ProfilePic'] = $row['ProfilePic'];
 }
-else 
+
+if (empty($responseArray))
 {
-	$responseArray['value'] = $row['Phone'];
+	$responseArray = null;
 }
 
 echo json_encode($responseArray);

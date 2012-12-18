@@ -11,26 +11,40 @@
 include "connection.php";
 
 //grabbing the arguments 
-$first = $_GET['first'];
+$phone = $_GET['first'];
 $password = $_GET['password'];
-
-
+$salt;
 $responseArray = array();
 
-$result = mysql_query("SELECT * FROM Users WHERE First='$first' AND Phone='$password'");
+$usernameResult = mysql_query("SELECT * FROM Users WHERE Phone='$phone'");
 
-$row = mysql_fetch_array($result);
-
-if(empty($row))
+while ($usernameRow = mysql_fetch_array($usernameResult))
 {
-	$responseArray['value'] = 'false';
+	$salt = $usernameRow['SALT'];
 }
-else 
+
+$hash = hash('sha256', $password . $salt);
+
+for ($i = 0; $i < 10000; $i++)
 {
+	$hash = hash('sha256', $hash);
+}
+
+$result = mysql_query("SELECT * FROM Users WHERE Phone='$phone' AND HashString='$hash'");
+
+while($row = mysql_fetch_array($result))
+{
+
 	$responseArray['first'] = $row['First'];
 	$responseArray['last'] = $row['Last'];
 	$responseArray['phone'] = $row['Phone'];
-	$responseArray['value'] = 'true';
+	$responseArray['profilepic'] = $row['ProfilePic'];
+
+}
+
+if (empty($responseArray))
+{
+	$responseArray = null;
 }
 
 echo json_encode($responseArray);
