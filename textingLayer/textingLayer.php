@@ -54,8 +54,15 @@ if ($messageArray[0] === "register")
 //invite
 elseif ($messageArray[0] === "invite")
 {
-	$inviteePhone = $messageArray[1];
-	sendText($inviteePhone, "Reply with 'register', your_first_name, and your_last_name to signup!");
+  if (count($messageArray) == 3)
+  {
+    $inviteePhone = $messageArray[1];
+    sendText($inviteePhone, "Reply with 'register', your_first_name, and your_last_name to signup!");
+  }
+  else
+  {
+    sendText($phone, "You're forgetting something. 'invite' 'phoneNumber' 'streamName'");
+  }
 }
 
 //upload the photo to the stream 

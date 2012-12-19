@@ -30,10 +30,13 @@ while ($likeRow = mysql_fetch_array($likeResult))
 	$responseArray['numberOfLikes'] = $numberOfLikes;
 }
 
-$hasLikedResult = mysql_query("SELECT * FROM PictureLikes WHERE Picture='$picture' AND Phone='$phone'");
+$hasLikedResult = mysql_query("SELECT * FROM PictureLikes WHERE PictureID='$picture' AND Phone='$phone'");
 while ($hasLikedRow = mysql_fetch_array($hasLikedResult))
 {
-	if(!empty($hasLikedRow))
+	if(empty($hasLikedRow)) 
+	{
+		//do nothing
+	}
 	{
 		$hasLiked = 'True';
 		$responseArray['hasLiked'] = $hasLiked;
