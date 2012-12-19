@@ -257,7 +257,7 @@ function popStreamProfile(theID)
 		var lengthOfPictures = data['pictures'].length;
 		var pictureIndex = 0;
 
-		while (pictureIndex < lengthOfPictures-1)
+		while (pictureIndex < lengthOfPictures)
 		{
 			pictureIndex++;
 			if (pictureIndex%2==0)

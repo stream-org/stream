@@ -17,9 +17,9 @@ $streamID = $_GET['streamID'];
 $pictureID = $picture . $phone . $streamID . time();
 $pictureID = hash('sha512', $pictureID);
 
-mysql_query("INSERT INTO StreamActivity (StreamID, Phone, Picture) VALUES ('$streamID', '$phone','$picture')");
+mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID) VALUES ('$streamID', '$phone','$picture')");
 
-$result = mysql_query("SELECT * FROM StreamActivity WHERE Picture='$picture' AND Phone='$phone' AND StreamID='$streamID'");
+$result = mysql_query("SELECT * FROM StreamActivity WHERE PictureID='$picture' AND Phone='$phone' AND StreamID='$streamID'");
 $responseArray = array();
 
 $row = mysql_fetch_array($result);

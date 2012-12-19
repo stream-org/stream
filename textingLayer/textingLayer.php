@@ -64,7 +64,7 @@ else
 	unset($messageArray[0]);
 	if (count($messageArray) == 1)
 	{
-		$streamID = getStreamID($phone, strtolower($messageArray[1]));
+		$streamID = getStreamID($phone, $messageArray[1]);
 		$url = 'http://75.101.134.112/api/uploadPhoto.php?phone=' . $phone . '&picture=' . $picture . '&streamID=' . $streamID;
 	  	$ch = curl_init($url);
 	  	$response = curl_exec($ch);
