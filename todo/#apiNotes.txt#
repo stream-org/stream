@@ -1,0 +1,18 @@
+signin 
+     - input: 
+       - phone number
+       - password
+     - output:
+       - return everything but password
+       - first name, last name, phone number, unique id 
+       - return null if no user 
+
+signup 
+     - input:
+          - first name 
+    	  - last name
+     	  - phone number
+     	  - password 
+     - output: 
+          - same as signin 
+

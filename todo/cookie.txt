@@ -1,0 +1,13 @@
+cookie todo list 
+
+1] have it work for newsfeed 
+
+if (number in cookie) {
+   populate stream newsfeed
+}
+else{
+   bring them to signin 
+}
+
+
+2] go down the list 
