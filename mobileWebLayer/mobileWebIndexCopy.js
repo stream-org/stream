@@ -132,6 +132,8 @@ function popStreamNF () {
 			streamArray.push(tempArray);
 		});
 
+		console.log(streamArray);
+
 		streamNewsfeed(streamArray);
 
 	});
@@ -200,7 +202,7 @@ function invitePeople(aStreamId)
 
 	var tempCounter = inviteCounter.toString() + inviteCounter.toString();
 	var phoneNumberString = '';
-	inviteCounter = inviteCounter-1;
+	inviteCounter = inviteCounter;
 
 	while (inviteCounter >= 0)
 	{
@@ -254,12 +256,14 @@ function popStreamProfile(theID)
 		$('#streamTitle').html(data['streamName']);
 		$('#numParticipants').html(data['numberOfParticipants'] + ' Participants');
 
+		console.log(data['pictures']);
+
 		var lengthOfPictures = data['pictures'].length;
 		var pictureIndex = 0;
 
 		while (pictureIndex < lengthOfPictures)
 		{
-			pictureIndex++;
+
 			if (pictureIndex%2==0)
 			{
 				$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="preShowPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
@@ -268,7 +272,7 @@ function popStreamProfile(theID)
 			{
 				$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="preShowPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
 			}
-
+			pictureIndex++;
 			var cw = $('.ui-grid-a img').width();
 			$('.ui-grid-a img').css({'height':cw+'px'});
 			
