@@ -1,0 +1,249 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>photo upload</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<script src="mobileWebIndexCopy.js"></script>
+	<link REL=StyleSheet HREF="mobileWebIndex.css" TYPE="text/css" MEDIA=screen>
+
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+
+	<script>
+
+	var phoneNumber;
+	var latestStreamID;
+	var latestPicture;
+
+	$('#streams_your').live('pageshow',function(){
+		$.mobile.pageLoading();
+		$('#streamNF').html('');
+		phoneNumber = checkPhoneCookie();
+		popStreamNF();
+		$.mobile.pageLoading(true);
+	});
+
+	$('#streamTemplate').live('pageshow', function() {
+		phoneNumber = checkPhoneCookie();
+		latestStreamID = checkStreamIDCookie();
+		popStreamProfile(latestStreamID);
+	});
+
+	$('#photoView').live('pageshow', function(){
+		phoneNumber = checkPhoneCookie();
+		latestStreamID = checkStreamIDCookie();
+		console.log("this is the phoneNumber: " + phoneNumber);
+		console.log("this is the streadID: " + latestStreamID);
+		latestPicture = checkPictureCookie();
+		console.log("this is the latestPicture: " + latestPicture);
+		console.log('showing picture');
+		showPicture(latestPicture);
+
+
+	})
+
+	</script>
+	
+</head>
+
+<body> 
+	<!-- 1. first page a user sees -->
+	<div data-role="page" id="introPage" data-theme="a">
+		<div data-role="header">
+		</div>
+
+		<div data-role="content" align="center">
+			<a href="#signUp" data-role="button" data-transition="flip">SIGN UP</a>
+			<a href="#signIn" data-role="button" data-transition="flip">SIGN IN</a>					
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div> 
+
+	<!-- 2. sign in page -->
+	<div data-role="page" data-theme="a" id="signIn">
+		<div data-role="header">
+			<a href="#introPage" data-icon="back">back</a>
+			<h1>SIGN IN</h1>
+			<a onClick = "signIn()" data-icon="check" data-transition="pop">sign in</a>
+		</div>
+
+		<div data-role="content" align="center" data-theme="d">
+		<h2>WELCOME BACK<h2>
+<!-- 		<form> -->
+			<label for="signIn_username" class="ui-hidden-accessible">Username:</label>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px" type="text" name="signIn_username" id="signIn_username" value="16508420492" placeholder="Username"/>
+			<label for="signIn_password" class="ui-hidden-accessible">Password:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="signIn_password" id="signIn_password" value="guitar11" placeholder="Password"/>
+			<a href="" class="ui-link">Forgot Password?</a>	
+<!-- 		</form>	 -->		
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- 3. sign up page -->
+	<div data-role="page" data-theme="a" id="signUp">
+		<div data-role="header">
+			<a href="#introPage" data-icon="back">back</a>
+			<h1>SIGN UP</h1>
+			<a onClick="signUp()" data-icon="check" data-transition="pop">sign up</a>
+		</div>
+
+		<div data-role="content" data-theme="c">
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Profile</h4>
+			<label for="firstName" class="ui-hidden-accessible">First Name:</label>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px" type="text" name="firstName" id="signUp_firstName" value="" placeholder="First Name"/>
+			<label for="lastName" class="ui-hidden-accessible">Last Name:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px;" type="password" name="lastName" id="signUp_lastName" value="" placeholder="Last Name"/>
+			<label for="phoneNumber" class="ui-hidden-accessible">Phone Number:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="phoneNumber" id="signUp_phoneNumber" value="" placeholder="Phone Number"/>
+			</form>	
+			<br>
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Account</h4>
+			<label for="password" class="ui-hidden-accessible">Password:</label>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px;" type="password" name="password" id="new_password1" value="" placeholder="Password"/>
+			<label for="password2" class="ui-hidden-accessible">Retype Password:</label>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="password2" id="new_password2" value="" placeholder="Retype Password"/>
+			</form>			
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- 4. streams_your page -->
+	<div data-role="page" data-theme="a" id="streams_your">
+		<div data-role="header">
+			<h1>STREAMS</h1>
+			<a href="#newStream" data-icon="new" class="ui-btn-right" data-iconpos="notext">ADD</a>
+		</div>
+
+		<div data-role="content" id="streamBucket">
+			<ul class="streams" data-role="listview" data-theme="d" id="streamNF">
+			</ul>
+			<!-- load using JS	 -->		
+		</div> 
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- 6. new stream page -->
+	<div data-role="page" data-theme="a" id="newStream">
+		<div data-role="header">
+			<a href="#streams_your">cancel</a>
+			<h1>NEW STREAM</h1>
+			<a href="#streamTemplate">create</a>
+		</div>
+
+		<fieldset class="ui-grid-a">
+			<div class="ui-block-a">
+				<button onClick="addStreamer()" data-theme="c">Add Streamer</button>
+			</div>
+			<div class="ui-block-b">
+				<button onClick="createStream()" data-theme="e">Submit</button>
+			</div>	   
+		</fieldset>
+
+		<div data-role="content" data-theme="c" id="inviteList">
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Stream Details</h4>
+			<label for="streamName" class="ui-hidden-accessible">Name of stream:</label>
+			<input style="margin: 0px;" type="text" name="streamName" id="streamName" value="" placeholder="Name of Stream"/>
+			</form>	
+			<br>
+			<form>
+			<h4 style="margin:0px 0px 3px 5px">Add phone numbers:</h4>
+			<label for="recipients" class="ui-hidden-accessible">Name of stream:</label>
+			<div id="inviteBox"><input style="margin: 0px;" type="text" name="recipients" id="00" value="" placeholder="Add phone numbers"/></div>
+			</form>	
+			<p style="font-size:13px; color:gray; text-align:center">Recipients will be apple to add photos to your stream via the app and through MMS. Standard text and data rates apply.</p>
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>
+
+	<!-- template for individual stream -->
+	<div data-role="page" data-theme="c" id="streamTemplate">
+		<div data-role="header">
+			<a href="#streams_your" data-icon="back">back</a>
+			<h1 id="streamTitle">{stream_name}</h1>
+			<a href="" data-icon="star" data-iconpos="notext">CAMERA ICON</a>
+		</div>
+
+		<div data-role="content" align="center" id="streamContent">
+			<a href="#participants" data-role="button" id="numParticipants">
+			</a>
+			<div class="ui-grid-a" id="streamPictures">
+				<!-- inject pics here -->
+			</div><!-- /grid-a -->		
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>	
+
+		<!-- 8. photo view page -->
+	<div data-role="page" data-theme="a" id="photoView">
+		<div data-role="header">
+			<h1 id="photographersName"></h1>
+			<a href="#streamTemplate" data-icon="delete" class="ui-btn-right" data-iconpos="notext">cancel</a>
+		</div>
+
+		<div data-role="content" data-theme="a">
+				<div class="pictureFrame" id="thePictureFrame">
+				</div>
+		</div> 
+
+		<div data-role="footer">
+			<div class="ui-grid-b">
+				<div class="ui-block-a" id="likeButton">
+					<!-- <a data-role="button" onClick="likePicture()">Like</a> -->
+				</div>
+
+				<div class="ui-block-b">
+				</div>
+
+				<div class="ui-block-c">
+					<a data-icon="check" data-role="button" id="numberOfLikes"></a>
+				</div>
+			</div>
+		</div>
+	</div>	
+</body>
+
+</html>
+
+
+
+
+
+
+	<!-- 5. streams_participating page -->
+	<!-- <div data-role="page" data-theme="a" id="streams_participating">
+		<div data-role="header">
+			<h1>STREAMS</h1>
+			<a href="#newStream" data-icon="new" class="ui-btn-right" data-iconpos="notext">ADD</a>
+		</div>
+
+		<div data-role="content" align="center" id="streamBucket">
+			<ul data-role="listview">
+				<li><a href="streamTemplate">
+					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
+					<h1>Champagne &amp; Shackles</h1>
+					<p>33 participants   88 pictures</p>
+				</a></li>
+			</ul>	
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div> -->

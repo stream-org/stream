@@ -36,10 +36,10 @@ $result = mysql_query("SELECT * FROM Users WHERE Phone='$phone' AND HashString='
 
 while($row = mysql_fetch_array($result))
 {
-	$responseArray['First'] = $row['First'];
-	$responseArray['Last'] = $row['Last'];
-	$responseArray['Phone'] = $row['Phone'];
-	$responseArray['ProfilePic'] = $row['ProfilePic'];
+	$responseArray['first'] = $row['First'];
+	$responseArray['last'] = $row['Last'];
+	$responseArray['phone'] = $row['Phone'];
+	$responseArray['profilePic'] = $row['ProfilePic'];
 }
 
 if (empty($responseArray))

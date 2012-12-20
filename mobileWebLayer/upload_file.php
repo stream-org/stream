@@ -1,40 +1,59 @@
 <?php
 
 include('SimpleImage.php');
+include('connection.php');
+
+$phone = $_POST['phoneNumber'];
+$streamID = $_POST['streamID'];
+
+echo $phone;
+echo '<br>';
+echo $streamID;
 
 $_FILES["file"]["name"] = hash('sha512', time()) . '.jpg';
 $filename = $_FILES["file"]["name"];
 
-move_uploaded_file($_FILES["file"]["tmp_name"], 'Pictures/testStream/' . $filename);
+move_uploaded_file($_FILES["file"]["tmp_name"], 'StreamPictures/Pictures/' . $filename);
 
-$filepath = 'Pictures/testStream/' . $filename;
+$filePath = 'StreamPictures/Pictures/' . $filename;
 
-list($width, $height) = getimagesize($filepath);
+$pictureFilePath = 'http://75.101.134.112/upload/StreamPictures/Pictures/' . $filename;
+$tinyPictureFilePath = 'http://75.101.134.112/upload/StreamPictures/TinyPictures/' . $filename;
+
+
+list($width, $height) = getimagesize($filePath);
 echo $width;
 echo '<br>';
 echo $height;
 
 if(intval($width) >= intval($height))
 {
-	// exec("sudo mogrify -resize 600x " . $filepath);
-	// echo $filepath;
+	chdir('StreamPictures');
 	chdir('Pictures');
-	chdir('testStream');
 	$image = new SimpleImage();
 	$image->load($filename);
+	chdir('../');
+	chdir('TinyPictures');
 	$image->resizeToWidth(600);
-	$image->save('newPic2.jpg');
+	$image->save($filename);
 }
 else
 {
+	chdir('StreamPictures');
 	chdir('Pictures');
-	chdir('testStream');
 	$image = new SimpleImage();
 	$image->load($filename);
+	chdir('../');
+	chdir('TinyPictures');
 	$image->resizeToHeight(600);
-	$image->save('newPic2.jpg');
+	$image->save($filename);
 }
 
-// header('Location:http://75.101.134.112/upload/Pictures/testStream/' . $filename);
+  $url = 'http://75.101.134.112/api/uploadPhoto.php?picture=' . $pictureFilePath . '&streamID=' . $streamID . '&phone=' . $phone . '&tiny=' . $tinyPictureFilePath;
+  $ch = curl_init($url);
+  $response = curl_exec($ch);
+  curl_close($ch);
+
+
 
 ?>
