@@ -5,64 +5,46 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
+	<script src="mobileWebIndexCopy.js"></script>
+	<link REL=StyleSheet HREF="mobileWebIndex.css" TYPE="text/css" MEDIA=screen>
+
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+
+	<script>
+
+	var phoneNumber;
+	var latestStreamID;
+	var latestPicture;
+
+	$('#streams_your').live('pageshow',function(){
+		$('#streamNF').html('');
+		phoneNumber = checkPhoneCookie();
+		popStreamNF();
+	});
+
+	$('#streamTemplate').live('pageshow', function() {
+		phoneNumber = checkPhoneCookie();
+		latestStreamID = checkStreamIDCookie();
+		popStreamProfile(latestStreamID);
+	});
+
+	$('#photoView').live('pageshow', function(){
+		phoneNumber = checkPhoneCookie();
+		latestStreamID = checkStreamIDCookie();
+		console.log("this is the phoneNumber: " + phoneNumber);
+		console.log("this is the streadID: " + latestStreamID);
+		latestPicture = checkPictureCookie();
+		console.log("this is the latestPicture: " + latestPicture);
+		console.log('showing picture');
+		showPicture(latestPicture);
+
+
+	})
+
+	</script>
 	
-	<style>
-		.ui-link {
-			font-size : 12px;
-			color : black;
-		}
-
-		#streamContent {
-			background-color: #DFDFDF;
-		}
-
-		.ui-grid-a .frame {
-			padding:4px;
-
-		}
-
-		.ui-grid-a img {
-		    width  : 100%;
-		    overflow : hidden;		    
-		}
-
-		.pictureFrame {
-			border : 6px solid white;
-		}
-
-		.streams img {
-			width:100px;
-			height:100px;
-		}
-
-		#introPage {
-			;
-		}
-
-		#likeButton {
-			/*width:100%;*/
-		}
-
-		#numberOfLikes {
-			/*width:100%;*/
-		}
-
-		.mainPic {
-			width  : 100%;
-		    height : auto;
-		}
-
-		@font-face
-		{
-		font-family: myFirstFont;
-		src: url('Sansation_Light.ttf'),
-		     url('Sansation_Light.eot'); /* IE9 */
-		}
-	</style>
-
 </head>
 
 <body> 
@@ -71,9 +53,9 @@
 		<div data-role="header">
 		</div>
 
-		<div data-role="content" align="center" style="background-image:url('assets/app_assets/Global/backgrounds/welcome@2x.png')">
-			<a href="#signUp" data-role="button" data-transition="flip" style="background-image:url('assets/app_assets/welcome/sign_up_button_normal@2x.png')">SIGN UP</a>
-			<a href="#signIn" data-role="button" data-transition="flip" style="background-image:url('assets/app_assets/welcome/sign_in_button_normal@2x.png')">SIGN IN</a>					
+		<div data-role="content" align="center">
+			<a href="#signUp" data-role="button" data-transition="flip">SIGN UP</a>
+			<a href="#signIn" data-role="button" data-transition="flip">SIGN IN</a>					
 		</div> 
 
 		<div data-role="footer">
@@ -92,9 +74,9 @@
 		<h2>WELCOME BACK<h2>
 <!-- 		<form> -->
 			<label for="signIn_username" class="ui-hidden-accessible">Username:</label>
-			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px" type="text" name="signIn_username" id="signIn_username" value="Rousseau" placeholder="Username"/>
+			<input style="margin: 0px; border-bottom-right-radius:0px; border-bottom-left-radius:0px" type="text" name="signIn_username" id="signIn_username" value="16508420492" placeholder="Username"/>
 			<label for="signIn_password" class="ui-hidden-accessible">Password:</label>
-			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="signIn_password" id="signIn_password" value="16508420492" placeholder="Password"/>
+			<input style="margin: 0px; border-top-right-radius:0px; border-top-left-radius:0px;" type="password" name="signIn_password" id="signIn_password" value="guitar11" placeholder="Password"/>
 			<a href="" class="ui-link">Forgot Password?</a>	
 <!-- 		</form>	 -->		
 		</div> 
@@ -143,42 +125,13 @@
 		</div>
 
 		<div data-role="content" id="streamBucket">
-			<!-- <div data-role="navbar">
-				<ul>
-					<li><a href="#streams_your" class="ui-btn-active ui-state-persist">Your</a></li>
-					<li><a href="#streams_participating">Participating</a></li>
-				</ul>
-			</div><! /navbar -->
-
 			<ul class="streams" data-role="listview" data-theme="d" id="streamNF">
 			</ul>
 			<!-- load using JS	 -->		
 		</div> 
-
 		<div data-role="footer">
 		</div>
 	</div>
-
-	<!-- 5. streams_participating page -->
-	<!-- <div data-role="page" data-theme="a" id="streams_participating">
-		<div data-role="header">
-			<h1>STREAMS</h1>
-			<a href="#newStream" data-icon="new" class="ui-btn-right" data-iconpos="notext">ADD</a>
-		</div>
-
-		<div data-role="content" align="center" id="streamBucket">
-			<ul data-role="listview">
-				<li><a href="streamTemplate">
-					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
-					<h1>Champagne &amp; Shackles</h1>
-					<p>33 participants   88 pictures</p>
-				</a></li>
-			</ul>	
-		</div> 
-
-		<div data-role="footer">
-		</div>
-	</div> -->
 
 	<!-- 6. new stream page -->
 	<div data-role="page" data-theme="a" id="newStream">
@@ -251,7 +204,7 @@
 		<div data-role="footer">
 			<div class="ui-grid-b">
 				<div class="ui-block-a" id="likeButton">
-					<a data-role="button">Like</a>
+					<!-- <a data-role="button" onClick="likePicture()">Like</a> -->
 				</div>
 
 				<div class="ui-block-b">
@@ -263,282 +216,62 @@
 			</div>
 		</div>
 	</div>	
+
+	<!-- 9. peopleWhoLike -->
+	<div data-role="page" data-theme="c" id="peopleWhoLike">
+		<div data-role="header">
+			<h1>People Who Like</h1>
+			<a href="#photoView" data-icon="delete" class="ui-btn-right" data-iconpos="notext">back</a>
+		</div>
+
+		<div data-role="content" id="likers">
+			<!-- <div data-role="navbar">
+				<ul>
+					<li><a href="#streams_your" class="ui-btn-active ui-state-persist">Your</a></li>
+					<li><a href="#streams_participating">Participating</a></li>
+				</ul>
+			</div><! /navbar -->
+
+			<ul class="streams" data-role="listview"id="streamNF">
+				<li>Channing Allen</li>
+				<li>Channing Allen</li>
+				<li>Channing Allen</li>
+				<li>Channing Allen</li>
+				<li>Channing Allen</li>
+				<li>Channing Allen</li>
+			</ul>
+			<!-- load using JS	 -->		
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>	
+
+	<!-- 10. peopleParticipating -->
+	<div data-role="page" data-theme="c" id="peopleParticipating">
+		<div data-role="header">
+			<h1>People Participating</h1>
+			<a href="#streams_your" data-icon="delete" class="ui-btn-right" data-iconpos="notext">back</a>
+		</div>
+
+		<div data-role="content" id="participants">
+
+			<ul class="streams" data-role="listview"id="streamNF">
+				<li>Channing Allen</li>
+				<li>Channing Allen</li>
+				<li>Channing Allen</li>
+				<li>Channing Allen</li>
+				<li>Channing Allen</li>
+				<li>Channing Allen</li>
+			</ul>
+			<!-- load using JS	 -->		
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>	
+
+
 </body>
-
-<script type="text/javascript">
-	// create global phoneNumber variable - this will drive many of the APIs and will be returned when the user signs in || signs up
-	var phoneNumber;
-
-	// make sure the phoneNumber global var is workin - call dis urrwhere
-	function checkPhoneNumber() {
-		console.log(phoneNumber);
-	};
-
-
-	var inviteCounter = 1;
-	function addStreamer()
-	{
-		$('#inviteBox').prepend('<input type="text" name="name" id="'+ inviteCounter +'" value="" placeholder="Add phone numbers"  />').trigger('create');
-		inviteCounter++;
-	}
-
-
-	function invitePeople(aStreamId)
-	{
-		var tempCounter = inviteCounter.toString() + inviteCounter.toString();
-		console.log(tempCounter);
-		var phoneNumberString = '';
-		inviteCounter = inviteCounter-1; //this is because one last ++ was added at the end of addStreamer
-
-		while (inviteCounter >= 0)
-		{
-			var tempNum = inviteCounter.toString() + inviteCounter.toString();
-			var tempPhoneNumber = document.getElementById(tempNum).value;
-			if (inviteCounter == 0)
-			{
-				phoneNumberString = phoneNumberString + tempPhoneNumber;
-			} 
-			else 
-			{
-				phoneNumberString = phoneNumberString + tempPhoneNumber + ',';
-			}
-			inviteCounter--;
-		}
-
-		console.log(phoneNumberString);
-
-		var API_URL = 'http://75.101.134.112/api/invitePeople.php?phone=' + phoneNumberString + '&streamID=' + aStreamId;
-	
-		$.getJSON(API_URL, function (data) {
-
-			console.log(data);
-		
-		});
-
-
-	}
-
-	function createStream() 
-	{
-		var theStreamID;
-		var theStreamName = document.getElementById('streamName').value;
-		var API_URL = 'http://75.101.134.112/api/createStream.php?phone=' + phoneNumber + '&streamName=' + theStreamName;
-		console.log(API_URL);
-
-		$.getJSON(API_URL, function (data) {
-			theStreamID = data['StreamID'];
-			console.log(theStreamID);
-			invitePeople(theStreamID);
-		});
-		// invitePeople(theStreamID, phoneNumberString);
-		
-	}
-
-
-
-	// function to populate Stream news feed (will be called by signIn and signUp)
-	function popStreamNF () {
-		console.log ("popStreamNF() initialized...");
-
-		var API_URL = "http://75.101.134.112/api/populateStreamNewsfeed.php?phone=" + phoneNumber;
-		console.log(API_URL);
-
-		$.getJSON(API_URL, function (data) {
-			// console.log(data.length);
-			var streamArray = [];
-			$.each(data, function(i){
-				// console.log(data[i]);
-				var streamID = i;
-				var streamName = data[i]['streamName'];
-				var numberOfParticipants = data[i]['numberOfParticipants'];
-				var numberOfPictures = data[i]['numberOfPictures'];
-				var latestPicture = data[i]['lastestPicture'];
-				var tempArray = [streamID, streamName, numberOfParticipants, numberOfPictures, latestPicture];
-				streamArray.push(tempArray);
-			});
-			streamNewsfeed(streamArray);
-		});
-	}
-
-	function streamNewsfeed(theStream)
-	{
-		for (var i = 0; i < theStream.length; i++)
-		{
-			var streamID = theStream[i][0];
-			var streamName = theStream[i][1];
-			var numberOfParticipants = theStream[i][2];
-			var numberOfPictures = theStream[i][3];
-			var latestPicture = theStream[i][4];
-			$("#streamNF").append('<li onClick="popStreamProfile(this.id)" id='+ streamID +'><a><img src="'+ latestPicture +'" /> <h1>'+  streamName +'</h1> <p>'+ numberOfParticipants +' participants   '+ numberOfPictures +' pictures</p></a></li>');
-		}
-		$('ul').listview('refresh');
-	}
-
-	// function to populate Stream profile. will get called when a user clicks on a stream object in stream newsfeed. {{rousseau built this}}
-	function popStreamProfile(theID)
-	{
-		console.log('popStreamProfile initialized...');
-		$('#streamTitle').html('');
-		$('#numParticipants').html('');
-		$('#streamPictures').html('');
-
-		var API_URL = "http://75.101.134.112/api/populateStreamProfile.php?phone=" + phoneNumber + "&streamID=" + theID;
-		$.getJSON(API_URL, function (data) {
-			console.log(data);
-			console.log(data['pictures']);
-			$('#streamTitle').html(data['streamName']);
-			$('#numParticipants').html(data['numberOfParticipants'] + ' Participants');
-			var lengthOfPictures = data['pictures'].length;
-			var pictureIndex = 0;
-
-			while (pictureIndex < lengthOfPictures-1)
-			{
-				console.log(data['pictures'][pictureIndex]);
-				pictureIndex++;
-				if (pictureIndex%2==0)
-				{
-					$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="showPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
-				} 
-				else 
-				{
-					$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="showPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
-				}
-
-				var cw = $('.ui-grid-a img').width();
-				$('.ui-grid-a img').css({'height':cw+'px'});
-				
-			}
-
-		});
-
-		$.mobile.changePage( "#streamTemplate", {
-				    transition: "pop",
-				    reverse: true
-				});
-		
-	}
-
-	function showPicture(pictureID)
-	{
-		$('#thePictureFrame').html('');
-		$('#numberOfLikes').html('');
-		var API_URL = 'http://75.101.134.112/api/getPictureMetadata.php?picture=' + pictureID;
-		$.getJSON(API_URL, function (data) {
-			
-			console.log(data);
-			var first = data['uploaderFirstName'];
-			var last = data['uploaderLastName'];
-			var fullName = first + ' ' + last;
-			var phone = data['uploaderPhone'];
-			var likes = data['numberOfLikes'];
-
-			$('#photographersName').html(fullName).trigger('create');
-			$('#numberOfLikes').html(likes + ' likes').trigger('create');
-
-			var cw = $('#photographersName').height();
-			$('#numberOfLikes').css({'height':cw+'px'});
-
-			});
-
-		$.mobile.changePage( "#photoView", {
-				    transition: "pop",
-				    reverse: true
-				});
-
-		$('#thePictureFrame').append('<img class="mainPic" src="' + pictureID + '" />'); 
-
-
-	}
-
-	// sign in to Stream (for existing users)
-	function signIn () {
-		console.log ("signIn() initialized...");
-		
-		var username = $("#signIn_username").val();
-		var password = $("#signIn_password").val();
-		console.log(username);
-		console.log(password);
-
-		var API_URL = "http://75.101.134.112/api/signin.php?first=" + username + "&password=" + password;
-		console.log(API_URL);
-
-		$.getJSON(API_URL, function (data) {
-			console.log(data);
-			console.log(data["value"]);
-			
-			// set global var "phoneNumber" equal to user's phone number - this will drive mennay APIs
-			phoneNumber = data["value"];
-			console.log(phoneNumber);
-
-			// transition to Stream News Feed - logic
-			if( data["value"] !== "false"){
-				console.log(data["value"]);
-				popStreamNF();
-				$.mobile.changePage( "#streams_your", {
-				    transition: "pop",
-				    reverse: true
-				});
-			}else{
-				alert("Whoops! That doesn't look like a username/password combination that we have stored.");
-			};
-
-			checkPhoneNumber();
-		});
-	};
-
-	// sign up for Stream (for new users)
-	function signUp () {
-		console.log ("signIn() initialized...");
-		
-		// store dem inputs as varbulls
-		var firstName = $("#signUp_firstName").val();
-		var lastName = $("#signUp_lastName").val();
-		var password1 = $("#new_password1").val();
-		var password2 = $("#new_password2").val();
-		var password; 
-
-		// set global var "phoneNumber" equal to user's phone number - this will drive mennay APIs
-		phoneNumber = $("#signUp_phoneNumber").val();
-
-		// make sure their password & confirmation password are the same
-		function passwordCheck() {
-			if (password1 === password2){
-				password = password1;
-			}else{
-				alert("Whoops!  Look like your passwords are different.");
-			}};
-
-		passwordCheck();
-
-		//variable test
-		// console.log(firstName);
-		// console.log(lastName);
-		// console.log(phoneNumber);
-		// console.log(password);
-
-		// store the API HTTP request as a variable
-		var API_URL = "http://75.101.134.112/api/signup.php?first=" + firstName + "&last=" + lastName + "&phone=" + phoneNumber + "&password=" + password;
-		console.log(API_URL);
-
-
-		$.getJSON(API_URL, function (data) {
-			console.log(data);
-			console.log(data["value"]);
-
-			if( data["value"] !== "false"){
-				console.log(data["value"]);
-				$.mobile.changePage( "#streams_your", {
-				    transition: "pop",
-				    reverse: true
-				});
-			}else{
-				alert("Whoops! It looks like somthing is wrong.");
-			};
-
-			checkPhoneNumber();
-		});
-	};
-
-</script>
 
 </html>
