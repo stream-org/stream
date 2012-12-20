@@ -11,11 +11,19 @@ include "connection.php";
 //grabbing the arguments 
 $picture = $_GET['picture'];
 
-$result = mysql_query("SELECT * FROM PictureLikes WHERE Picture='$picture'");
+$result = mysql_query("SELECT * FROM PictureLikes WHERE PictureID='$picture'");
 $responseArray = array();
 while ($row = mysql_fetch_array($result))
 {
-	array_push($responseArray, $row[1]);
+	$phone = $row['Phone'];
+	$name;
+	$nameResult = mysql_query("SELECT * FROM Users WHERE Phone='$phone'");
+	while ($nameRow = mysql_fetch_array($nameResult))
+	{
+		$name = $nameRow['First'] . ' ' . $nameRow['Last'];
+	}
+
+	array_push($responseArray, $name);
 }
 
 echo json_encode($responseArray);

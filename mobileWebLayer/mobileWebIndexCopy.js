@@ -300,8 +300,6 @@ function preShowPicture(pictureID)
 	});
 };
 
-
-
 function showPicture(pictureID)
 {
 	$('#thePictureFrame').html('');
@@ -407,6 +405,41 @@ function unlikePicture()
 
 	});
 };
+
+//////////////////
+//getPeopleWhoLike
+//////////////////
+
+function getPeopleWhoLike()
+{
+	console.log('getPeopleWhoLike() initialized...');
+
+	var picture = checkPictureCookie();
+	var API_URL = 'http://75.101.134.112/api/getPeopleWhoLike.php?picture=' + picture;
+	console.log(API_URL);
+
+	$.getJSON(API_URL, function (data) 
+	{
+		console.log(data);
+	});
+}
+
+///////////////////
+//getPeopleInStream
+///////////////////
+
+function getPeopleInStream () {
+	console.log('getPeopleInStream initialized...');
+
+	var streamID = checkStreamIDCookie();
+	var API_URL = 'http://75.101.134.112/api/getPeopleInStream.php?streamID=' + streamID;
+	console.log(API_URL);
+
+	$.getJSON(API_URL, function (data) 
+	{
+		console.log(data[0]);
+	});
+}
 
 ///////////
 //getCookie

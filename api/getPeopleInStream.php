@@ -31,13 +31,14 @@ while($row = mysql_fetch_array($result))
 		$lastName = $nameRow['Last'];
 	}
 
-	$photoResult = mysql_query("SELECT COUNT(Picture) FROM StreamActivity WHERE StreamID='$streamID' AND Phone='$phone'");
+	$photoResult = mysql_query("SELECT COUNT(PictureID) FROM StreamActivity WHERE StreamID='$streamID' AND Phone='$phone'");
 	while($photoRow = mysql_fetch_array($photoResult))
 	{
 		$numberOfPhotos = $photoRow[0];
 	}
 
-	$responseArray[$phone] = array('firstName'=>$firstName, 'lastName'=>$lastName, 'numberOfPhotos'=>$numberOfPhotos);
+	$userProf = array('phone'=>$phone,'first'=>$firstName, 'last'=>$lastName, 'numberOfPhotos'=>$numberOfPhotos);
+	array_push($responseArray,$userProf);
 
 }
 

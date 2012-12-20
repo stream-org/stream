@@ -6,10 +6,6 @@ include('connection.php');
 $phone = $_POST['phoneNumber'];
 $streamID = $_POST['streamID'];
 
-echo $phone;
-echo '<br>';
-echo $streamID;
-
 $_FILES["file"]["name"] = hash('sha512', time()) . '.jpg';
 $filename = $_FILES["file"]["name"];
 
@@ -22,9 +18,6 @@ $tinyPictureFilePath = 'http://75.101.134.112/upload/StreamPictures/TinyPictures
 
 
 list($width, $height) = getimagesize($filePath);
-echo $width;
-echo '<br>';
-echo $height;
 
 if(intval($width) >= intval($height))
 {
@@ -53,7 +46,5 @@ else
   $ch = curl_init($url);
   $response = curl_exec($ch);
   curl_close($ch);
-
-
-
+  
 ?>
