@@ -5,7 +5,7 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-	<script src="mobileWebIndexCopy.js"></script>
+	<script src="mobileWebIndexCopy_chan.js"></script>
 	<link REL=StyleSheet HREF="mobileWebIndex.css" TYPE="text/css" MEDIA=screen>
 
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
@@ -178,7 +178,7 @@
 		</div>
 
 		<div data-role="content" align="center" id="streamContent">
-			<a href="#participants" data-role="button" id="numParticipants">
+			<a href="#peopleParticipating" data-role="button" id="numParticipants">
 			</a>
 			<div class="ui-grid-a" id="streamPictures">
 				<!-- inject pics here -->
@@ -211,7 +211,7 @@
 				</div>
 
 				<div class="ui-block-c">
-					<a data-icon="check" data-role="button" id="numberOfLikes"></a>
+					<a data-icon="check" data-role="button" id="numberOfLikes" href="#peopleWhoLike"></a>
 				</div>
 			</div>
 		</div>
@@ -220,19 +220,13 @@
 	<!-- 9. peopleWhoLike -->
 	<div data-role="page" data-theme="c" id="peopleWhoLike">
 		<div data-role="header">
-			<h1>People Who Like</h1>
-			<a href="#photoView" data-icon="delete" class="ui-btn-right" data-iconpos="notext">back</a>
+			<h1>Likes</h1>
+			<a href="#photoView" class="ui-btn-left">back</a>
 		</div>
 
-		<div data-role="content" id="likers">
-			<!-- <div data-role="navbar">
-				<ul>
-					<li><a href="#streams_your" class="ui-btn-active ui-state-persist">Your</a></li>
-					<li><a href="#streams_participating">Participating</a></li>
-				</ul>
-			</div><! /navbar -->
+		<div data-role="content">
 
-			<ul class="streams" data-role="listview"id="streamNF">
+			<ul class="streams" data-role="listview" id="likes">
 				<li>Channing Allen</li>
 				<li>Channing Allen</li>
 				<li>Channing Allen</li>
@@ -250,19 +244,19 @@
 	<!-- 10. peopleParticipating -->
 	<div data-role="page" data-theme="c" id="peopleParticipating">
 		<div data-role="header">
-			<h1>People Participating</h1>
-			<a href="#streams_your" data-icon="delete" class="ui-btn-right" data-iconpos="notext">back</a>
+			<h1>Participants</h1>
+			<a href="#streamTemplate" class="ui-btn-left">back</a>
 		</div>
 
-		<div data-role="content" id="participants">
+		<div data-role="content">
 
-			<ul class="streams" data-role="listview"id="streamNF">
-				<li>Channing Allen</li>
-				<li>Channing Allen</li>
-				<li>Channing Allen</li>
-				<li>Channing Allen</li>
-				<li>Channing Allen</li>
-				<li>Channing Allen</li>
+			<ul class="streams" data-role="listview" id="participants">
+				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
+				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
+				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
+				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
+				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
+				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
 			</ul>
 			<!-- load using JS	 -->		
 		</div> 
