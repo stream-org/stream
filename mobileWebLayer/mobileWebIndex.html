@@ -41,10 +41,13 @@
 		console.log("this is the latestPicture: " + latestPicture);
 		console.log('showing picture');
 		showPicture(latestPicture);
-
-
 	})
 
+	$('#photoUpload').live('pageshow',function(){
+		$('#streamNF').html('');
+		phoneNumber = checkPhoneCookie();
+		popStreamNF();
+	});
 
     // $('#fileupload').fileupload({
     //     url : "http://75.101.134.112/upload/upload_fileTest.php"
@@ -182,9 +185,7 @@
 		<div data-role="header">
 			<a href="#streams_your" data-icon="back">back</a>
 			<h1 id="streamTitle">{stream_name}</h1>
-			<button data-icon="new">Add Photo</button>
-			<!-- <input id="fileUpload" type="file" name="files[]" multiple> -->
-
+			<button href="#photoUpload" data-icon="new">Add Photo</button>
 		</div>
 
 		<div data-role="content" align="center" id="streamContent">
@@ -199,11 +200,32 @@
 		</div>
 	</div>	
 
-	<!-- 7. photo view page -->
+
+	<!-- 7. Add Photo -->
+	<div data-role="page" data-theme="c" id="streamTemplate">
+		<div data-role="header">
+			<a href="#streams_your" data-icon="back">back</a>
+			<h1 id="streamTitle">Upload Photo</h1>
+		</div>
+		<div data-role="content" id="streamBucket">
+			<ul class="streams" data-role="listview" data-theme="d" id="streamNF">
+			</ul>
+			<!-- load using JS	 -->		
+		</div>
+
+		You will be receiving a text message (sent to [userPhoneNumber]), please reply back with the words "Stream [albumName]" and the photo you would like to upload.
+
+		<p style="font-size:13px; color:gray; text-align:center">Recipients will be apple to add photos to your stream via the app and through MMS. Standard text and data rates apply.</p>
+
+		<div data-role="footer">
+		</div>
+	</div>	
+
+	<!-- 8. photo view page -->
 	<div data-role="page" data-theme="a" id="photoView">
 		<div data-role="header">
 			<h1 id="photographersName"></h1>
-			<a href="#streamTemplate" data-icon="delete" class="ui-btn-right" data-iconpos="notext">cancel</a>
+			<a href="#streamTemplate" data-icon="back" class="ui-btn-right" data-iconpos="notext"></a>
 		</div>
 
 		<div data-role="content" data-theme="a">
@@ -227,7 +249,7 @@
 		</div>
 	</div>
 
-	<!-- 8. peopleWhoLike -->
+	<!-- 9. peopleWhoLike -->
 	<div data-role="page" data-theme="c" id="peopleWhoLike">
 		<div data-role="header">
 			<h1>Likes</h1>
@@ -251,7 +273,7 @@
 		</div>
 	</div>	
 
-	<!-- 9. peopleParticipating -->
+	<!-- 10. peopleParticipating -->
 	<div data-role="page" data-theme="c" id="peopleParticipating">
 		<div data-role="header">
 			<h1>Participants</h1>
