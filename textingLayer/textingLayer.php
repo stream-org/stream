@@ -41,44 +41,54 @@ function getStreamID($phoneNumber, $theStreamName)
 
 if ($messageArray[0] === "register")
 {
-	$first = $messageArray[1];
-	$last = $messageArray[2];
-	$url = 'http://75.101.134.112/api/signup.php?first=' . $first . '&last=' . $last . '&phone=' . $phone;
-  	$ch = curl_init($url);
-  	$response = curl_exec($ch);
-  	curl_close($ch);
+  $first = $messageArray[1];
+  $last = $messageArray[2];
+  $url = 'http://75.101.134.112/api/signup.php?first=' . $first . '&last=' . $last . '&phone=' . $phone;
+    $ch = curl_init($url);
+    $response = curl_exec($ch);
+    curl_close($ch);
 
-  	sendText($phone, "You're all signed up!");
+    sendText($phone, "You're all signed up!");
 }
 
 //invite
 elseif ($messageArray[0] === "invite")
 {
-  if (count($messageArray) == 3)
-  {
     $inviteePhone = $messageArray[1];
-    sendText($inviteePhone, "Reply with 'register', your_first_name, and your_last_name to signup!");
-  }
-  else
-  {
-    sendText($phone, "You're forgetting something. 'invite' 'phoneNumber' 'streamName'");
-  }
+    sendText($inviteePhone, "You're in! Reply with 'vegas' and a photo to join in on the fun!");
+}
+
+elseif ($messageArray[0] == "album")
+{
+  sendText($phone, "http://bit.ly/12Dy6u5");
+}
+
+elseif ($messageArray[0] == 'vegas')
+{
+  $streamID = getStreamID($phone, $messageArray[0]);
+  $url = 'http://75.101.134.112/api/uploadPhoto.php?phone=' . $phone . '&picture=' . $picture . '&streamID=' . $streamID;
+  $ch = curl_init($url);
+  $response = curl_exec($ch);
+  curl_close($ch);
+
+  sendText($phone, "Your photo has been uploaded!");
+
 }
 
 //upload the photo to the stream 
 else 
 {
-	unset($messageArray[0]);
-	if (count($messageArray) == 1)
-	{
-		$streamID = getStreamID($phone, $messageArray[1]);
-		$url = 'http://75.101.134.112/api/uploadPhoto.php?phone=' . $phone . '&picture=' . $picture . '&streamID=' . $streamID;
-	  	$ch = curl_init($url);
-	  	$response = curl_exec($ch);
-	  	curl_close($ch);
+  unset($messageArray[0]);
+  if (count($messageArray) == 1)
+  {
+    $streamID = getStreamID($phone, $messageArray[1]);
+    $url = 'http://75.101.134.112/api/uploadPhoto.php?phone=' . $phone . '&picture=' . $picture . '&streamID=' . $streamID;
+      $ch = curl_init($url);
+      $response = curl_exec($ch);
+      curl_close($ch);
 
-	  	sendText($phone, "Your photo photo has been uploaded!");
-	}
+      sendText($phone, "Your photo photo has been uploaded!");
+  }
   else
   {
     $theNewMessage = implode(" ", $messageArray);
@@ -89,10 +99,5 @@ else
     curl_close($ch);
 
     sendText($phone, "Your photo photo has been uploaded!");
-  }	
+  } 
 }
-
-
-
-
-?>
