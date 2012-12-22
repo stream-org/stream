@@ -192,6 +192,27 @@ function addStreamer()
 	inviteCounter++;
 }
 
+//////////////
+//addPhoto
+//////////////
+
+function addPhoto() 
+{
+	console.log ("addPhoto() initialized...");
+
+	var theStreamID;
+	var theStreamName = document.getElementById('streamName').value;
+	var API_URL = 'http://75.101.134.112/upload/upload.php?phoneNumber=' + phoneNumber + '&streamID=' + theStreamID;
+	console.log(API_URL);
+
+	$.getJSON(API_URL, function (data) 
+	{
+		console.log(data);
+	});
+
+}
+
+
 ///////////////
 //invitePeople
 ///////////////
