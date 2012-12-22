@@ -123,7 +123,6 @@ function popStreamNF () {
 
 		$.each(data, function(i)
 		{
-			console.log(i);
 			var streamID = i;
 			var streamName = data[i]['streamName'];
 			var numberOfParticipants = data[i]['numberOfParticipants'];
@@ -176,11 +175,6 @@ function createStream()
 		theStreamID = data['StreamID'];
 		console.log(theStreamID);
 		invitePeople(theStreamID);
-
-  		$.mobile.changePage( "#streams_your", {
-				    transition: "pop",
-				    reverse: true
-		});
 	});
 
 }
@@ -230,7 +224,7 @@ function invitePeople(aStreamId)
 
 	var tempCounter = inviteCounter.toString() + inviteCounter.toString();
 	var phoneNumberString = '';
-	inviteCounter = inviteCounter - 1;
+	inviteCounter = inviteCounter;
 
 	while (inviteCounter >= 0)
 	{

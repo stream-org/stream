@@ -46,10 +46,16 @@ while($streamidRow = mysql_fetch_array($streamidResult))
 	}
 
 	$latestPictureResult = mysql_query("SELECT * FROM StreamActivity WHERE StreamID='$streamID' ORDER BY Created DESC LIMIT 1");
-	while($latestPictureRow = mysql_fetch_array($latestPictureResult))
-	{
-		$latestPicture = $latestPictureRow['PictureID'];
-	}
+	$latestPictureRow = mysql_fetch_array($latestPictureResult);
+
+		if (empty($latestPictureRow))
+		{
+			$latestPicture = "http://75.101.134.112/icon.png";
+		} 
+		else 
+		{
+			$latestPicture = $latestPictureRow['PictureID'];
+		}
 
 	$responseArray[$streamID] = array('streamName'=>$streamName, 'numberOfParticipants'=>$numberOfParticipants, 'numberOfPictures'=>$numberOfPictures, 'latestPicture'=>$latestPicture);
 }
