@@ -6,7 +6,7 @@ function checkPhoneNumber() {
 var inviteCounter = 1;
 function addStreamer()
 {
-	$('#inviteBox').prepend('<input type="text" name="name" id="'+ inviteCounter +'" value="" placeholder="Add phone numbers"  />').trigger('create');
+	$('#inviteBox').prepend('<input type="text" name="name" id="'+ inviteCounter.toString() + inviteCounter.toString() +'" value="" placeholder="Add phone numbers"  />').trigger('create');
 	inviteCounter++;
 }
 
@@ -395,7 +395,8 @@ var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCStri
 document.cookie=c_name + "=" + c_value;
 }
 
-function checkPhoneCookie{
+function checkPhoneCookie
+{
 var phoneNumber=getCookie("phoneNumber");
 if (phoneNumber!=null && phoneNumber!="")
   {
@@ -408,10 +409,12 @@ else
 			    reverse: true
 			});
   }
+
 }
 
 function checkStreamIDCookie()
 {
+	//asdoifjaoisfdja
 var latestStreamID = getCookie("latestStreamID");
 if (latestStreamID!=null && latestStreamID!="")
   {
