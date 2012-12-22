@@ -202,7 +202,7 @@ function addPhoto()
 
 	var theStreamID;
 	var theStreamName = document.getElementById('streamName').value;
-	var API_URL = 'http://75.101.134.112/upload/upload.php?phoneNumber=' + phoneNumber + '&streamID=' + theStreamID;
+	var API_URL = 'http://75.101.134.112/upload/uploadDecider.php?phoneNumber=' + phoneNumber + '&streamID=' + theStreamID;
 	console.log(API_URL);
 
 	$.getJSON(API_URL, function (data) 
