@@ -5,7 +5,7 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-	<script src="mobileWebIndex.js"></script>
+	<script src="http://75.101.134.112/RousseausWork/mobileWebIndex.js"></script>
 	<link REL=StyleSheet HREF="mobileWebIndex.css" TYPE="text/css" MEDIA=screen>
 
 	<!-- For Photo Upload -->
@@ -41,15 +41,17 @@
 		console.log("this is the latestPicture: " + latestPicture);
 		console.log('showing picture');
 		showPicture(latestPicture);
+	});
 
+	$('#peopleParticipating').live('pageshow', function(){
+		console.log('the streamID is: ' + checkStreamIDCookie());
+		getPeopleInStream(checkStreamIDCookie());
+	});
 
-	})
-
-
-    // $('#fileupload').fileupload({
-    //     url : "http://75.101.134.112/upload/upload_fileTest.php"
-    // });
-
+	$('#peopleWhoLike').live('pageshow', function(){
+		console.log('the streamID is: ' + checkPictureCookie());
+		getPeopleWhoLike(checkPictureCookie());
+	});
 
 	</script>
 	
@@ -177,17 +179,17 @@
 		</div>
 	</div>
 
-	<!-- template for individual stream -->
+	<!-- 7. template for individual stream -->
 	<div data-role="page" data-theme="c" id="streamTemplate">
 		<div data-role="header">
 			<a href="#streams_your" data-icon="back">back</a>
 			<h1 id="streamTitle">{stream_name}</h1>
-			<input id="fileupload" type="file" name="files[]" multiple>
+			<!-- <input id="fileupload" type="file" name="files[]" multiple> -->
 
 		</div>
 
 		<div data-role="content" align="center" id="streamContent">
-			<a href="#participants" data-role="button" id="numParticipants" onClick="getPeopleInStream()">
+			<a data-role="button" id="numParticipants" onClick="preGetPeopleInStream()">
 			</a>
 			<div class="ui-grid-a" id="streamPictures">
 				<!-- inject pics here -->
@@ -220,37 +222,47 @@
 				</div>
 
 				<div class="ui-block-c">
-					<a data-icon="check" data-role="button" id="numberOfLikes" onClick= "getPeopleWhoLike()" ></a>
+					<a data-icon="check" data-role="button" id="numberOfLikes" onClick= "preGetPeopleWhoLike()" ></a>
 				</div>
 			</div>
 		</div>
-	</div>	
-</body>
+	</div>
 
-</html>
-
-
-
-
-
-
-	<!-- 5. streams_participating page -->
-	<!-- <div data-role="page" data-theme="a" id="streams_participating">
+	<!-- 9. peopleWhoLike -->
+	<div data-role="page" data-theme="c" id="peopleWhoLike">
 		<div data-role="header">
-			<h1>STREAMS</h1>
-			<a href="#newStream" data-icon="new" class="ui-btn-right" data-iconpos="notext">ADD</a>
+			<h1>Likes</h1>
+			<a href="#photoView" class="ui-btn-left">back</a>
 		</div>
 
-		<div data-role="content" align="center" id="streamBucket">
-			<ul data-role="listview">
-				<li><a href="streamTemplate">
-					<img src="http:\/\/d2c.bandcon.mogreet.com\/mo-mms\/images\/210471_1670976.jpeg" />
-					<h1>Champagne &amp; Shackles</h1>
-					<p>33 participants   88 pictures</p>
-				</a></li>
-			</ul>	
+		<div data-role="content">
+
+			<ul class="streams" data-role="listview" id="likes">
+			</ul>
+			<!-- load using JS	 -->		
 		</div> 
 
 		<div data-role="footer">
 		</div>
-	</div> -->
+	</div>	
+
+	<!-- 10. peopleParticipating -->
+	<div data-role="page" data-theme="c" id="peopleParticipating">
+		<div data-role="header">
+			<h1>Participants</h1>
+			<a href="#streamTemplate" class="ui-btn-left">back</a>
+		</div>
+
+		<div data-role="content">
+
+			<ul class="streams" data-role="listview" id="participants">
+			</ul>
+			<!-- load using JS	 -->		
+		</div> 
+
+		<div data-role="footer">
+		</div>
+	</div>		
+</body>
+
+</html>

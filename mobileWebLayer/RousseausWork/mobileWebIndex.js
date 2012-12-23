@@ -154,7 +154,7 @@ function streamNewsfeed(theStream)
 		$("#streamNF").append('<li onClick="prePopStream(this.id)" id='+ streamID +'><a><img src="'+ latestPicture +'" /> <h1>'+  streamName +'</h1> <p>'+ numberOfParticipants +' participants   '+ numberOfPictures +' pictures</p></a></li>');
 	}
 
-	$('ul').listview('refresh');
+	$('#streamNF').listview('refresh');
 
 };
 
@@ -438,17 +438,36 @@ function unlikePicture()
 //getPeopleWhoLike
 //////////////////
 
-function getPeopleWhoLike()
+function preGetPeopleWhoLike() 
+{
+	console.log('preGetPeopleWhoLike() initialized...');
+
+	$.mobile.changePage( "#peopleWhoLike", {
+		transition: "pop",
+		reverse: true
+	});
+
+}
+
+function getPeopleWhoLike(thePicture)
 {
 	console.log('getPeopleWhoLike() initialized...');
 
-	var picture = checkPictureCookie();
-	var API_URL = 'http://75.101.134.112/api/getPeopleWhoLike.php?picture=' + picture;
+	// var picture = checkPictureCookie();
+	var API_URL = 'http://75.101.134.112/api/getPeopleWhoLike.php?picture=' + thePicture;
 	console.log(API_URL);
 
 	$.getJSON(API_URL, function (data) 
 	{
 		console.log(data);
+
+		$('#likes').html('');
+		for ( var j = 0; j < data.length; j++)
+		{
+			$('#likes').append('<li><a><h1>' + data[j] + '</h1></a></li>').trigger('create');
+		}
+
+		$('#likes').listview('refresh');
 	});
 }
 
@@ -456,16 +475,35 @@ function getPeopleWhoLike()
 //getPeopleInStream
 ///////////////////
 
-function getPeopleInStream () {
-	console.log('getPeopleInStream initialized...');
+function preGetPeopleInStream() 
+{
+	console.log('preGetPeopleInStream initialized...');
 
-	var streamID = checkStreamIDCookie();
-	var API_URL = 'http://75.101.134.112/api/getPeopleInStream.php?streamID=' + streamID;
+	$.mobile.changePage( "#peopleParticipating", {
+		transition: "pop",
+		reverse: true
+	});
+
+}
+
+function getPeopleInStream (theStreamID) {
+
+	console.log('getPeopleInStream initialized...');
+	console.log('the streamID: ' + theStreamID);
+
+	var API_URL = 'http://75.101.134.112/api/getPeopleInStream.php?streamID=' + theStreamID;
 	console.log(API_URL);
 
 	$.getJSON(API_URL, function (data) 
 	{
-		console.log(data[0]);
+		$('#participants').html('');
+		for ( var j = 0; j < data.length; j++)
+		{
+			$('#participants').append('<li><a><h1>' + data[j]['first'] + ' ' + data[j]['last'] + '</h1><p>' + data[j]['numberOfPhotos'] + ' pictures</p></a></li>').trigger('create');
+		}
+
+		$('#participants').listview('refresh');
+		
 	});
 }
 

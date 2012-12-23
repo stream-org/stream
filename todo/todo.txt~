@@ -4,6 +4,9 @@
 //implement salting in signin 
 //implement salting in signup 
 
+- fix the issue where the popStreamNF gets called more than once
+- start linking the other functions together
+
 pull a photo, resize it, and store it through a php file 
 integrate that into the uploadPhoto.php api
 go through the database and create PictureIDs for all images

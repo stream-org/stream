@@ -60,19 +60,22 @@ for ($i=0; $i < count($phoneArray) ; $i++) {
 		if ($userRow['First'] !== '' && $userRow['HashString'] == '')
 		{
 			$textString = "You've been invited to a Stream! Reply with stream, " . $streamName . ", and a photo to join in on the fun!";
-			sendText('6508420492', $textString);
+			sendText($currentPhone, $textString);
 			$firstTimeUser = False;
 		}
 
 		if ($userRow['First'] !== '' && $userRow['HashString'] !== '')
 		{
-			sendText("6508420492", "realUser");
+			$textString = "You've been invited to a Stream! bit.ly/12Dy6u5";
+			sendText("6508420492", $textString);
 			$firstTimeUser = False;
 		} 
 	}
 
 	if ($firstTimeUser) {
-		echo "firstTime";
+
+		$textString = "Welcome to Stream! Go to bit.ly/12Dy6u5 to sign up/view the stream your friend invited you to."; 
+		sendText($currentPhone, $textString);
 	}
 
 
