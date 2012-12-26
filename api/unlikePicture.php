@@ -13,9 +13,9 @@ include "connection.php";
 $picture = $_GET['picture'];
 $phone = $_GET['phone'];
 
-mysql_query("DELETE FROM PictureLikes WHERE PictureID='$picture' AND Phone='$phone'");
+mysql_query("DELETE FROM PictureLikes WHERE TinyPicURL='$picture' AND Phone='$phone'");
 
-$result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE PictureID='$picture'");
+$result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE TinyPicURL='$picture'");
 
 $count = mysql_fetch_row($result);
 

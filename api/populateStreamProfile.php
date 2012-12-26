@@ -24,10 +24,10 @@ while($participantRow = mysql_fetch_array($participantResult))
 }
 
 
-$pictureResult = mysql_query("SELECT * FROM StreamActivity WHERE StreamID='$streamID' ORDER BY Created ASC");
+$pictureResult = mysql_query("SELECT * FROM StreamActivity WHERE StreamID='$streamID' ORDER BY Created DESC");
 while($pictureRow = mysql_fetch_array($pictureResult))
 {
-	array_push($pictureArray, $pictureRow['PictureID']);
+	array_push($pictureArray, $pictureRow['TinyPicURL']);
 }
 
 $streamNameResult = mysql_query("SELECT * FROM Streams WHERE StreamID='$streamID'");

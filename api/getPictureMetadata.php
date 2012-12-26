@@ -23,14 +23,14 @@ $responseArray = array();
 
 $responseArray['hasLiked'] = $hasLiked;
 
-$likeResult = mysql_query("SELECT COUNT(Distinct Phone) FROM PictureLikes WHERE PictureID='$picture'");
+$likeResult = mysql_query("SELECT COUNT(Distinct Phone) FROM PictureLikes WHERE TinyPicURL='$picture'");
 while ($likeRow = mysql_fetch_array($likeResult))
 {
 	$numberOfLikes = $likeRow[0];
 	$responseArray['numberOfLikes'] = $numberOfLikes;
 }
 
-$hasLikedResult = mysql_query("SELECT * FROM PictureLikes WHERE PictureID='$picture' AND Phone='$phone'");
+$hasLikedResult = mysql_query("SELECT * FROM PictureLikes WHERE TinyPicURL='$picture' AND Phone='$phone'");
 while ($hasLikedRow = mysql_fetch_array($hasLikedResult))
 {
 	if(empty($hasLikedRow)) 
@@ -43,7 +43,7 @@ while ($hasLikedRow = mysql_fetch_array($hasLikedResult))
 	}
 }
 
-$uploaderPhoneResult = mysql_query("SELECT * FROM StreamActivity WHERE PictureID='$picture'");
+$uploaderPhoneResult = mysql_query("SELECT * FROM StreamActivity WHERE TinyPicURL='$picture'");
 while($uploaderPhoneRow = mysql_fetch_array($uploaderPhoneResult))
 {
 	$uploaderPhone = $uploaderPhoneRow['Phone'];
