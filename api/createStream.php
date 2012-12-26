@@ -40,7 +40,7 @@ $streamID = hash('sha512', $streamID);
 $responseArray = array();
 
 //create the stream, and insert the creator into the stream 
-mysql_query("INSERT INTO Streams (StreamName, StreamID) VALUES ('$streamName', '$streamID')");
+mysql_query("INSERT INTO Streams (StreamName, StreamID, Phone) VALUES ('$streamName', '$streamID', '$phone')");
 mysql_query("INSERT INTO UserStreams (Phone, StreamID) VALUES ('$phone', '$streamID')");
 
 
