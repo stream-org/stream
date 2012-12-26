@@ -12,10 +12,15 @@
 //connects to the database
 include "connection.php";
 
+
+//gets number standardization function
+include "formatPhoneNumbers.php";
+
 //grabbing the arguments 
 $first = $_GET['first'];
 $last = $_GET['last'];
 $phone = $_GET['phone'];
+$phone = standardizePhone($phone);
 $password = $_GET['password'];
 $submit = $_GET['submit'];
 $profilePicture = $_GET['profilePicture'];

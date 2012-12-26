@@ -1,7 +1,7 @@
 <?php
 
 //input::
-//	picture
+//	pictureID
 
 //output::
 //  array of phone numbers of people who liked it 
@@ -9,9 +9,9 @@
 include "connection.php";
 
 //grabbing the arguments 
-$picture = $_GET['picture'];
+$pictureID = $_GET['pictureID'];
 
-$result = mysql_query("SELECT * FROM PictureLikes WHERE PictureID='$picture'");
+$result = mysql_query("SELECT * FROM PictureLikes WHERE PictureID='$pictureID'");
 $responseArray = array();
 $likersArray = array();
 while ($row = mysql_fetch_array($result))
@@ -31,7 +31,7 @@ while ($row = mysql_fetch_array($result))
 	}
 }
 
-$responseArray['picture'] = $picture;
+$responseArray['pictureID'] = $pictureID;
 $responseArray['likers'] = $likersArray;
 
 echo json_encode($responseArray);

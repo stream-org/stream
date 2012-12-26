@@ -19,6 +19,9 @@ function sendText($phoneNumber, $textString)
 
 include "connection.php";
 
+//gets number standardization function
+include "formatPhoneNumbers.php";
+
 //grabbing the arguments 
 $streamID = $_GET['streamID'];
 $phone = $_GET['phone'];
@@ -36,7 +39,7 @@ while($nameRow = mysql_fetch_array($nameResult))
 for ($i=0; $i < count($phoneArray) ; $i++) { 
 
 	$firstTimeUser = True;
-	$currentPhone = $phoneArray[$i];
+	$currentPhone = standardizePhone($phoneArray[$i]);
 	$textString;
 
 	$internationalCode = false;

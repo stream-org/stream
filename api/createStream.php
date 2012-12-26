@@ -7,6 +7,11 @@
 //output::
 //	streamID
 
+include "connection.php";
+
+//gets number standardization function
+include "formatPhoneNumbers.php";
+
 function sendText($phoneNumber, $textString)
 {
   $textString = urlencode($textString);
@@ -21,6 +26,9 @@ include "connection.php";
 
 //grabbing the arguments 
 $phone = $_GET['phone'];
+
+$phone = standardizePhone($phone);
+
 $streamName = $_GET['streamName'];
 
 $invitees = $_GET['invitees'];

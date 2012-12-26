@@ -12,11 +12,15 @@ function standardizePhone($phone){
 
     $length = strlen($number);
 
-    if($length <10 || $length > 11) {
+    if($length <10) {
         
-        $number = "Incorrect Number Input";
+        $number = "Error! Too Few Numbers: ".$number;
 
-    } elseif($length == 10) {
+    }elseif($length > 11) {
+
+		$number = "Error! Too Many Numbers: ".$number;
+
+    }elseif($length == 10) {
 
     // Assume US International code
         $number = "1".$number;

@@ -11,6 +11,7 @@
 
 include "connection.php";
 
+
 //grabbing the arguments 
 $streamID = $_GET['streamID'];
 $responseArray = array();

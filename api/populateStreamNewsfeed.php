@@ -11,8 +11,13 @@
 
 include "connection.php";
 
+
+//gets number standardization function
+include "formatPhoneNumbers.php";
+
 //grabbing the arguments 
 $phone = $_GET['phone'];
+$phone = standardizePhone($phone);
 
 $streamID;
 $streamName;

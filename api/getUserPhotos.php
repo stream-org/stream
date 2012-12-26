@@ -9,9 +9,13 @@
 
 include "connection.php";
 
+//gets number standardization function
+include "formatPhoneNumbers.php";
+
 //grabbing the arguments 
 $streamID = $_GET['streamID'];
 $phone = $_GET['phone'];
+$phone = standardizePhone($phone);
 
 $responseArray = array();
 

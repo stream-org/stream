@@ -2,7 +2,12 @@
 
 include "connection.php";
 
+
+//gets number standardization function
+include "formatPhoneNumbers.php";
+
 $phone = $_GET['phone'];
+$phone = standardizePhone($phone);
 $streamID = $_GET['streamID'];
 
 function sendText($phoneNumber, $textString)

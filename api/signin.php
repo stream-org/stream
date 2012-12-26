@@ -10,8 +10,12 @@
 //connects to the database
 include "connection.php";
 
+//gets number standardization function
+include "formatPhoneNumbers.php";
+
 //grabbing the arguments 
 $phone = $_GET['first'];
+$phone = standardizePhone($phone);
 $internationalCode;
 $password = $_GET['password'];
 $salt;

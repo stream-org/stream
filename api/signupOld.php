@@ -12,6 +12,10 @@
 //connects to the database
 include "connection.php";
 
+
+//gets number standardization function
+include "formatPhoneNumbers.php";
+
 //grabbing the arguments 
 $first = $_GET['first'];
 $last = $_GET['last'];

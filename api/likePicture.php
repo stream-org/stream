@@ -9,9 +9,13 @@
 
 include "connection.php";
 
+//gets number standardization function
+include "formatPhoneNumbers.php";
+
 //grabbing the arguments 
 $picture = $_GET['picture'];
 $phone = $_GET['phone'];
+$phone = standardizePhone($phone);
 
 mysql_query("INSERT INTO PictureLikes (TinyPicURL, Phone) VALUES ('$picture', '$phone')");
 
