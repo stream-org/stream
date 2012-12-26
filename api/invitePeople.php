@@ -7,7 +7,8 @@
 //output::
 //	Boolean (T/F)
 
-function sendText($phoneNumber, $textString){
+function sendText($phoneNumber, $textString)
+{
   $textString = urlencode($textString);
   $phoneNumber = intval($phoneNumber);
   $url = 'https://api.mogreet.com/moms/transaction.send?client_id=1316&token=dbd7557a6a9d09ab13fda4b5337bc9c7&campaign_id=28420&to=' . $phoneNumber . '&message=' . $textString . '&format=json';
@@ -38,6 +39,42 @@ for ($i=0; $i < count($phoneArray) ; $i++) {
 	$currentPhone = $phoneArray[$i];
 	$textString;
 
+	$internationalCode = false;
+	$inTable = array();
+
+	if (strlen($currentPhone) == 11)
+	{
+		$internationalCode = true;
+	}
+
+	$inTableResult = mysql_query("SELECT * FROM Users WHERE Phone='$currentPhone'");
+	while($inTableRow = mysql_fetch_array($inTableResult))
+	{
+		$inTable['value'] = true;
+	}
+
+	if(empty($inTable))
+	{
+		if ($internationalCode)
+		{
+			$tempPhone = substr($currentPhone, 1);	
+			$inTableResult = mysql_query("SELECT * FROM Users WHERE Phone='$tempPhone'");
+			while($inTableRow = mysql_fetch_array($inTableResult))
+			{
+				$currentPhone = $tempPhone;
+			}
+		}
+		else
+		{
+			$tempPhone = '1' . $currentPhone;
+			$inTableResult = mysql_query("SELECT * FROM Users WHERE Phone='$tempPhone'");
+			while($inTableRow = mysql_fetch_array($inTableResult))
+			{
+				$currentPhone = $tempPhone;
+			}
+		}
+	}
+
 	//if phone is user with password send one notif
 	//if phone with no hash, another notif 
 	//if no phone, send register 
@@ -59,14 +96,14 @@ for ($i=0; $i < count($phoneArray) ; $i++) {
 	{
 		if ($userRow['First'] !== '' && $userRow['HashString'] == '')
 		{
-			$textString = "You've been invited to a Stream! Reply with stream, " . $streamName . ", and a photo to join in on the fun!";
+			$textString = "You've been invited to a Stream! Open the Stream app to view " . $streamName;
 			sendText($currentPhone, $textString);
 			$firstTimeUser = False;
 		}
 
 		if ($userRow['First'] !== '' && $userRow['HashString'] !== '')
 		{
-			$textString = "You've been invited to a Stream! bit.ly/12Dy6u5";
+			$textString = "You've been invited to a Stream! Open the Stream app to view " . $streamName;
 			sendText("6508420492", $textString);
 			$firstTimeUser = False;
 		} 
@@ -74,7 +111,7 @@ for ($i=0; $i < count($phoneArray) ; $i++) {
 
 	if ($firstTimeUser) {
 
-		$textString = "Welcome to Stream! Go to bit.ly/12Dy6u5 to sign up/view the stream your friend invited you to."; 
+		$textString = "You've been invited to a Stream! Open the Stream app to view " . $streamName;
 		sendText($currentPhone, $textString);
 	}
 

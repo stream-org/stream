@@ -168,20 +168,41 @@ function createStream()
 
 	var theStreamID;
 	var theStreamName = document.getElementById('streamName').value;
-	var API_URL = 'http://75.101.134.112/api/createStream.php?phone=' + phoneNumber + '&streamName=' + theStreamName;
-	console.log(API_URL);
 
+	var tempCounter = inviteCounter.toString() + inviteCounter.toString();
+	var phoneNumberString = '';
+	inviteCounter = inviteCounter - 1;
+
+	while (inviteCounter >= 0)
+	{
+		var tempNum = inviteCounter.toString() + inviteCounter.toString();
+		var tempPhoneNumber = document.getElementById(tempNum).value;
+
+		if (inviteCounter == 0)
+		{
+			phoneNumberString = phoneNumberString + tempPhoneNumber;
+		} 
+
+		else 
+		{
+			phoneNumberString = phoneNumberString + tempPhoneNumber + ',';
+		}
+
+		inviteCounter--;
+	}
+
+	var API_URL = 'http://75.101.134.112/api/createStream.php?phone=' + phoneNumber + '&streamName=' + theStreamName + '&invitees=' + phoneNumberString;
+	console.log (API_URL);
+
+  	$.mobile.changePage( "#streams_your", {
+		transition: "pop",
+		reverse: true
+	});
+	
 	$.getJSON(API_URL, function (data) 
 	{
-		theStreamID = data['StreamID'];
-		console.log(theStreamID);
-		invitePeople(theStreamID);
-
-  		$.mobile.changePage( "#streams_your", {
-				    transition: "pop",
-				    reverse: true
-		});
-	});
+		console.log('page change');
+  	});
 
 }
 

@@ -77,10 +77,20 @@ if ($tiny = "null"){
 
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL) VALUES ('$streamID', '$phone','$pictureFilePath', '$pictureID', '$tinyPictureFilePath')");
 
+  	$url = 'http://75.101.134.112/api/notification.php?phone=' . $phone . '&streamID=' . $streamID;
+  	$ch = curl_init($url);
+  	$response = curl_exec($ch);
+  	curl_close($ch);
+
  }
 
 else{
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL) VALUES ('$streamID', '$phone','$picture', '$pictureID', '$tiny')");
+
+	$url = 'http://75.101.134.112/api/notification.php?phone=' . $phone . '&streamID=' . $streamID;
+  	$ch = curl_init($url);
+  	$response = curl_exec($ch);
+  	curl_close($ch);
 
 	$result = mysql_query("SELECT * FROM StreamActivity WHERE PictureID='$picture' AND Phone='$phone' AND StreamID='$streamID'");
 	$responseArray = array();

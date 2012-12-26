@@ -15,13 +15,19 @@ $phone = $_GET['phone'];
 
 $responseArray = array();
 
+$pictureArray = array();
+
 
 $result = mysql_query("SELECT * FROM StreamActivity WHERE Phone='$phone' AND StreamID='$streamID' ORDER BY Created");
 
 while($row = mysql_fetch_array($result))
 {
-	array_push($responseArray, $row['Picture']);
+	array_push($pictureArray, $row['PictureID']);
 }
+
+$responseArray['streamID'] = $streamID;
+$responseArray['phone'] = $phone;
+$responseArray['pictures'] = $pictureArray;
 
 echo json_encode($responseArray);
 
