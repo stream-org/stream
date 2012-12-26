@@ -30,6 +30,7 @@ if ($tiny = "null"){
 
 	$val = time().$picture;
 	$filename = hash('sha512', $val) . '.jpg';
+	$tinyfilename = "tiny".$filename;
 
 	echo "<br> filename: ".$filename;
 
@@ -42,8 +43,8 @@ if ($tiny = "null"){
 	$filePath = '~/html/upload/StreamPictures/Pictures/' . $filename;
 
 	$pictureFilePath = 'http://75.101.134.112/upload/StreamPictures/Pictures/' . $filename;
-	$tinyPictureFilePath = 'http://75.101.134.112/upload/StreamPictures/TinyPictures/tiny' . $filename;
-	$tinyfilename = "tiny".$filename;
+	$tinyPictureFilePath = 'http://75.101.134.112/upload/StreamPictures/TinyPictures/' . $tinyfilename;
+	
 
 	list($width, $height) = getimagesize($filePath);
 

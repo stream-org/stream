@@ -22,7 +22,7 @@ $result = mysql_query("SELECT * FROM StreamActivity WHERE Phone='$phone' AND Str
 
 while($row = mysql_fetch_array($result))
 {
-	array_push($pictureArray, $row['PictureID']);
+	array_push($pictureArray, $row['TinyPicURL']);
 }
 
 $responseArray['streamID'] = $streamID;

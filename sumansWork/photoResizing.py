@@ -7,6 +7,9 @@ import sys
 import string
 import re
 import MySQLdb as mdb
+import os
+import Image
+import hashlib
 
 # Connect to Database
 con = mdb.connect('174.120.60.130', 'suman', 'ninjas1158!', 'suman_Stream')
@@ -14,31 +17,60 @@ con = mdb.connect('174.120.60.130', 'suman', 'ninjas1158!', 'suman_Stream')
 cur = con.cursor()
 cur.execute("SELECT VERSION()")
 
+print os.getcwd()
 
-print "test"
+size = 600,600
 
 # Get all PictureID's
 cur.execute(
 
-"SELECT PictureID FROM StreamActivity WHERE TinyPicURL is NULL"
+"SELECT PictureID,PicURL FROM StreamActivity WHERE TinyPicURL = ''"
 
 )
 
-table = cur.fetchall()
 
-# Hashes StreamID and puts it into PicURL because we are too lazy to change the column names
+table = cur.fetchall()
 
 for row in table:
 
-	print row
 
-	# hashValue = hashlib.sha224(str(row[0])).hexdigest()
+# 
+# CAUTION: THESE ARE SWITCHED BECAUSE ARE COLUMNS NAMES ARE ACCIDENTLY SWITCHED!!!!
+	picURL = str(row[0])
+	pictureID = str(row[1])
 
+	print picURL
+	print pictureID
 
-	# cur.execute(
+	hashValue = hashlib.sha512(str(pictureID)).hexdigest()
 
-	# "UPDATE StreamActivity SET PicURL = '%s' WHERE PictureID = '%s'" % (hashValue, str(row[0]))
+	filename = str(hashValue) + '.jpg'
+	tinyfilename = "tiny"+filename
+
+	os.popen("touch "+filename)
+	os.popen("chmod go+w "+filename)
+	command = "wget -O "+filename+" "+picURL
+	os.popen(command)
+
+	im = Image.open(filename)
+	im.thumbnail(size, Image.ANTIALIAS)
+	im.save(tinyfilename, "JPEG")
+
+	os.popen("mv "+filename+" ~/html/upload/StreamPictures/Pictures/")
+	os.popen("mv "+tinyfilename+" ~/html/upload/StreamPictures/TinyPictures/")
+
+	pictureFilePath = 'http://75.101.134.112/upload/StreamPictures/Pictures/' + filename
+	tinyPictureFilePath = 'http://75.101.134.112/upload/StreamPictures/TinyPictures/' + tinyfilename
+
+	cur.execute(
+
+	"UPDATE StreamActivity SET PictureID = '%s' WHERE PicURL = '%s'" % (pictureFilePath, pictureID)
 
 	)
 
-	
+	cur.execute(
+
+	"UPDATE StreamActivity SET TinyPicURL = '%s' WHERE PicURL = '%s'" % (tinyPictureFilePath, pictureID)
+
+	)
+
