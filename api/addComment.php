@@ -1,8 +1,9 @@
 <?php
 
 //input::
-//	picture
+//	pictureID
 //	phone
+//	comment
 
 //output::
 //	JSON object of comments
@@ -12,13 +13,12 @@ include "connection.php";
 //gets number standardization function
 include "formatPhoneNumbers.php";
 
-include "viewComments.php"
-
 //grabbing the arguments 
 $pictureID = $_GET['pictureID'];
 $phone = $_GET['phone'];
 $phone = standardizePhone($phone);
 $comment = $_GET['comment'];
+
 
 mysql_query("INSERT INTO Comments (PictureID, Phone, Comment) VALUES ('$pictureID', '$phone', '$comment')");
 

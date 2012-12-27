@@ -18,7 +18,7 @@ $streamidResult = mysql_query("SELECT * FROM Comments WHERE PictureID='$pictureI
 
 while($streamidRow = mysql_fetch_array($streamidResult))
 {
-	$responseArray = array('phone'=>$streamidRow['Phone'], 'created'=>$streamidRow['Created'],'comment'=>$streamidRow['Comment']);
+	$responseArray[$streamidRow['Created']] = array('phone'=>$streamidRow['Phone'],'comment'=>$streamidRow['Comment']);
 }
 
 echo json_encode($responseArray);
