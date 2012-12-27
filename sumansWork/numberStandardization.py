@@ -47,22 +47,23 @@ for table in tables:
 		
 		newPhone = re.sub(r'\D', '', oldPhone)
 		
+		if (len(newPhone) != 11):
 
-		if (len(newPhone) == 10):
-			newPhone = "1" +newPhone
+			if (len(newPhone) == 10):
+				newPhone = "1" +newPhone
 
-		elif (len(newPhone) != 11):
-			newPhone = ""
+			elif (len(newPhone) != 11):
+				newPhone = ""
 
-		print newPhone
+			print newPhone
 
-		# Update the record
+			# Update the record
 
-		cur.execute(
+			cur.execute(
 
-		"""UPDATE %s SET Phone = %%s WHERE Phone = %%s""" % table[0], (newPhone, oldPhone)
+			"""UPDATE %s SET Phone = %%s WHERE Phone = %%s""" % table[0], (newPhone, oldPhone)
 
-		)
+			)
 
 
 
