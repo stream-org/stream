@@ -14,7 +14,7 @@ include "connection.php";
 include "formatPhoneNumbers.php";
 
 //grabbing the arguments 
-$picture = $_GET['picture'];
+$pictureID = $_GET['pictureID'];
 $phone = $_GET['phone'];
 $phone = standardizePhone($phone);
 $numberOfLikes;
@@ -27,14 +27,16 @@ $responseArray = array();
 
 $responseArray['hasLiked'] = $hasLiked;
 
-$likeResult = mysql_query("SELECT COUNT(Distinct Phone) FROM PictureLikes WHERE TinyPicURL='$picture'");
+// Gets like information on the picture and the user viewing the picture
+
+$likeResult = mysql_query("SELECT COUNT(Distinct Phone) FROM PictureLikes WHERE PictureID='$pictureID'");
 while ($likeRow = mysql_fetch_array($likeResult))
 {
 	$numberOfLikes = $likeRow[0];
 	$responseArray['numberOfLikes'] = $numberOfLikes;
 }
 
-$hasLikedResult = mysql_query("SELECT * FROM PictureLikes WHERE TinyPicURL='$picture' AND Phone='$phone'");
+$hasLikedResult = mysql_query("SELECT * FROM PictureLikes WHERE PictureID='$pictureID' AND Phone='$phone'");
 while ($hasLikedRow = mysql_fetch_array($hasLikedResult))
 {
 	if(empty($hasLikedRow)) 
@@ -47,7 +49,9 @@ while ($hasLikedRow = mysql_fetch_array($hasLikedResult))
 	}
 }
 
-$uploaderPhoneResult = mysql_query("SELECT * FROM StreamActivity WHERE TinyPicURL='$picture'");
+// Gets Uploader's information
+
+$uploaderPhoneResult = mysql_query("SELECT * FROM StreamActivity WHERE PictureID='$pictureID'");
 while($uploaderPhoneRow = mysql_fetch_array($uploaderPhoneResult))
 {
 	$uploaderPhone = $uploaderPhoneRow['Phone'];
@@ -62,6 +66,18 @@ while($uploaderNameRow = mysql_fetch_array($uploaderNameResult))
 	$responseArray['uploaderFirstName'] = $uploaderNameFirst;
 	$responseArray['uploaderLastName'] = $uploaderNameLast;
 }
+
+// Gets comments
+$streamidResult = mysql_query("SELECT * FROM Comments WHERE PictureID='$pictureID' ORDER BY Created ASC");
+
+$tempResponseArray;
+
+while($streamidRow = mysql_fetch_array($streamidResult))
+{
+	$tempResponseArray[$streamidRow['Created']] = array('phone'=>$streamidRow['Phone'],'comment'=>$streamidRow['Comment']);
+}
+
+$responseArray['Comments'] = $tempResponseArray;
 
 $responseArray['picture_url'] = $picture;
 
