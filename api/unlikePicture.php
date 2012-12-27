@@ -13,13 +13,13 @@ include "connection.php";
 include "formatPhoneNumbers.php";
 
 //grabbing the arguments 
-$picture = $_GET['picture'];
+$pictureID = $_GET['pictureID'];
 $phone = $_GET['phone'];
 $phone = standardizePhone($phone);
 
-mysql_query("DELETE FROM PictureLikes WHERE TinyPicURL='$picture' AND Phone='$phone'");
+mysql_query("DELETE FROM PictureLikes WHERE PictureID='$pictureID' AND Phone='$phone'");
 
-$result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE TinyPicURL='$picture'");
+$result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE PictureID='$pictureID'");
 
 $count = mysql_fetch_row($result);
 

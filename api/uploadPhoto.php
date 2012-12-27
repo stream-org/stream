@@ -5,6 +5,7 @@
 //	picture_url 
 //	stream_id
 //  tinyPicture url
+//	caption
 
 //output::
 //	pictureID or null
@@ -22,6 +23,7 @@ $phone = standardizePhone($phone);
 $picture = $_GET['picture'];
 $tiny = $_GET['tiny'];
 $streamID = $_GET['streamID'];
+$caption = $_GET['caption'];
 $pictureID = $picture . $phone . $streamID . time();
 $pictureID = hash('sha512', $pictureID);
 
@@ -91,7 +93,7 @@ if ($tiny = "null"){
  }
 
 else{
-	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL) VALUES ('$streamID', '$phone', '$pictureID', '$picture','$tiny')");
+	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption) VALUES ('$streamID', '$phone', '$pictureID', '$picture','$tiny','$caption')");
 
 	$url = 'http://75.101.134.112/api/notification.php?phone=' . $phone . '&streamID=' . $streamID;
   	$ch = curl_init($url);
