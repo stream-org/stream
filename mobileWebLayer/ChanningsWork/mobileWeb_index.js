@@ -123,6 +123,7 @@ function popStreamNF () {
 
 		$.each(data, function(i)
 		{
+			console.log(i);
 			var streamID = i;
 			var streamName = data[i]['streamName'];
 			var numberOfParticipants = data[i]['numberOfParticipants'];
@@ -153,7 +154,11 @@ function streamNewsfeed(theStream)
 		$("#streamNF").append('<li onClick="prePopStream(this.id)" id='+ streamID +'><a><img src="'+ latestPicture +'" /> <h1>'+  streamName +'</h1> <p>'+ numberOfParticipants +' participants   '+ numberOfPictures +' pictures</p></a></li>');
 	}
 
-	$('ul').listview('refresh');
+	var cw = $('#streamNF > li').height();
+	$('#streamNF > li > a > img').css({'height':cw+'px'});
+	$('#streamNF > li > a > img').css({'width':cw+'px'});
+
+	$('#streamNF').listview('refresh');
 
 };
 
@@ -167,15 +172,41 @@ function createStream()
 
 	var theStreamID;
 	var theStreamName = document.getElementById('streamName').value;
-	var API_URL = 'http://75.101.134.112/api/createStream.php?phone=' + phoneNumber + '&streamName=' + theStreamName;
-	console.log(API_URL);
 
+	var tempCounter = inviteCounter.toString() + inviteCounter.toString();
+	var phoneNumberString = '';
+	inviteCounter = inviteCounter - 1;
+
+	while (inviteCounter >= 0)
+	{
+		var tempNum = inviteCounter.toString() + inviteCounter.toString();
+		var tempPhoneNumber = document.getElementById(tempNum).value;
+
+		if (inviteCounter == 0)
+		{
+			phoneNumberString = phoneNumberString + tempPhoneNumber;
+		} 
+
+		else 
+		{
+			phoneNumberString = phoneNumberString + tempPhoneNumber + ',';
+		}
+
+		inviteCounter--;
+	}
+
+	var API_URL = 'http://75.101.134.112/api/createStream.php?phone=' + phoneNumber + '&streamName=' + theStreamName + '&invitees=' + phoneNumberString;
+	console.log (API_URL);
+
+  	$.mobile.changePage( "#streams_your", {
+		transition: "pop",
+		reverse: true
+	});
+	
 	$.getJSON(API_URL, function (data) 
 	{
-		theStreamID = data['StreamID'];
-		console.log(theStreamID);
-		invitePeople(theStreamID);
-	});
+		console.log('page change');
+  	});
 
 }
 
@@ -187,10 +218,32 @@ var inviteCounter = 1;
 
 function addStreamer()
 {
+	var tempCounter = inviteCounter.toString() + inviteCounter.toString();
 	console.log ("addStreamer() initialized...");
-	$('#inviteBox').prepend('<input type="text" name="name" id="'+ inviteCounter +'" value="" placeholder="Add phone numbers"  />').trigger('create');
+	$('#inviteBox').prepend('<input type="text" name="name" id="' + tempCounter + '" value="" placeholder="Add phone numbers"  />').trigger('create');
 	inviteCounter++;
 }
+
+//////////////
+//addPhoto
+//////////////
+
+function addPhoto() 
+{
+	console.log ("addPhoto() initialized...");
+
+	var theStreamID;
+	var theStreamName = document.getElementById('streamName').value;
+	var API_URL = 'http://75.101.134.112/upload/uploadDecider.php?phoneNumber=' + phoneNumber + '&streamID=' + theStreamID;
+	console.log(API_URL);
+
+	$.getJSON(API_URL, function (data) 
+	{
+		console.log(data);
+	});
+
+}
+
 
 ///////////////
 //invitePeople
@@ -202,7 +255,7 @@ function invitePeople(aStreamId)
 
 	var tempCounter = inviteCounter.toString() + inviteCounter.toString();
 	var phoneNumberString = '';
-	inviteCounter = inviteCounter;
+	inviteCounter = inviteCounter - 1;
 
 	while (inviteCounter >= 0)
 	{
@@ -239,18 +292,22 @@ function popStreamProfile(theID)
 {
 	console.log('popStreamProfile initialized...');
 
+	//clears out all existing HTML inside the container divs for #streamTemplate, the page we are heading to[-cca]
 	$('#streamTitle').html('');
 	$('#numParticipants').html('');
 	$('#streamPictures').html('');
 
+	//transitions to #streamTemplate, makes the transition have some cool jQuery mobile-ness [-cca]
 	$.mobile.changePage( "#streamTemplate", {
 		transition: "pop",
 		reverse: true
 	});
 
+	//calls the populateStreamProfile API with the user's phone # & the stream's ID [-cca]
 	var API_URL = "http://75.101.134.112/api/populateStreamProfile.php?phone=" + phoneNumber + "&streamID=" + theID;
 	console.log(API_URL);
 
+	//grabs the JSON response object and iterates through it to populate the newsfeed [-cca]
 	$.getJSON(API_URL, function (data) 
 	{
 		$('#streamTitle').html(data['streamName']);
@@ -261,10 +318,10 @@ function popStreamProfile(theID)
 		var lengthOfPictures = data['pictures'].length;
 		var pictureIndex = 0;
 
-		if(pictureIndex%2==0){
+
+		if(lengthOfPictures%2==0) {
 			while (pictureIndex < lengthOfPictures)
 			{
-
 				if (pictureIndex%2==0)
 				{
 					$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="preShowPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
@@ -276,30 +333,29 @@ function popStreamProfile(theID)
 				pictureIndex++;
 				var cw = $('.ui-grid-a img').width();
 				$('.ui-grid-a img').css({'height':cw+'px'});
-			
-			}
-
-		}else{
-
-			while (pictureIndex < lengthOfPictures)
-			{
-
-				if (pictureIndex%2==0)
-				{
-					$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="preShowPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
-				} 
-				else 
-				{
-					$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="preShowPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
-				}
-				pictureIndex++;
-				var cw = $('.ui-grid-a img').width();
-				$('.ui-grid-a img').css({'height':cw+'px'});
-			
 			}
 		}
-	});
+		else
+		{
+			while (pictureIndex < lengthOfPictures)
+			{
+				if (pictureIndex%2==0)
+				{
+					$('#streamPictures').append('<div class="ui-block-b frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="preShowPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
+				} 
+				else 
+				{
+					$('#streamPictures').append('<div class="ui-block-a frame"><a href=""><div class="pictureFrame"><img class="thumb" onClick="preShowPicture(this.src)" src="' + data['pictures'][pictureIndex] + '" /></div></a></div>').trigger('create');
+				}
+				pictureIndex++;
+				var cw = $('.ui-grid-a img').width();
+				$('.ui-grid-a img').css({'height':cw+'px'});				
+			}
+		}
+	});	
 };
+
+
 
 //////////////
 //viewPicture
@@ -320,7 +376,7 @@ function preShowPicture(pictureID)
 function showPicture(pictureID)
 {
 	$('#thePictureFrame').html('');
-	$('#numberOfLikes').html('');
+	$('#photoViewFooter').html('');
 
 	var API_URL = 'http://75.101.134.112/api/getPictureMetadata.php?picture=' + pictureID + '&phone=' + phoneNumber;
 	console.log(API_URL);
@@ -334,26 +390,22 @@ function showPicture(pictureID)
 		var likes = data['numberOfLikes'];
 		var hasLiked = data['hasLiked'];
 
-		$('#photographersName').html(fullName).trigger('create');
-		$('#numberOfLikes').html(likes + ' likes').trigger('create');
-
-		var cw = $('#photographersName').height();
-		$('#numberOfLikes').css({'height':cw+'px'});
+		$('#photographersName').html(fullName).trigger('create');		
 
 		if(hasLiked == 'True')
 		{
 			$('#thePictureFrame').html('');
-			$('#likeButton').html('');
 			$('#thePictureFrame').append('<div id="mainPic"><img src="' + pictureID + '" /></div>').trigger('create'); 
-			$('#likeButton').append('<a data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
+			$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
+			$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
 		}
 
 		else
 		{
 			$('#thePictureFrame').html('');
-			$('#likeButton').html('');
 			$('#thePictureFrame').append('<div id="mainPic"><img src="' + pictureID + '" /></div>').trigger('create'); 
-			$('#likeButton').append('<a data-role="button" onClick="likePicture()">Like</a>').trigger('create');
+			$('#photoViewFooter').append('<a data-role="button" onClick="likePicture()">Like</a>').trigger('create');
+			$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
 		}
 
 	});
@@ -373,21 +425,8 @@ function likePicture()
 
 	$.getJSON(API_URL, function (data) 
 	{
-		$('#likeButton').html('');
-		$('#likeButton').append('<a data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
-
-		if (data['likes'] == '1')
-		{
-			$('#numberOfLikes').html('');
-			$('#numberOfLikes').html(data['likes'] + ' like').trigger('create');
-		}
-
-		else
-		{
-			$('#numberOfLikes').html('');
-			$('#numberOfLikes').html(data['likes'] + ' likes').trigger('create');
-		}
-
+		$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
+		$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
 	});
 };
 
@@ -405,21 +444,8 @@ function unlikePicture()
 
 	$.getJSON(API_URL, function (data) 
 	{
-		$('#likeButton').html('');
-		$('#likeButton').append('<a data-role="button" onClick="likePicture()">Like</a>').trigger('create');
-
-		if (data['likes'] == '1')
-		{
-			$('#numberOfLikes').html('');
-			$('#numberOfLikes').html(data['likes'] + ' like').trigger('create');
-		}
-
-		else
-		{
-			$('#numberOfLikes').html('');
-			$('#numberOfLikes').html(data['likes'] + ' likes').trigger('create');
-		}
-
+		$('#photoViewFooter').append('<a data-role="button" onClick="likePicture()">Like</a>').trigger('create');
+		$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
 	});
 };
 
@@ -427,17 +453,36 @@ function unlikePicture()
 //getPeopleWhoLike
 //////////////////
 
-function getPeopleWhoLike()
+function preGetPeopleWhoLike() 
+{
+	console.log('preGetPeopleWhoLike() initialized...');
+
+	$.mobile.changePage( "#peopleWhoLike", {
+		transition: "pop",
+		reverse: true
+	});
+
+}
+
+function getPeopleWhoLike(thePicture)
 {
 	console.log('getPeopleWhoLike() initialized...');
 
-	var picture = checkPictureCookie();
-	var API_URL = 'http://75.101.134.112/api/getPeopleWhoLike.php?picture=' + picture;
+	// var picture = checkPictureCookie();
+	var API_URL = 'http://75.101.134.112/api/getPeopleWhoLike.php?picture=' + thePicture;
 	console.log(API_URL);
 
 	$.getJSON(API_URL, function (data) 
 	{
 		console.log(data);
+
+		$('#likes').html('');
+		for ( var j = 0; j < data.length; j++)
+		{
+			$('#likes').append('<li><a><h1>' + data[j] + '</h1></a></li>').trigger('create');
+		}
+
+		$('#likes').listview('refresh');
 	});
 }
 
@@ -445,16 +490,35 @@ function getPeopleWhoLike()
 //getPeopleInStream
 ///////////////////
 
-function getPeopleInStream () {
-	console.log('getPeopleInStream initialized...');
+function preGetPeopleInStream() 
+{
+	console.log('preGetPeopleInStream initialized...');
 
-	var streamID = checkStreamIDCookie();
-	var API_URL = 'http://75.101.134.112/api/getPeopleInStream.php?streamID=' + streamID;
+	$.mobile.changePage( "#peopleParticipating", {
+		transition: "pop",
+		reverse: true
+	});
+
+}
+
+function getPeopleInStream (theStreamID) {
+
+	console.log('getPeopleInStream initialized...');
+	console.log('the streamID: ' + theStreamID);
+
+	var API_URL = 'http://75.101.134.112/api/getPeopleInStream.php?streamID=' + theStreamID;
 	console.log(API_URL);
 
 	$.getJSON(API_URL, function (data) 
 	{
-		console.log(data[0]);
+		$('#participants').html('');
+		for ( var j = 0; j < data.length; j++)
+		{
+			$('#participants').append('<li><a><h1>' + data[j]['first'] + ' ' + data[j]['last'] + '</h1><p>' + data[j]['numberOfPhotos'] + ' pictures</p></a></li>').trigger('create');
+		}
+
+		$('#participants').listview('refresh');
+		
 	});
 }
 

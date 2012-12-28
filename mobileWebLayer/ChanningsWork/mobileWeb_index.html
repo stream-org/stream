@@ -1,18 +1,20 @@
 <!DOCTYPE html> 
 <html> 
 <head> 
-	<title>photo upload</title> 
+	<title>Welcome to Stream!</title> 
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-	<script src="mobileWebIndexCopy_chan.js"></script>
-	<link REL=StyleSheet HREF="mobileWebIndex.css" TYPE="text/css" MEDIA=screen>
+	<script src="http://75.101.134.112/ChanningsWork/mobileWeb_index.js"></script>
+	<link REL=StyleSheet HREF="mobileWeb_index.css" TYPE="text/css" MEDIA=screen>
 
+	<!-- For Photo Upload -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
 
-	<script>
+	<script>	
 
 	var phoneNumber;
 	var latestStreamID;
@@ -39,9 +41,17 @@
 		console.log("this is the latestPicture: " + latestPicture);
 		console.log('showing picture');
 		showPicture(latestPicture);
+	});
 
+	$('#peopleParticipating').live('pageshow', function(){
+		console.log('the streamID is: ' + checkStreamIDCookie());
+		getPeopleInStream(checkStreamIDCookie());
+	});
 
-	})
+	$('#peopleWhoLike').live('pageshow', function(){
+		console.log('the streamID is: ' + checkPictureCookie());
+		getPeopleWhoLike(checkPictureCookie());
+	});
 
 	</script>
 	
@@ -169,16 +179,17 @@
 		</div>
 	</div>
 
-	<!-- template for individual stream -->
+	<!-- 7. template for individual stream -->
 	<div data-role="page" data-theme="c" id="streamTemplate">
 		<div data-role="header">
 			<a href="#streams_your" data-icon="back">back</a>
 			<h1 id="streamTitle">{stream_name}</h1>
-			<a href="" data-icon="star" data-iconpos="notext">CAMERA ICON</a>
+			<!-- <input id="fileupload" type="file" name="files[]" multiple> -->
+
 		</div>
 
 		<div data-role="content" align="center" id="streamContent">
-			<a href="#peopleParticipating" data-role="button" id="numParticipants">
+			<a data-role="button" id="numParticipants" onClick="preGetPeopleInStream()">
 			</a>
 			<div class="ui-grid-a" id="streamPictures">
 				<!-- inject pics here -->
@@ -202,20 +213,12 @@
 		</div> 
 
 		<div data-role="footer">
-			<div class="ui-grid-b">
-				<div class="ui-block-a" id="likeButton">
-					<!-- <a data-role="button" onClick="likePicture()">Like</a> -->
+				<div data-role="button" id="likeButton" onClick= "likePicture()">
 				</div>
-
-				<div class="ui-block-b">
-				</div>
-
-				<div class="ui-block-c">
-					<a data-icon="check" data-role="button" id="numberOfLikes" href="#peopleWhoLike"></a>
-				</div>
-			</div>
+					
+				<div data-icon="check" data-role="button" id="numberOfLikes" onClick= "preGetPeopleWhoLike()" ></div>				
 		</div>
-	</div>	
+	</div>
 
 	<!-- 9. peopleWhoLike -->
 	<div data-role="page" data-theme="c" id="peopleWhoLike">
@@ -227,12 +230,6 @@
 		<div data-role="content">
 
 			<ul class="streams" data-role="listview" id="likes">
-				<li>Channing Allen</li>
-				<li>Channing Allen</li>
-				<li>Channing Allen</li>
-				<li>Channing Allen</li>
-				<li>Channing Allen</li>
-				<li>Channing Allen</li>
 			</ul>
 			<!-- load using JS	 -->		
 		</div> 
@@ -251,21 +248,13 @@
 		<div data-role="content">
 
 			<ul class="streams" data-role="listview" id="participants">
-				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
-				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
-				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
-				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
-				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
-				<li><a href=""><h1>Channing Allen</h1><p>3 photos</p></a></li>
 			</ul>
 			<!-- load using JS	 -->		
 		</div> 
 
 		<div data-role="footer">
 		</div>
-	</div>	
-
-
+	</div>		
 </body>
 
 </html>
