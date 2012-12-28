@@ -318,6 +318,7 @@ function popStreamProfile(theID)
 		var lengthOfPictures = data['pictures'].length;
 		var pictureIndex = 0;
 
+		console.log(lengthOfPictures);
 
 		if(lengthOfPictures%2==0) {
 			while (pictureIndex < lengthOfPictures)
@@ -381,6 +382,10 @@ function showPicture(pictureID)
 	var API_URL = 'http://75.101.134.112/api/getPictureMetadata.php?picture=' + pictureID + '&phone=' + phoneNumber;
 	console.log(API_URL);
 
+	//need to put in some logic to make the picture fit; used to have it, not sure where it went (looks at Rousseau.) [-cca]
+	width = $('#thePictureFrame').width()
+	console.log(width);
+
 	$.getJSON(API_URL, function (data) {
 		
 		var first = data['uploaderFirstName'];
@@ -395,7 +400,7 @@ function showPicture(pictureID)
 		if(hasLiked == 'True')
 		{
 			$('#thePictureFrame').html('');
-			$('#thePictureFrame').append('<div id="mainPic"><img src="' + pictureID + '" /></div>').trigger('create'); 
+			$('#thePictureFrame').append('<div id="mainPic"><img style="max-width:'+ width + '; height:auto" src="' + pictureID + '" /></div>').trigger('create'); 
 			$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
 			$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
 		}
@@ -403,7 +408,7 @@ function showPicture(pictureID)
 		else
 		{
 			$('#thePictureFrame').html('');
-			$('#thePictureFrame').append('<div id="mainPic"><img src="' + pictureID + '" /></div>').trigger('create'); 
+			$('#thePictureFrame').append('<div id="mainPic"><img style="max-width:'+ width + ';height:auto" src="' + pictureID + '" /></div>').trigger('create');
 			$('#photoViewFooter').append('<a data-role="button" onClick="likePicture()">Like</a>').trigger('create');
 			$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
 		}
