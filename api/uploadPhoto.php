@@ -12,6 +12,8 @@
 
 include('SimpleImage.php');
 include('connection.php');
+include('sendText.php');
+include('push.php');
 
 
 //gets number standardization function
@@ -89,6 +91,8 @@ if ($tiny = "null"){
 
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL) VALUES ('$streamID', '$phone', '$pictureID','$pictureFilePath', '$tinyPictureFilePath')");
 
+	iPhonePush($phone, $streamID);
+
 	$metrics->track('upload_photo', array('medium'=>'text','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$pictureID));
 
   	$url = 'http://75.101.134.112/api/notification.php?phone=' . $phone . '&streamID=' . $streamID;
@@ -100,6 +104,8 @@ if ($tiny = "null"){
 
 else{
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption) VALUES ('$streamID', '$phone', '$pictureID', '$picture','$tiny','$caption')");
+
+	iPhonePush($phone, $streamID);
 
 	$metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$pictureID));
 	
