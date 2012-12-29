@@ -14,6 +14,7 @@ include "connection.php";
 include "formatPhoneNumbers.php";
 
 include "sendText.php";
+include "push.php";
 
 //Mixpanel Tracking
 require_once("mixPanel.php");
@@ -52,6 +53,8 @@ for ($i=0; $i < count($phoneArray) ; $i++) {
 		$metrics->track('invite_person', array('inviter'=>$inviterPhone,'stream_created'=>$streamID,'num_invitees'=>count($invitees), 'distinct_id'=>$currentPhone));
 
 		mysql_query("INSERT INTO Users (Phone, InvitedBy) VALUES ('$currentPhone', '$inviterPhone')");
+
+		invitePush($inviterPhone, $streamID);
 
 
 		echo $currentPhone;

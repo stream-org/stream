@@ -36,25 +36,9 @@
 
 }
 
-#likeButton 
-{
-	width:100%;
-}
-
-#numberOfLikes 
-{
-	width:100%;
-}
 
 #mainPic 
 {
 	width  : 100%;
     height : auto;
-}
-
-@font-face
-{
-font-family: myFirstFont;
-src: url('Sansation_Light.ttf'),
-     url('Sansation_Light.eot'); /* IE9 */
 }
