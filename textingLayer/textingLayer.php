@@ -116,7 +116,7 @@ else{
   $response = curl_exec($ch);
   curl_close($ch);
 
-  sendText($phone, "Your photo(s) have been uploaded! View them here [NEED LINK TO MOBILE LAYER]");
+  sendText($phone, "Your photo(s) have been uploaded! View them here bit.ly/12Dy6u5");
 
 }
 
