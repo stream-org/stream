@@ -7,7 +7,7 @@ include('connection.php');
 
 // iPhonePush($phone, $streamID);
 
-function iPhonePush($phone, $streamID)
+function photoPush($phone, $streamID)
 {
 	$theName;
 	$theStreamName;

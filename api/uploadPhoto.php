@@ -91,7 +91,7 @@ if ($tiny = "null"){
 
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL) VALUES ('$streamID', '$phone', '$pictureID','$pictureFilePath', '$tinyPictureFilePath')");
 
-	iPhonePush($phone, $streamID);
+	photoPush($phone, $streamID);
 
 	$metrics->track('upload_photo', array('medium'=>'text','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$pictureID));
 
@@ -105,7 +105,7 @@ if ($tiny = "null"){
 else{
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption) VALUES ('$streamID', '$phone', '$pictureID', '$picture','$tiny','$caption')");
 
-	iPhonePush($phone, $streamID);
+	photoPush($phone, $streamID);
 
 	$metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$pictureID));
 	
