@@ -21,7 +21,7 @@ $metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
 $streamID = $_GET['streamID'];
 $streamerPhone = $_GET['streamerPhone'];
 $viewerPhone = $_GET['viewerPhone'];
-$phone = standardizePhone($phone);
+$phone = standardizePhone($streamerPhone);
 
 $responseArray = array();
 

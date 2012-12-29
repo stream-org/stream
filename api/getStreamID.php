@@ -16,22 +16,37 @@ include "formatPhoneNumbers.php";
 $phone = $_GET['phone'];
 $phone = standardizePhone($phone);
 $streamName = $_GET['streamName'];
+$streamToUser = $_GET['streamToUser'];
 $responseArray = array();
 
-$result = mysql_query("SELECT * FROM UserStreams WHERE Phone='$phone'");
+//getting streamID based on streamName
+if ($streamToUser == ''){
+	$result = mysql_query("SELECT * FROM UserStreams WHERE Phone='$phone'");
 
-while($row=mysql_fetch_array($result))
-{
-	$streamID = $row['StreamID'];
-	$anotherResult = mysql_query("SELECT * FROM Streams WHERE StreamID='$streamID'");
-	while($anotherRow = mysql_fetch_array($anotherResult))
+	while($row=mysql_fetch_array($result))
 	{
-		$tempStreamName = $anotherRow['StreamName'];
-		if($tempStreamName === $streamName)
+		$streamID = $row['StreamID'];
+		$anotherResult = mysql_query("SELECT * FROM Streams WHERE StreamID='$streamID'");
+		while($anotherRow = mysql_fetch_array($anotherResult))
 		{
-			echo $streamID;
+			$tempStreamName = $anotherRow['StreamName'];
+			if($tempStreamName === $streamName)
+			{
+				echo $streamID;
+			}
 		}
 	}
+}
+
+//Getting streamID based on streamToUser number
+else{
+
+	$result = mysql_query("SELECT * FROM UserStreams WHERE Phone='$phone' AND StreamToUser = '$streamToUser'");
+	$row=mysql_fetch_array($result);
+	$streamID = $row['StreamID'];
+
+	echo $streamID;
+
 }
 
 ?>

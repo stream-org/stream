@@ -5,14 +5,14 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-	<link REL=StyleSheet HREF="mobileWeb_index.css" TYPE="text/css" MEDIA=screen>
-
 	<!-- For Photo Upload -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
 	<script src="http://75.101.134.112/ChanningsWork/mobileWeb_index.js"></script>
+
+	<link REL=StyleSheet HREF="mobileWeb_index.css" TYPE="text/css" MEDIA=screen>
 
 	<script>	
 
@@ -36,7 +36,7 @@
 		phoneNumber = checkPhoneCookie();
 		latestStreamID = checkStreamIDCookie();
 		console.log("this is the phoneNumber: " + phoneNumber);
-		console.log("this is the streadID: " + latestStreamID);
+		console.log("this is the streamID: " + latestStreamID);
 		latestPicture = checkPictureCookie();
 		console.log("this is the latestPicture: " + latestPicture);
 		console.log('showing picture');
@@ -143,7 +143,7 @@
 		</div>
 	</div>
 
-	<!-- 6. new stream page -->
+	<!-- 5. new stream page -->
 	<div data-role="page" data-theme="a" id="newStream">
 		<div data-role="header">
 			<a href="#streams_your">cancel</a>
@@ -179,7 +179,7 @@
 		</div>
 	</div>
 
-	<!-- 7. template for individual stream -->
+	<!-- 6. template for individual stream -->
 	<div data-role="page" data-theme="c" id="streamTemplate">
 		<div data-role="header">
 			<a href="#streams_your" data-icon="back">back</a>
@@ -200,7 +200,7 @@
 		</div>
 	</div>	
 
-	<!-- 8. photo view page -->
+	<!-- 7. photo view page -->
 	<div data-role="page" data-theme="a" id="photoView">
 		<div data-role="header">
 			<h1 id="photographersName"></h1>
@@ -220,7 +220,7 @@
 		</div>
 	</div>
 
-	<!-- 9. peopleWhoLike -->
+	<!-- 8. peopleWhoLike -->
 	<div data-role="page" data-theme="c" id="peopleWhoLike">
 		<div data-role="header">
 			<h1>Likes</h1>
@@ -238,7 +238,7 @@
 		</div>
 	</div>	
 
-	<!-- 10. peopleParticipating -->
+	<!-- 9. peopleParticipating -->
 	<div data-role="page" data-theme="c" id="peopleParticipating">
 		<div data-role="header">
 			<h1>Participants</h1>

@@ -33,9 +33,19 @@ $caption = $_GET['caption'];
 $pictureID = $picture . $phone . $streamID . time();
 $pictureID = hash('sha512', $pictureID);
 
+//For testing photo upload notification
+if($picture = "test"){
+
+  	$url = 'http://75.101.134.112/api/notification.php?phone=' . $phone . '&streamID=' . $streamID;
+  	$ch = curl_init($url);
+  	$response = curl_exec($ch);
+  	curl_close($ch);
+
+}
+
 // Logic for photos uploaded through text
 
-if ($tiny = "null"){
+elseif ($tiny = "null"){
 
 
 	echo "Mogreet!";
@@ -101,6 +111,7 @@ if ($tiny = "null"){
   	curl_close($ch);
 
  }
+
 
 else{
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption) VALUES ('$streamID', '$phone', '$pictureID', '$picture','$tiny','$caption')");
