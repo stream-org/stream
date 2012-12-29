@@ -17,6 +17,10 @@ include('connection.php');
 //gets number standardization function
 include "formatPhoneNumbers.php";
 
+//Mixpanel Tracking
+require_once("mixPanel.php");
+$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
+
 //grabbing the arguments 
 $phone = $_GET['phone'];
 $phone = standardizePhone($phone);
@@ -85,6 +89,8 @@ if ($tiny = "null"){
 
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL) VALUES ('$streamID', '$phone', '$pictureID','$pictureFilePath', '$tinyPictureFilePath')");
 
+	$metrics->track('upload_photo', array('medium'=>'text','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$pictureID));
+
   	$url = 'http://75.101.134.112/api/notification.php?phone=' . $phone . '&streamID=' . $streamID;
   	$ch = curl_init($url);
   	$response = curl_exec($ch);
@@ -95,6 +101,8 @@ if ($tiny = "null"){
 else{
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption) VALUES ('$streamID', '$phone', '$pictureID', '$picture','$tiny','$caption')");
 
+	$metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$pictureID));
+	
 	$url = 'http://75.101.134.112/api/notification.php?phone=' . $phone . '&streamID=' . $streamID;
   	$ch = curl_init($url);
   	$response = curl_exec($ch);
@@ -116,3 +124,4 @@ else{
 
 	echo json_encode($responseArray);
 }
+?>
