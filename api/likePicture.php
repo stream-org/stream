@@ -11,6 +11,7 @@ include "connection.php";
 
 //gets number standardization function
 include "formatPhoneNumbers.php";
+include "push.php";
 
 //Mixpanel Tracking
 require_once("mixPanel.php");

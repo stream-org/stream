@@ -1,0 +1,29 @@
+for ($j = 0; $j < count($peopleInStreamArray); $j++)
+	{
+		$tempPhone = $peopleInStreamArray[$j];
+		$sendMogreetTextResult = mysql_query("SELECT * FROM Users WHERE Phone='$tempPhone' AND Token=''");
+		while ($sendMogreetTextRow = mysql_fetch_array($sendMogreetTextResult))
+		{
+			$theMessage = $theName . ' uploaded a photo to ' . $theStreamName . '. bit.ly/12Dy6u5';
+			sendText($tempPhone, $theMessage);
+		}
+	}
+
+
+	4af61150a072db0982335b65cb905b77d32bab06c008ce49d1854ed0331a786e
+	4af61150a072db0982335b65cb905b77d32bab06c008ce49d1854ed0331a786e
+
+
+	c19c01acd2ce94ee007562c0b8f58fa5fb1c7c0984a1fc9d1b2265797e924dbf
+	c19c01acd2ce94ee007562c0b8f58fa5fb1c7c0984a1fc9d1b2265797e924dbf
+
+
+
+	773ac1de96703ed9a9147562c9bb4e035bdddc24158824bc0ef14d0bb70047572b14892dae8849c9ea897ee0c1c3e105837ef0f17d4891fca9aa95a337fcd418
+
+
+
+	f24bdc
+	773ac1d
+	9ebf7d56
+	d700ff

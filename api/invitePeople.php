@@ -10,10 +10,8 @@
 
 include "connection.php";
 
-//gets number standardization function
+// //gets number standardization function
 include "formatPhoneNumbers.php";
-
-include "sendText.php";
 include "push.php";
 
 //Mixpanel Tracking
@@ -35,18 +33,17 @@ while($nameRow = mysql_fetch_array($nameResult))
 	$streamName = $nameRow['StreamName'];
 }
 
-for ($i=0; $i < count($phoneArray) ; $i++) { 
+for ($i=0; $i < count($phoneArray); $i++) 
+{ 
+	echo 'made it here';
 
-	if (substr($phoneArray[$i],0,5) != 'Error'){
+	if (substr($phoneArray[$i],0,5) != 'Error')
+	{
 
 		$firstTimeUser = True;
 		$currentPhone = standardizePhone($phoneArray[$i]);
 		$textString;
 
-
-		//if phone is user with password send one notif
-		//if phone with no hash, another notif 
-		//if no phone, send register 
 
 		mysql_query("INSERT INTO UserStreams (Phone, StreamID) VALUES ('$currentPhone', '$streamID')");
 
@@ -55,36 +52,6 @@ for ($i=0; $i < count($phoneArray) ; $i++) {
 		mysql_query("INSERT INTO Users (Phone, InvitedBy) VALUES ('$currentPhone', '$inviterPhone')");
 
 		invitePush($inviterPhone, $streamID);
-
-
-		echo $currentPhone;
-		echo '<br>';
-
-		$userResult = mysql_query("SELECT * FROM Users WHERE Phone='$currentPhone'");
-
-
-		while ($userRow = mysql_fetch_array($userResult)) 
-		{
-			if ($userRow['First'] !== '' && $userRow['HashString'] == '')
-			{
-				$textString = "You've been invited to a Stream! Open the Stream app to view " . $streamName;
-				sendText($currentPhone, $textString);
-				$firstTimeUser = False;
-			}
-
-			if ($userRow['First'] !== '' && $userRow['HashString'] !== '')
-			{
-				$textString = "You've been invited to a Stream! Open the Stream app to view " . $streamName;
-				sendText("6508420492", $textString);
-				$firstTimeUser = False;
-			} 
-		}
-
-		if ($firstTimeUser) {
-
-			$textString = "You've been invited to a Stream! Open the Stream app to view " . $streamName;
-			sendText($currentPhone, $textString);
-		}
 	}
 }
 
