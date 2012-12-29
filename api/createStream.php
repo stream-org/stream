@@ -15,6 +15,7 @@ include "connection.php";
 include "formatPhoneNumbers.php";
 
 include "sendText.php";
+include "push.php";
 
 //Mixpanel Tracking
 require_once("mixPanel.php");
