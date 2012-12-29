@@ -5,7 +5,7 @@ include "connection.php";
 //extracting data from the XML object
 $rawMessage = (string) file_get_contents('php://input');
 $simpleXML = simplexml_load_string($rawMessage);
-$pictureArray = (string)$simpleXML->images->image;
+$picture = (string)$simpleXML->images->image;
 $phone = (string)$simpleXML->msisdn;
 $message = (string)$simpleXML->message;
 
