@@ -4,6 +4,12 @@
 	color : black;
 }
 
+.streams img 
+{
+	width:100px;
+	height:100px;
+}
+
 #streamContent 
 {
 	background-color: #DFDFDF;
@@ -25,20 +31,8 @@
 	border : 6px solid white;
 }
 
-.streams img 
+.pictureFrame img 
 {
-	width:100px;
-	height:100px;
-}
-
-#introPage 
-{
-
-}
-
-
-#mainPic 
-{
-	width  : 100%;
-    height : auto;
+	width : 100%;
+	height: auto;
 }

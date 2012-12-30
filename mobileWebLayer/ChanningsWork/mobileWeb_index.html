@@ -5,59 +5,21 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
-	<!-- For Photo Upload -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<!-- import libraries: jQuery, jQueryMobile, & cookies  -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>	
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>	
 	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	
+	<!-- import stylesheets: jQueryMobile & Custom -->
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-	<script src="http://75.101.134.112/ChanningsWork/mobileWeb_index.js"></script>
-
 	<link REL=StyleSheet HREF="mobileWeb_index.css" TYPE="text/css" MEDIA=screen>
 
-	<script>	
+	<!-- import Custom Javascript -->
+	<script src="http://75.101.134.112/ChanningsWork/mobileWeb_index.js"></script>
 
-	var phoneNumber;
-	var latestStreamID;
-	var latestPicture;
-
-	$('#streams_your').live('pageshow',function(){
-		$('#streamNF').html('');
-		phoneNumber = checkPhoneCookie();
-		popStreamNF();
-	});
-
-	$('#streamTemplate').live('pageshow', function() {
-		phoneNumber = checkPhoneCookie();
-		latestStreamID = checkStreamIDCookie();
-		popStreamProfile(latestStreamID);
-	});
-
-	$('#photoView').live('pageshow', function(){
-		phoneNumber = checkPhoneCookie();
-		latestStreamID = checkStreamIDCookie();
-		console.log("this is the phoneNumber: " + phoneNumber);
-		console.log("this is the streamID: " + latestStreamID);
-		latestPicture = checkPictureCookie();
-		console.log("this is the latestPicture: " + latestPicture);
-		console.log('showing picture');
-		showPicture(latestPicture);
-	});
-
-	$('#peopleParticipating').live('pageshow', function(){
-		console.log('the streamID is: ' + checkStreamIDCookie());
-		getPeopleInStream(checkStreamIDCookie());
-	});
-
-	$('#peopleWhoLike').live('pageshow', function(){
-		console.log('the streamID is: ' + checkPictureCookie());
-		getPeopleWhoLike(checkPictureCookie());
-	});
-
-	</script>
-	
 </head>
 
-<body> 
+<body>
 	<!-- 1. first page a user sees -->
 	<div data-role="page" id="introPage" data-theme="a">
 		<div data-role="header">
@@ -185,7 +147,6 @@
 			<a href="#streams_your" data-icon="back">back</a>
 			<h1 id="streamTitle">{stream_name}</h1>
 			<!-- <input id="fileupload" type="file" name="files[]" multiple> -->
-
 		</div>
 
 		<div data-role="content" align="center" id="streamContent">
@@ -201,8 +162,8 @@
 	</div>	
 
 	<!-- 7. photo view page -->
-	<div data-role="page" data-theme="a" id="photoView">
-		<div data-role="header">
+	<div data-role="page" data-theme="a" id="photoView" data-fullscreen="true">
+		<div data-role="header" data-position="fixed">
 			<h1 id="photographersName"></h1>
 			<a href="#streamTemplate" data-icon="delete" class="ui-btn-right" data-iconpos="notext">cancel</a>
 		</div>
@@ -212,11 +173,7 @@
 				</div>
 		</div> 
 
-		<div data-role="footer">
-				<div data-role="button" id="likeButton" onClick= "likePicture()">
-				</div>
-					
-				<div data-icon="check" data-role="button" id="numberOfLikes" onClick= "preGetPeopleWhoLike()" ></div>				
+		<div data-role="footer" data-poisition="fixed" id="photoViewFooter">		
 		</div>
 	</div>
 

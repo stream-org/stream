@@ -120,6 +120,7 @@ function popStreamNF () {
 	{
 
 		var streamArray = [];
+		console.log(data);
 
 		$.each(data, function(i)
 		{
@@ -382,11 +383,9 @@ function showPicture(pictureID)
 	var API_URL = 'http://75.101.134.112/api/getPictureMetadata.php?picture=' + pictureID + '&phone=' + phoneNumber;
 	console.log(API_URL);
 
-	//need to put in some logic to make the picture fit; used to have it, not sure where it went (looks at Rousseau.) [-cca]
-	width = $('#thePictureFrame').width()
-	console.log(width);
-
 	$.getJSON(API_URL, function (data) {
+
+		console.log(data);
 		
 		var first = data['uploaderFirstName'];
 		var last = data['uploaderLastName'];
@@ -394,23 +393,24 @@ function showPicture(pictureID)
 		var phone = data['uploaderPhone'];
 		var likes = data['numberOfLikes'];
 		var hasLiked = data['hasLiked'];
+		var pictureURL = data['picture_url']
 
-		$('#photographersName').html(fullName).trigger('create');		
+		$('#photographersName').html(fullName);	
 
 		if(hasLiked == 'True')
 		{
-			$('#thePictureFrame').html('');
-			$('#thePictureFrame').append('<div id="mainPic"><img style="max-width:'+ width + '; height:auto" src="' + pictureID + '" /></div>').trigger('create'); 
-			$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
-			$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
+			$('#thePictureFrame').append('<div id="mainPic"><img src="' + pictureURL + '" /></div>').trigger('create');
+			$('#photoViewFooter').append('<a class="ui-btn-left" data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
+			$('#photoViewFooter').append('<a class="ui-btn-right" data-role="button" onClick="preGetPeopleWhoLike()">' + likes + ' likes</a>').trigger('create');
+
 		}
 
 		else
 		{
-			$('#thePictureFrame').html('');
-			$('#thePictureFrame').append('<div id="mainPic"><img style="max-width:'+ width + ';height:auto" src="' + pictureID + '" /></div>').trigger('create');
-			$('#photoViewFooter').append('<a data-role="button" onClick="likePicture()">Like</a>').trigger('create');
-			$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
+			$('#thePictureFrame').append('<div id="mainPic"><img src="' + pictureURL + '" /></div>').trigger('create');
+			$('#photoViewFooter').append('<a class="ui-btn-left" data-role="button" onClick="likePicture()">Like</a>').trigger('create');
+			$('#photoViewFooter').append('<a class="ui-btn-right" data-role="button" onClick="preGetPeopleWhoLike()">' + likes + ' likes</a>').trigger('create');
+			
 		}
 
 	});
@@ -423,6 +423,7 @@ function showPicture(pictureID)
 function likePicture()
 {
 	console.log('likePicture() initialized...');
+	$('#photoViewFooter').html('');
 
 	var picture = document.getElementById("mainPic").getElementsByTagName("img")[0].src;
 	var API_URL = 'http://75.101.134.112/api/likePicture.php?picture=' + picture + '&phone=' + phoneNumber;
@@ -430,8 +431,8 @@ function likePicture()
 
 	$.getJSON(API_URL, function (data) 
 	{
-		$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
-		$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
+		$('#photoViewFooter').append('<a class="ui-btn-left" data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
+		$('#photoViewFooter').append('<a class="ui-btn-right" data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
 	});
 };
 
@@ -442,6 +443,7 @@ function likePicture()
 function unlikePicture() 
 {
 	console.log('unlikePicture initialized...');
+	$('#photoViewFooter').html('');
 
 	var picture = document.getElementById("mainPic").getElementsByTagName("img")[0].src;
 	var API_URL = 'http://75.101.134.112/api/unlikePicture.php?picture=' + picture + '&phone=' + phoneNumber;
@@ -449,8 +451,8 @@ function unlikePicture()
 
 	$.getJSON(API_URL, function (data) 
 	{
-		$('#photoViewFooter').append('<a data-role="button" onClick="likePicture()">Like</a>').trigger('create');
-		$('#photoViewFooter').append('<a data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
+		$('#photoViewFooter').append('<a class="ui-btn-left" data-role="button" onClick="likePicture()">Like</a>').trigger('create');
+		$('#photoViewFooter').append('<a class="ui-btn-right" data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
 	});
 };
 
@@ -641,3 +643,49 @@ var latestPicture = getCookie("latestPicture");
 		});
   	}
 };
+
+///////////////////////////////////////////////
+//final functions (things that should run last)
+///////////////////////////////////////////////
+
+var phoneNumber;
+var latestStreamID;
+var latestPicture;
+
+//triggered by 'streams_your'
+$(document).on('pageinit','#streams_your',function(){
+	$('#streamNF').html('');
+	phoneNumber = checkPhoneCookie();
+	popStreamNF();
+});
+
+//triggered by 'streamTemplate'
+$(document).on('pageinit', '#streamTemplate', function() {
+	phoneNumber = checkPhoneCookie();
+	latestStreamID = checkStreamIDCookie();
+	popStreamProfile(latestStreamID);
+});
+
+//triggered by 'photoView'
+$(document).on('pageinit','#photoView', function(){
+	phoneNumber = checkPhoneCookie();
+	latestStreamID = checkStreamIDCookie();
+	console.log("this is the phoneNumber: " + phoneNumber);
+	console.log("this is the streamID: " + latestStreamID);
+	latestPicture = checkPictureCookie();
+	console.log("this is the latestPicture: " + latestPicture);
+	console.log('showing picture');
+	showPicture(latestPicture);
+});
+
+//triggered by 'peopleParticipating'
+$(document).on('pageinit','#peopleParticipating', function(){
+	console.log('the streamID is: ' + checkStreamIDCookie());
+	getPeopleInStream(checkStreamIDCookie());
+});
+
+//triggered by 'peopleWhoLike'
+$(document).on('pageinit','#peopleWhoLike', function(){
+	console.log('the streamID is: ' + checkPictureCookie());
+	getPeopleWhoLike(checkPictureCookie());
+});
