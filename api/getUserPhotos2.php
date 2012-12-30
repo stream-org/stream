@@ -28,16 +28,21 @@ $responseArray = array();
 $pictureArray = array();
 
 
+
 $result = mysql_query("SELECT * FROM StreamActivity WHERE Phone='$phone' AND StreamID='$streamID' ORDER BY Created");
 
 while($row = mysql_fetch_array($result))
 {
-	array_push($pictureArray, $row['TinyPicURL']);
+	$tempArray = array();
+	$tempArray['url'] = $row['TinyPicURL'];
+	$tempArray['id'] = $row['PictureID'];
+	array_push($pictureArray, $tempArray	);
 }
 
 $responseArray['streamID'] = $streamID;
 $responseArray['phone'] = $phone;
 $responseArray['pictures'] = $pictureArray;
+
 
 echo json_encode($responseArray);
 
