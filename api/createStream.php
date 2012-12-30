@@ -14,8 +14,8 @@ include "connection.php";
 // //gets number standardization function
 include "formatPhoneNumbers.php";
 
-include "sendText.php";
-// include "push.php";
+
+include "push.php";
 
 //Mixpanel Tracking
 require_once("mixPanel.php");
@@ -67,6 +67,8 @@ for ($i=0; $i < count($invitees) ; $i++) {
   	curl_close($ch);
 
 }
+
+invitePush($phone, $streamID);
 
 $responseArray['streamID'] = $streamID;
 
