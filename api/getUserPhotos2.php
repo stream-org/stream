@@ -36,7 +36,7 @@ while($row = mysql_fetch_array($result))
 	$tempArray = array();
 	$tempArray['url'] = $row['TinyPicURL'];
 	$tempArray['id'] = $row['PictureID'];
-	array_push($pictureArray, $tempArray	);
+	array_push($pictureArray, $tempArray);
 }
 
 $responseArray['streamID'] = $streamID;
