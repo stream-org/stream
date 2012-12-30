@@ -3,10 +3,8 @@
 include('connection.php');
 include('sendText.php');
 
-// $phone = $_GET['phone'];
-// $streamID = $_GET['streamID'];
-
-// invitePush($phone, $streamID);
+$phone = $_GET['phone'];
+$streamID = $_GET['streamID'];
 
 function invitePush($phone, $streamID)
 {
