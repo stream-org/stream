@@ -11,8 +11,7 @@
 //	pictureID or null
 
 include('SimpleImage.php');
-include('connection.php');
-include('sendText.php');
+include('connection.php');	
 include('push.php');
 
 
@@ -34,18 +33,15 @@ $pictureID = $picture . $phone . $streamID . time();
 $pictureID = hash('sha512', $pictureID);
 
 //For testing photo upload notification
-if($picture = "test"){
+if($picture == "test"){
 
-  	$url = 'http://75.101.134.112/api/notification.php?phone=' . $phone . '&streamID=' . $streamID;
-  	$ch = curl_init($url);
-  	$response = curl_exec($ch);
-  	curl_close($ch);
+  	photopush($phone, $streamID);
 
 }
 
 // Logic for photos uploaded through text
 
-elseif ($tiny = "null"){
+elseif ($tiny == ""){
 
 
 	echo "Mogreet!";
@@ -105,11 +101,6 @@ elseif ($tiny = "null"){
 
 	$metrics->track('upload_photo', array('medium'=>'text','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$pictureID));
 
-  	$url = 'http://75.101.134.112/api/notification.php?phone=' . $phone . '&streamID=' . $streamID;
-  	$ch = curl_init($url);
-  	$response = curl_exec($ch);
-  	curl_close($ch);
-
  }
 
 
@@ -119,11 +110,6 @@ else{
 	photoPush($phone, $streamID);
 
 	$metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$pictureID));
-	
-	$url = 'http://75.101.134.112/api/notification.php?phone=' . $phone . '&streamID=' . $streamID;
-  	$ch = curl_init($url);
-  	$response = curl_exec($ch);
-  	curl_close($ch);
 
 	$result = mysql_query("SELECT * FROM StreamActivity WHERE PicURL='$picture' AND Phone='$phone' AND StreamID='$streamID'");
 	$responseArray = array();

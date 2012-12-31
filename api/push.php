@@ -3,8 +3,58 @@
 include('connection.php');
 include('sendText.php');
 
-$phone = $_GET['phone'];
-$streamID = $_GET['streamID'];
+function likePush($phone, $pictureID)
+{
+	$likerName;
+	$theStreamName;
+	$userToken;
+	$uploaderPhone;
+	$streamID;
+
+	//get the name of the person who liked the photo
+	$nameResult = mysql_query("SELECT * FROM Users WHERE Phone='$phone'");
+
+	while ($nameRow = mysql_fetch_array($nameResult))
+	{
+		$likerName = $nameRow['First'];
+	}
+
+	//find the number of the person who uploaded the photo
+	$uploaderPhoneResult = mysql_query("SELECT * FROM StreamActivity WHERE PictureID='$pictureID'");
+	while ($uploaderPhoneRow = mysql_fetch_array($uploaderPhoneResult))
+	{
+		$uploaderPhone = $uploaderPhoneRow['Phone'];
+		$streamID = $uploaderPhoneRow['StreamID'];
+	}
+
+	//find the name of the stream that the photo was uploaded to 
+	$streamNameResult = mysql_query("SELECT * FROM Streams WHERE StreamID='$streamID'");
+
+	while($streamNameRow = mysql_fetch_array($streamNameResult))
+	{
+		$theStreamName = $streamNameRow['StreamName'];
+	}
+
+	//I have the uploader's number, the liker's name, and the streamName
+	$sendResult = mysql_query("SELECT * FROM Users WHERE Phone='$uploaderPhone'");
+	while($sendRow = mysql_fetch_array($sendResult))
+	{
+		if ($sendRow['Token'] != '')
+		{
+			$tempToken = $sendRow['Token'];
+			$theMessage = $likerName . ' likes the photo you posted on ' . $theStreamName . '.';
+			$url = 'http://75.101.134.112/api/pushNotification.php?token=' . $tempToken . '&message=' . urlencode($theMessage); 
+		  	$ch = curl_init($url);
+		  	$response = curl_exec($ch);
+		  	curl_close($ch);
+		}
+		else
+		{
+			$theMessage = $likerName . ' likes the photo you posted on ' . $theStreamName . '. bit.ly/12Dy6u5';
+			sendText($uploaderPhone, $theMessage);	
+		}
+	}
+}
 
 function invitePush($phone, $streamID)
 {

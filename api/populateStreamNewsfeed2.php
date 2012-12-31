@@ -54,11 +54,11 @@ while($streamidRow = mysql_fetch_array($streamidResult))
 	{
 		$numberOfPictures = $pictureRow[0];
 	}
-	$latestPictureArray = array();
+	$latestPictureArray = null;
 	$latestPictureResult = mysql_query("SELECT * FROM StreamActivity WHERE StreamID='$streamID' ORDER BY Created DESC LIMIT 1");
 	while($latestPictureRow = mysql_fetch_array($latestPictureResult))
 	{
-		
+		$latestPictureArray = array();
 		$latestPictureArray['url'] = $latestPictureRow['TinyPicURL'];
 		$latestPictureArray['id'] = $latestPictureRow['PictureID'];
 	}

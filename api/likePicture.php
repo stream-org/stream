@@ -11,7 +11,7 @@ include "connection.php";
 
 //gets number standardization function
 include "formatPhoneNumbers.php";
-include "push.php";
+include('push.php');
 
 //Mixpanel Tracking
 require_once("mixPanel.php");
@@ -23,6 +23,9 @@ $phone = $_GET['phone'];
 $phone = standardizePhone($phone);
 
 mysql_query("INSERT INTO PictureLikes (PictureID, Phone) VALUES ('$pictureID', '$phone')");
+
+//send like push notification
+likePush($phone, $pictureID);
 
 $metrics->track('like_picture', array('liker_phone'=>$phone,'liked_picture'=>$pictureID,'distinct_id'=>$phone));
 
