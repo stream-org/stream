@@ -380,7 +380,7 @@ function showPicture(pictureID)
 	$('#thePictureFrame').html('');
 	$('#photoViewFooter').html('');
 
-	var API_URL = 'http://75.101.134.112/api/getPictureMetadata.php?picture=' + pictureID + '&phone=' + phoneNumber;
+	var API_URL = 'http://75.101.134.112/api/getPictureMetadata2.php?picture=' + pictureID + '&phone=' + phoneNumber;
 	console.log(API_URL);
 
 	$.getJSON(API_URL, function (data) {
