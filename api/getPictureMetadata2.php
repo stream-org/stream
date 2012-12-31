@@ -5,10 +5,13 @@
 //	phone
 
 //output:: 
-//	picture_url
-//	number of people who like it
-//	name and phone of person who uploaded the photo
-// 	photo's comments
+//	picture URL ['picture_url']
+//  picture ID ['pictureID']
+//	number of people who like it ['numberOfLikes']
+//  whether the user has liked the photo ['hasLiked']
+//	name of person who uploaded the photo ['uploaderFirstName'] ['uploaderLastName'] 
+//  phone of person who uploaded the photo ['uploaderPhone']
+// 	photo's comments ['Comments']
 
 include "connection.php";
 
