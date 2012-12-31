@@ -426,7 +426,7 @@ function likePicture()
 	$('#photoViewFooter').html('');
 
 	var picture = document.getElementById("mainPic").getElementsByTagName("img")[0].src;
-	var API_URL = 'http://75.101.134.112/api/likePicture.php?picture=' + picture + '&phone=' + phoneNumber;
+	var API_URL = 'http://75.101.134.112/api/likePicture.php?pictureID=' + picture + '&phone=' + phoneNumber;
 	console.log(API_URL);
 
 	$.getJSON(API_URL, function (data) 
