@@ -27,7 +27,7 @@ $fp = stream_socket_client(
 if (!$fp)
 	exit("Failed to connect: $err $errstr" . PHP_EOL);
 
-echo 'Connected to APNS' . PHP_EOL;
+// echo 'Connected to APNS' . PHP_EOL;
 
 // Create the payload body
 $body['aps'] = array(
