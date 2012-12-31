@@ -426,11 +426,12 @@ function likePicture()
 	$('#photoViewFooter').html('');
 
 	var picture = document.getElementById("mainPic").getElementsByTagName("img")[0].src;
-	var API_URL = 'http://75.101.134.112/api/likePicture.php?pictureID=' + picture + '&phone=' + phoneNumber;
-	console.log(API_URL);
+	var API_URL = 'http://75.101.134.112/api/mobileWebLikePicture.php?picture=' + picture + '&phone=' + phoneNumber;
+	console.log(API_URL);	
 
 	$.getJSON(API_URL, function (data) 
 	{
+		console.log(data);
 		$('#photoViewFooter').append('<a class="ui-btn-left" data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
 		$('#photoViewFooter').append('<a class="ui-btn-right" data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
 	});
@@ -451,6 +452,7 @@ function unlikePicture()
 
 	$.getJSON(API_URL, function (data) 
 	{
+		console.log(data);
 		$('#photoViewFooter').append('<a class="ui-btn-left" data-role="button" onClick="likePicture()">Like</a>').trigger('create');
 		$('#photoViewFooter').append('<a class="ui-btn-right" data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
 	});

@@ -25,7 +25,7 @@ $phone = standardizePhone($phone);
 
 //get the pictureID from the picture 
 
-$pictureIDResult = mysql_query("SELECT * FROM StreamActivity WHERE PicURL='$picture'");
+$pictureIDResult = mysql_query("SELECT * FROM StreamActivity WHERE TinyPicURL='$picture'");
 
 while($pictureIDRow = mysql_fetch_array($pictureIDResult))
 {
