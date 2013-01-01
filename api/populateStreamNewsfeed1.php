@@ -27,7 +27,7 @@ $latestPicture;
 
 $responseArray = array();
 
-$streamidResult = mysql_query("SELECT * FROM UserStreams WHERE Phone='$phone'");
+$streamidResult = mysql_query("SELECT * FROM UserStreams WHERE Phone='$phone' ORDER BY StreamJoinDate DESC");
 while($streamidRow = mysql_fetch_array($streamidResult))
 {
 	$streamID = $streamidRow['StreamID'];

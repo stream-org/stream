@@ -109,7 +109,7 @@ else{
 
 	photoPush($phone, $streamID);
 
-	$metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$pictureID));
+	$metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$phone));
 
 	$result = mysql_query("SELECT * FROM StreamActivity WHERE PicURL='$picture' AND Phone='$phone' AND StreamID='$streamID'");
 	$responseArray = array();
