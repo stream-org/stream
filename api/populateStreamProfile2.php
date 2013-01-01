@@ -39,7 +39,7 @@ while($pictureRow = mysql_fetch_array($pictureResult))
 	$result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE PictureID='$pictureID'");
 	$numLikes = mysql_fetch_row($result);
 	$numLikes = $numLikes[0];
-	$picture['TinyPicURL'] = $TinyPicURL;
+	$picture['url'] = $TinyPicURL;
 	$picture['numLikes'] = $numLikes;
 	$picture['pictureID'] = $pictureID;
 	array_push($pictureArray, $picture);
