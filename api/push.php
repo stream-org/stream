@@ -13,6 +13,7 @@ function likePush($phone, $pictureID)
 	$userToken;
 	$uploaderPhone;
 	$streamID;
+	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
 
 	//get the name of the person who liked the photo
 	$nameResult = mysql_query("SELECT * FROM Users WHERE Phone='$phone'");
@@ -50,16 +51,16 @@ function likePush($phone, $pictureID)
 		  	$ch = curl_init($url);
 		  	$response = curl_exec($ch);
 		  	curl_close($ch);
+		  	$metrics->track('like_notification', array('notification_type'=>'iPhone Push','notified_phone'=>$uploaderPhone,'liker_phone'=>$phone,'liked_picture'=>$pictureID,'distinct_id'=>$pictureID));
 		}
 		else
 		{
 			$theMessage = $likerName . ' likes the photo you posted on ' . $theStreamName . '. bit.ly/12Dy6u5';
 			sendText($uploaderPhone, $theMessage);	
+			$metrics->track('like_notification', array('notification_type'=>'text','notified_phone'=>$uploaderPhone,'liker_phone'=>$phone,'liked_picture'=>$pictureID,'distinct_id'=>$pictureID));
 		}
 	}
 
-	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
-	$metrics->track('like_notification', array('notified_phone'=>$phone,'liked_picture'=>$pictureID,'distinct_id'=>$pictureID));
 }
 
 function invitePush($phone, $streamID)
@@ -68,7 +69,7 @@ function invitePush($phone, $streamID)
 	$theStreamName;
 	$userToken;
 	$peopleInStreamArray = array();
-
+	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
 
 	// get the user's name and token 
 	$nameResult = mysql_query("SELECT * FROM Users WHERE Phone='$phone'");
@@ -109,6 +110,7 @@ function invitePush($phone, $streamID)
 		  	$response = curl_exec($ch);
 		  	curl_close($ch);
 		}
+		$metrics->track('invite_notification', array('notification_type'=>'iPhone Push','notified_phone'=>$tempPhone,'stream_invited_to'=>$streamID,'distinct_id'=>$streamID));
 	}
 
 	for ($j = 0; $j < count($peopleInStreamArray); $j++)
@@ -120,9 +122,8 @@ function invitePush($phone, $streamID)
 			$theMessage2 = $theName . ' invited you to the ' . $theStreamName . ' stream. bit.ly/12Dy6u5';
 			sendText($tempPhone2, $theMessage2);
 		}
-	}
-	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
-	$metrics->track('like_notification', array('notified_phone'=>$phone,'stream_invited_to'=>$streamID,'distinct_id'=>$streamID));
+		$metrics->track('invite_notification', array('notification_type'=>'text','notified_phone'=>$tempPhone2,'stream_invited_to'=>$streamID,'distinct_id'=>$streamID));
+	}	
 }
 
 
@@ -133,6 +134,7 @@ function photoPush($phone, $streamID)
 	$userToken;
 	$peopleInStreamArray = array();
 
+	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
 
 	// get the user's name and token 
 	$nameResult = mysql_query("SELECT * FROM Users WHERE Phone='$phone'");
@@ -172,6 +174,9 @@ function photoPush($phone, $streamID)
 		  	$response = curl_exec($ch);
 		  	curl_close($ch);
 		}
+
+		$metrics->track('photo_notification', array('notification_type'=>'iPhone Push','notified_phone'=>$tempPhone,'stream_uploaded_to'=>$streamID,'distinct_id'=>$tempPhone));
+
 	}
 
 	for ($j = 0; $j < count($peopleInStreamArray); $j++)
@@ -183,9 +188,8 @@ function photoPush($phone, $streamID)
 			$theMessage2 = $theName . ' uploaded a photo to ' . $theStreamName . '. bit.ly/12Dy6u5';
 			sendText($tempPhone2, $theMessage2);
 		}
+		$metrics->track('photo_notification', array('notification_type'=>'text','notified_phone'=>$tempPhone2,'stream_uploaded_to'=>$streamID,'distinct_id'=>$tempPhone));
 	}
-	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
-	$metrics->track('photo_notification', array('notified_phone'=>$phone,'stream_uploaded_to'=>$streamID,'distinct_id'=>$phone));
 }
 
 
