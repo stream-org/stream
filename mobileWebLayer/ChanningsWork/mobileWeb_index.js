@@ -380,7 +380,7 @@ function showPicture(pictureID)
 	$('#thePictureFrame').html('');
 	$('#photoViewFooter').html('');
 
-	var API_URL = 'http://75.101.134.112/api/getPictureMetadata2.php?picture=' + pictureID + '&phone=' + phoneNumber;
+	var API_URL = 'http://75.101.134.112/api/mobileWebGetPictureMetadata.php?picture=' + pictureID + '&phone=' + phoneNumber;
 	console.log(API_URL);
 
 	$.getJSON(API_URL, function (data) {
@@ -433,7 +433,7 @@ function likePicture()
 	{
 		console.log(data);
 		$('#photoViewFooter').append('<a class="ui-btn-left" data-role="button" onClick="unlikePicture()">Unlike</a>').trigger('create');
-		$('#photoViewFooter').append('<a class="ui-btn-right" data-role="button" onClick="unlikePicture()">' + likes + ' likes</a>').trigger('create');
+		$('#photoViewFooter').append('<a class="ui-btn-right" data-role="button" onClick="unlikePicture()">' + data['likes'] + ' likes</a>').trigger('create');
 	});
 };
 

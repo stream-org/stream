@@ -55,7 +55,7 @@ else{
 	mysql_query("UPDATE Users SET First ='$first', Last ='$last', ProfilePic = '$profilePicture', SALT = '$salt', HashString='$hash', JoinDate='$now' WHERE Phone = '$phone'");
 
 }
-$name = $first." ".$last
+$name = $first . " " . $last;
 
 $metrics->track('sign_up', array('name'=>$name, 'phone'=>$phone, 'profile_picture'=>$profilePicture, 'distinct_id'=>$phone));
 
@@ -69,8 +69,6 @@ while($row = mysql_fetch_array($result))
 	$responseArray['phone'] = $row['Phone'];
 	$responseArray['profilePic'] = $row['ProfilePic'];
 }
-
-
 
 
 if (empty($responseArray))
