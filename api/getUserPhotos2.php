@@ -46,6 +46,6 @@ $responseArray['pictures'] = $pictureArray;
 
 echo json_encode($responseArray);
 
-$metrics->track('view_streamer', array('viewer_phone'=>$viewerPhone,'streamer_phone'=>$streamerPhone,'stream'=>$streamID,'distinct_id'=>$phone));
+$metrics->track('view_streamer', array('viewer_phone'=>$viewerPhone,'streamer_phone'=>$streamerPhone,'stream'=>$streamID,'distinct_id'=>$viewerPhone.$streamerPhone));
 
 ?>

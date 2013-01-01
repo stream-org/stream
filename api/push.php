@@ -3,6 +3,9 @@
 include('connection.php');
 include('sendText.php');
 
+require_once("mixPanel.php");
+
+
 function likePush($phone, $pictureID)
 {
 	$likerName;
@@ -54,6 +57,9 @@ function likePush($phone, $pictureID)
 			sendText($uploaderPhone, $theMessage);	
 		}
 	}
+
+	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
+	$metrics->track('like_notification', array('notified_phone'=>$phone,'liked_picture'=>$pictureID,'distinct_id'=>$pictureID));
 }
 
 function invitePush($phone, $streamID)
@@ -115,8 +121,8 @@ function invitePush($phone, $streamID)
 			sendText($tempPhone2, $theMessage2);
 		}
 	}
-
-
+	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
+	$metrics->track('like_notification', array('notified_phone'=>$phone,'stream_invited_to'=>$streamID,'distinct_id'=>$streamID));
 }
 
 
@@ -178,6 +184,8 @@ function photoPush($phone, $streamID)
 			sendText($tempPhone2, $theMessage2);
 		}
 	}
+	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
+	$metrics->track('photo_notification', array('notified_phone'=>$phone,'stream_uploaded_to'=>$streamID,'distinct_id'=>$phone));
 }
 
 

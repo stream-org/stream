@@ -99,7 +99,7 @@ elseif ($tiny == ""){
 
 	photoPush($phone, $streamID);
 
-	$metrics->track('upload_photo', array('medium'=>'text','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$pictureID));
+	$metrics->track('upload_photo', array('medium'=>'text','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$phone));
 
  }
 

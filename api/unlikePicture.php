@@ -23,7 +23,7 @@ $phone = standardizePhone($phone);
 
 mysql_query("DELETE FROM PictureLikes WHERE PictureID='$pictureID' AND Phone='$phone'");
 
-$metrics->track('like_picture', array('unliker_phone'=>$phone,'unliked_picture'=>$pictureID,'distinct_id'=>$phone));
+$metrics->track('unlike_picture', array('unliker_phone'=>$phone,'unliked_picture'=>$pictureID,'distinct_id'=>$phone));
 
 $result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE PictureID='$pictureID'");
 

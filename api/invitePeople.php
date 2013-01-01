@@ -83,7 +83,7 @@ for ($i=0; $i < count($phoneArray); $i++)
 
 	}
 }
-$metrics->track('invite_person_to_A_Stream', array('inviter'=>$inviterPhone,'stream_created'=>$streamID,'num_invitees'=>count($invitees), 'distinct_id'=>$currentPhone));
+$metrics->track('invite_person_to_A_Stream', array('inviter'=>$inviterPhone,'stream_created'=>$streamID,'num_invitees'=>count($invitees), 'distinct_id'=>$inviterPhone));
 
 // invitePush($inviterPhone, $streamID);
 

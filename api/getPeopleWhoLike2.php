@@ -42,6 +42,6 @@ $responseArray['likers'] = $likersArray;
 
 echo json_encode($responseArray);
 
-$metrics->track('view_streamers_who_like', array('viewer'=>$viewerPhone,'liked_picture'=>$pictureID,'distinct_id'=>$viewerPhone));
+$metrics->track('view_streamers_who_like', array('viewer'=>$viewerPhone,'liked_picture'=>$pictureID,'distinct_id'=>$viewerPhone.$pictureID));
 
 ?>

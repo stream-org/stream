@@ -106,6 +106,6 @@ $responseArray['pictureID'] = $pictureID;
 
 echo json_encode($responseArray);
 
-$metrics->track('view_picture', array('viewer_phone'=>$phone,'uploader_phone'=>$uploaderPhone,'uploader_name'=>$uploaderName, 'picture'=>$pictureURL,'distinct_id'=>$phone));
+$metrics->track('view_picture', array('viewer_phone'=>$phone,'uploader_phone'=>$uploaderPhone,'uploader_name'=>$uploaderName, 'picture'=>$pictureURL,'distinct_id'=>$phone.$pictureID));
 
 ?>

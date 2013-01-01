@@ -55,7 +55,7 @@ $streamToUser = $row[0] + 1;
 
 mysql_query("INSERT INTO UserStreams (Phone, StreamID, StreamToUser) VALUES ('$phone', '$streamID','$streamToUser')");
 
-$metrics->track('create_stream', array('medium'=>$medium,'stream_creator'=>$phone,'stream_created'=>$streamID,'num_invitees'=>count($invitees), 'distinct_id'=>$streamID));
+$metrics->track('create_stream', array('medium'=>$medium,'stream_creator'=>$phone,'stream_created'=>$streamID,'num_invitees'=>count($invitees), 'distinct_id'=>$phone));
 
 //Invite invitees to stream
 for ($i=0; $i < count($invitees) ; $i++) { 
