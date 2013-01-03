@@ -5,7 +5,6 @@ include('sendText.php');
 
 require_once("mixPanel.php");
 
-
 function likePush($phone, $pictureID)
 {
 	$likerName;
@@ -60,6 +59,43 @@ function likePush($phone, $pictureID)
 			$metrics->track('like_notification', array('notification_type'=>'text','notified_phone'=>$uploaderPhone,'liker_phone'=>$phone,'liked_picture'=>$pictureID,'distinct_id'=>$pictureID));
 		}
 	}
+
+}
+
+function inviteSinglePush($inviterPhone, $inviteePhone, $streamID)
+{
+	$theName;
+	$theStreamName;
+	$userToken;
+
+	// get the user's name and token 
+	$nameResult = mysql_query("SELECT * FROM Users WHERE Phone='$inviterPhone'");
+
+	while ($nameRow = mysql_fetch_array($nameResult))
+	{
+		$theName = $nameRow['First'];
+	}
+
+	$streamNameResult = mysql_query("SELECT * FROM Streams WHERE StreamID='$streamID'");
+
+	while($streamNameRow = mysql_fetch_array($streamNameResult))
+	{
+		$theStreamName = $streamNameRow['StreamName'];
+	}
+
+
+
+	$tokenResult = mysql_query("SELECT * FROM Users WHERE Phone='$inviteePhone' AND Token!=''");
+	while($tokenRow = mysql_fetch_array($tokenResult))
+	{
+		$userToken = $tokenRow['Token'];
+	}
+
+	$theMessage = $theName . ' invited you to the ' . $theStreamName . ' stream.';
+	$url = 'http://75.101.134.112/api/pushNotification.php?token=' . $userToken . '&message=' . urlencode($theMessage); 
+	$ch = curl_init($url);
+	$response = curl_exec($ch);
+	curl_close($ch);
 
 }
 
