@@ -2,6 +2,7 @@
 
 require_once('connection.php');
 require_once('mixPanel.php');
+require_once('sendText.php');
 
 function likePushNotification($liker_phone, $picture_id)
 {
@@ -20,10 +21,8 @@ function likePushNotification($liker_phone, $picture_id)
 	{
 		$liker_name = $liker_name_row['First'];
 	}
-	echo $liker_name;
-	echo '<br>';
 
-	//finding the uploader's phone number by using the $picture_id
+	//fetching the uploader's phone number by using the $picture_id
 	$uploader_phone_result = mysql_query("SELECT * FROM StreamActivity WHERE PictureID='$picture_id'");
 	while($uploader_phone_row = mysql_fetch_array($uploader_phone_result))
 	{
@@ -45,8 +44,8 @@ function likePushNotification($liker_phone, $picture_id)
 		$uploader_token = $uploader_information_row['Token'];
 		if($uploader_token !== '')
 		{
-			$the_message = $liker_name . ' likes the photo you posted on ' . $stream_name . '.';
-			$url = 'http://75.101.134.112/stream/api/pushNotification.php?token=' . $uploader_token . '&message=' . urlencode($the_message); 
+			$message = $liker_name . ' likes the photo you posted on ' . $stream_name . '.';
+			$url = 'http://75.101.134.112/stream/api/pushNotification.php?token=' . $uploader_token . '&message=' . urlencode($message); 
 		  	$ch = curl_init($url);
 		  	$response = curl_exec($ch);
 		  	curl_close($ch);
@@ -54,51 +53,57 @@ function likePushNotification($liker_phone, $picture_id)
 		}
 		else
 		{
-			$the_message = $liker_name . ' likes the photo you posted on ' . $stream_name . '.';
-			sendText($uploader_phone, $the_message);	
+			$message = $liker_name . ' likes the photo you posted on ' . $stream_name . '. bit.ly/12Dy6u5';
+			sendText($uploader_phone, $message);	
 			$metrics->track('like_notification', array('notification_type'=>'text','notified_phone'=>$uploaderPhone,'liker_phone'=>$liker_phone,'liked_picture'=>$picture_id,'distinct_id'=>$picture_id));
 		}
 	}
 }
 
+function singleInvitePushNotification($inviter_phone, $invitee_phone, $stream_id)
+{
+	$inviter_name;
+	$stream_name;
+	$invitee_token;
 
+	//fetching the inviter's name by using the $inviter_phone
+	$inviter_name_result = mysql_query("SELECT * FROM Users WHERE Phone='$inviter_phone'");
+	while($inviter_name_row = mysql_fetch_array($inviter_name_result))
+	{
+		$inviter_name = $inviter_name_row['First'];
+	}
 
-// function inviteSinglePush($inviterPhone, $inviteePhone, $streamID)
-// {
-// 	$theName;
-// 	$theStreamName;
-// 	$userToken;
+	//fetching the stream name by using the $stream_id
+	$stream_name_result = mysql_query("SELECT * FROM Streams WHERE StreamID='$stream_id'");
+	while($stream_name_row = mysql_fetch_array($stream_name_result))
+	{
+		$stream_name = $stream_name_row['StreamName'];
+	}
 
-// 	// get the user's name and token 
-// 	$nameResult = mysql_query("SELECT * FROM Users WHERE Phone='$inviterPhone'");
+	//fetching the invitee's token by using the invitee's phone number 
+	$invitee_token_result = mysql_query("SELECT * FROM Users WHERE Phone='$invitee_phone'");
+	while($invitee_token_row = mysql_fetch_array($invitee_token_result))
+	{
+		$invitee_token = $invitee_token_row['Token'];
+	}
 
-// 	while ($nameRow = mysql_fetch_array($nameResult))
-// 	{
-// 		$theName = $nameRow['First'];
-// 	}
-
-// 	$streamNameResult = mysql_query("SELECT * FROM Streams WHERE StreamID='$streamID'");
-
-// 	while($streamNameRow = mysql_fetch_array($streamNameResult))
-// 	{
-// 		$theStreamName = $streamNameRow['StreamName'];
-// 	}
-
-
-
-// 	$tokenResult = mysql_query("SELECT * FROM Users WHERE Phone='$inviteePhone' AND Token!=''");
-// 	while($tokenRow = mysql_fetch_array($tokenResult))
-// 	{
-// 		$userToken = $tokenRow['Token'];
-// 	}
-
-// 	$theMessage = $theName . ' invited you to the ' . $theStreamName . ' stream.';
-// 	$url = 'http://75.101.134.112/api/pushNotification.php?token=' . $userToken . '&message=' . urlencode($theMessage); 
-// 	$ch = curl_init($url);
-// 	$response = curl_exec($ch);
-// 	curl_close($ch);
-
-// }
+	//if the user has a token, send them a push notification. if not, send them a text.
+	if($invitee_token != '')
+	{
+		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
+		$url = 'http://75.101.134.112/stream/api/pushNotification.php?token=' . $invitee_token . '&message=' . urlencode($message); 
+		$ch = curl_init($url);
+		$response = curl_exec($ch);
+		curl_close($ch);
+		$metrics->track('invite_notification', array('notification_type'=>'iPhone Push','notified_phone'=>$invitee_phone,'stream_invited_to'=>$stream_id,'distinct_id'=>$stream_id));
+	}
+	else
+	{
+		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
+		sendText($invitee_phone, $message);	
+		$metrics->track('invite_notification', array('notification_type'=>'text','notified_phone'=>$invitee_phone,'stream_invited_to'=>$stream_id,'distinct_id'=>$stream_id));
+	}
+}
 
 // function invitePush($phone, $streamID)
 // {
