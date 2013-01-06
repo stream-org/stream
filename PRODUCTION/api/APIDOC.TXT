@@ -1,0 +1,64 @@
+stream apidoc.txt
+
+add_comment.php
+get_users_in_stream.php
+get_users_who_like_the_photo.php
+get_photo_metadata.php
+get_stream_id.php
+get_photos_uploaded_by_user.php
+invite_users.php
+is_in_beta.php
+likes_photo.php
+googlevoice_text.php
+text_notification.php
+populate_user_streams.php
+push_notification.php
+register_push_token.php
+delete_from_stream.php
+delete_picture.php
+sign_in.php
+sign_up.php
+unlike_photo.php
+upload_photo.php
+view_comments.php
+upload_file.php
+
+dependencies 
+  - class.googlevoice.php
+  - connection.php
+  - format_phone_numbers.php
+  - mixPanel.php
+  - push.php
+  - SimpleImage.php
+
+scripts
+  - numberStandardization.py
+  - photoResizing.py
+  - pictureIDMigration.py
+  - removeEmptyPictures.py
+
+
+conventions 
+  - comments at the top 
+    - description, input, output 
+  - comment each sql query call 
+  - variable names
+    - all lowercase 
+      - first 
+      - last
+      - viewer_phone 
+      - stream_id
+      - stream_name
+      - token
+      - has_liked
+      - uploader_phone
+      - photo_url
+      - tiny_photo_url
+      - photo_id
+      - comment 
+      - created
+      - latest_photo
+      - number_of_photos
+      - number_of_users
+      - photo_array
+      - number_of_likes
