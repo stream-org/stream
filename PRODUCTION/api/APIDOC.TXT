@@ -2,13 +2,13 @@ stream apidoc.txt
 
 add_comment.php
 get_users_in_stream.php
-get_users_who_like_the_photo.php
-get_photo_metadata.php
+get_users_who_like_the_picture.php
+get_picture_metadata.php
 get_stream_id.php
-get_photos_uploaded_by_user.php
+get_pictures_uploaded_by_user.php
 invite_users.php
 is_in_beta.php
-likes_photo.php
+likes_picture.php
 googlevoice_text.php
 text_notification.php
 populate_user_streams.php
@@ -18,8 +18,8 @@ delete_from_stream.php
 delete_picture.php
 sign_in.php
 sign_up.php
-unlike_photo.php
-upload_photo.php
+unlike_picture.php
+upload_picture.php
 view_comments.php
 upload_file.php
 
@@ -33,7 +33,7 @@ dependencies
 
 scripts
   - numberStandardization.py
-  - photoResizing.py
+  - pictureResizing.py
   - pictureIDMigration.py
   - removeEmptyPictures.py
 
@@ -42,23 +42,39 @@ conventions
   - comments at the top 
     - description, input, output 
   - comment each sql query call 
-  - variable names
-    - all lowercase 
-      - first 
-      - last
-      - viewer_phone 
-      - stream_id
-      - stream_name
-      - token
-      - has_liked
-      - uploader_phone
-      - photo_url
-      - tiny_photo_url
-      - photo_id
-      - comment 
-      - created
-      - latest_photo
-      - number_of_photos
-      - number_of_users
-      - photo_array
-      - number_of_likes
+Here are the following objects with possible attributes:
+
+- stream
+  - id
+  - name
+  - created
+  - array
+  - usercount
+- viewer
+  - first
+  - last
+  - phone
+  - hash
+  - salt
+  - password
+  - token
+  - hasliked
+- uploader
+  - first
+  - last
+  - phone
+  - token
+- liker
+  - first
+  - last
+  - phone
+  - token
+  - count
+- picture
+  - array
+  - created
+  - url
+  - tinyurl
+  - latest
+  - count
+

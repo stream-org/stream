@@ -5,10 +5,10 @@
 // Input: Picture
 // Output: nothing output if file sucessfully uploads. Else returns error in dictionary form
 
-include('dependecies.php');
+include('dependencies.php');
 
-$phone = $_POST['phoneNumber'];
-$streamID = $_POST['streamID'];
+$uploader_phone = $_POST['uploader_phone'];
+$stream_id = $_POST['stream_id'];
 
 
 // Check if a photo was even uploaded
@@ -19,7 +19,18 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 	$_FILES["file"]["name"] = hash('sha512', time()) . '.jpg';
 	$filename = $_FILES["file"]["name"];
 
-	move_uploaded_file($_FILES["file"]["tmp_name"], 'StreamPictures/Pictures/' . $filename);
+	chdir('../');
+	chdir('../');
+	chdir('upload');
+
+	$result = move_uploaded_file($_FILES["file"]["tmp_name"], 'StreamPictures/Pictures/' . $filename);
+
+	echo "<br>";
+
+	echo $result;
+	echo "<br>";
+
+	echo $filename;
 
 	$filePath = 'StreamPictures/Pictures/' . $filename;
 
@@ -29,9 +40,7 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 
 	list($width, $height) = getimagesize($filePath);
 
-	chdir('../');
-	chdir('../');
-	chdir('upload');
+	
 	chdir('StreamPictures');
 	chdir('Pictures');
 	$image = new SimpleImage();
@@ -49,7 +58,8 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 	}
 	$image->save($filename);
 
-	$url = 'http://75.101.134.112/api/uploadPhoto.php?picture=' . $pictureFilePath . '&streamID=' . $streamID . '&phone=' . $phone . '&tiny=' . $tinyPictureFilePath;
+
+	$url = 'http://75.101.134.112/stream/api/uploadPhoto.php?picture_url=' . $pictureFilePath . '&stream_id=' . $stream_id . '&uploader_phone=' . $uploader_phone . '&tiny_picture_url=' . $tinyPictureFilePath;
 	$ch = curl_init($url);
 	$response = curl_exec($ch);
 	curl_close($ch);
@@ -58,11 +68,11 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 //Send back an error of a photo was not found
 else
 {
-	$errorArray = array();
+	$output = array();
 
-	$errorArray['error'] = "Photo did not upload";
+	$output['error'] = "Photo did not upload";
 
-	echo json_encode($errorArray);
+	echo json_encode($output);
 }
 
 ?>

@@ -1,57 +1,51 @@
 <?PHP
 
-// Uploads the location of a picture to the database if sent through either the iPhone app or Mobile Web Layer
+// Uploads the location of a picture_url to the database if sent through either the iPhone app or Mobile Web Layer
 // Saves the photo if photo uploaded through text
 
 //input::
-//	phone number
+//	uploader_phone number
 //	picture_url 
 //	stream_id
 //  tinyPicture url
 //	caption
 
 //output::
-//	pictureID or null
+//	picture_id or null
 
-include('dependecies.php');
+include('dependencies.php');
 
 //Mixpanel Tracking
 $metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
 
 //grabbing the arguments 
-$phone = $_GET['phone'];
-$phone = standardizePhone($phone);
-$picture = $_GET['picture'];
-$tiny = $_GET['tiny'];
-$streamID = $_GET['streamID'];
+$uploader_phone = $_GET['uploader_phone'];
+$uploader_phone = standardizePhone($uploader_phone);
+$picture_url = $_GET['picture_url'];
+$tiny_picture_url = $_GET['tiny_picture_url'];
+$stream_id = $_GET['stream_id'];
 $caption = $_GET['caption'];
-$pictureID = $picture . $phone . $streamID . time();
-$pictureID = hash('sha512', $pictureID);
+$picture_id = $picture_url . $uploader_phone . $stream_id . time();
+$picture_id = hash('sha512', $picture_id);
 
 //For testing photo upload notification
-if($picture == "test"){
+if($picture_url == "test"){
 
-  	photopush($phone, $streamID);
+  	photopush($uploader_phone, $stream_id);
 
 }
 
 // Logic for photos uploaded through text
 
-elseif ($tiny == ""){
+elseif ($tiny_picture_url == ""){
 
-
-	echo "Mogreet!";
-	echo "<br>Picture: ".$picture;
-
-	$val = time().$picture;
+	$val = time().$picture_url;
 	$filename = hash('sha512', $val) . '.jpg';
 	$tinyfilename = "tiny".$filename;
 
-	echo "<br> filename: ".$filename;
-
 	exec("touch ".$filename);
 	exec("chmod go+w ".$filename);
-	$command = "wget -O ".$filename." ".$picture;
+	$command = "wget -O ".$filename." ".$picture_url;
 	exec($command);
 	exec("mv ".$filename." ~/html/upload/StreamPictures/Pictures/");
 
@@ -91,36 +85,32 @@ elseif ($tiny == ""){
 		$image->save(tinyfilename);
 	}
 
-	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL) VALUES ('$streamID', '$phone', '$pictureID','$pictureFilePath', '$tinyPictureFilePath')");
+	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL) VALUES ('$stream_id', '$uploader_phone', '$picture_id','$pictureFilePath', '$tinyPictureFilePath')");
 
-	photoPush($phone, $streamID);
+	photoPush($uploader_phone, $stream_id);
 
-	$metrics->track('upload_photo', array('medium'=>'text','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$phone));
+	$metrics->track('upload_photo', array('medium'=>'text','uploader'=>$uploader_phone,'stream'=>$stream_id,'picture_url'=>$picture_url,'distinct_id'=>$uploader_phone));
 
  }
 
-
+// Logic for photos uploaded thorugh iPhone app r android app
 else{
-	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption) VALUES ('$streamID', '$phone', '$pictureID', '$picture','$tiny','$caption')");
+	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption) VALUES ('$stream_id', '$uploader_phone', '$picture_id', '$picture_url','$tiny_picture_url','$caption')");
 
-	photoPush($phone, $streamID);
+	photoPush($uploader_phone, $stream_id);
 
-	$metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$phone,'stream'=>$streamID,'picture'=>$picture,'distinct_id'=>$phone));
+	$metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$uploader_phone,'stream'=>$stream_id,'picture_url'=>$picture_url,'distinct_id'=>$uploader_phone));
 
-	$result = mysql_query("SELECT * FROM StreamActivity WHERE PicURL='$picture' AND Phone='$phone' AND StreamID='$streamID'");
-	$responseArray = array();
+	$picture_id_result = mysql_query("SELECT * FROM StreamActivity WHERE PictureID='$picture_id' AND Phone='$uploader_phone' AND StreamID='$stream_id'");
+	$output = array();
 
-	$row = mysql_fetch_array($result);
+	$picture_id_row = mysql_fetch_array($picture_id_result);
 
-	if (empty($row)) 
+	if ($picture_id_row) 
 	{
-		$responseArray = null;
-	} 
-	else 
-	{
-		$responseArray['pictureID'] = $pictureID;
+		$output['picture_id'] = $picture_id;
 	}
 
-	echo json_encode($responseArray);
+	echo json_encode($output);
 }
 ?>
