@@ -44,7 +44,7 @@ function likePushNotification($liker_phone, $picture_id)
 		if($uploader_token !== '')
 		{
 			$message = $liker_name . ' likes the photo you posted on ' . $stream_name . '.';
-			$url = 'http://75.101.134.112/stream/api/pushNotification.php?token=' . $uploader_token . '&message=' . urlencode($message); 
+			$url = 'http://75.101.134.112/stream/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message); 
 		  	$ch = curl_init($url);
 		  	$response = curl_exec($ch);
 		  	curl_close($ch);
@@ -91,7 +91,7 @@ function singleInvitePushNotification($inviter_phone, $invitee_phone, $stream_id
 	if($invitee_token != '')
 	{
 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
-		$url = 'http://75.101.134.112/stream/api/pushNotification.php?token=' . $invitee_token . '&message=' . urlencode($message); 
+		$url = 'http://75.101.134.112/stream/api/push_notification.php?token=' . $invitee_token . '&message=' . urlencode($message); 
 		$ch = curl_init($url);
 		$response = curl_exec($ch);
 		curl_close($ch);
@@ -158,7 +158,7 @@ function multipleInvitePushNotification($inviter_phone, $stream_id)
 	{
 		$current_token = $invited_iPhone_users_array[$iPhone_user_token_index];
 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
-		$url = 'http://75.101.134.112/stream/api/pushNotification.php?token=' . $current_token . '&message=' . urlencode($message); 
+		$url = 'http://75.101.134.112/stream/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
 	  	$ch = curl_init($url);
 	  	$response = curl_exec($ch);
 	  	curl_close($ch);
@@ -235,7 +235,7 @@ function uploadPicturePushNotification($uploader_phone, $stream_id)
 	{
 		$current_token = $invited_iPhone_users_array[$iPhone_user_token_index];
 		$message = $uploader_name . ' just uploaded a photo to ' . $stream_name . '.';
-		$url = 'http://75.101.134.112/stream/api/pushNotification.php?token=' . $current_token . '&message=' . urlencode($message); 
+		$url = 'http://75.101.134.112/stream/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
 	  	$ch = curl_init($url);
 	  	$response = curl_exec($ch);
 	  	curl_close($ch);
