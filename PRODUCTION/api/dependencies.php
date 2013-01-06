@@ -1,10 +1,10 @@
 <?PHP
 
-include('DEPENDENCIES/class.googlevoice.php');
-include('DEPENDENCIES/connection.php');
-include('DEPENDENCIES/format_phone_numbers.php');
-include('DEPENDENCIES/mixPanel.php');
-include('DEPENDENCIES/push.php');
-include('DEPENDENCIES/SimpleImage.php'); 
+require_once('DEPENDENCIES/class.googlevoice.php');
+require_once('DEPENDENCIES/connection.php');
+require_once('DEPENDENCIES/format_phone_numbers.php');
+require_once('DEPENDENCIES/mixPanel.php');
+require_once('DEPENDENCIES/push.php');
+require_once('DEPENDENCIES/SimpleImage.php'); 
 
 ?>
