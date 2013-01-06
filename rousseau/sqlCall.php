@@ -5,7 +5,7 @@ include('connection.php');
 function sqlCall($table, $column, $columnValue, $data) 
 {
 
-	$query = "SELECT * FROM Users WHERE " . $column . "=" . $columnValue;
+	$query = "SELECT * FROM " . $table . " WHERE " . $column . "=" . $columnValue;
 
 	$queryResult = mysql_query($query);
 
@@ -16,8 +16,5 @@ function sqlCall($table, $column, $columnValue, $data)
 	}
 
 }
-
-
-
 
 ?>
