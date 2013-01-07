@@ -12,7 +12,7 @@
     }
 
     @font-face {
-        font-family: 'MS_One_I';
+        font-family: MS_One_I;
         src: url(assets/Museo_Sans/museosans-100italic-webfont.ttf);
     }
 
@@ -170,6 +170,11 @@
                 .ui-btn-down-oj .ui-btn-inner {
                     background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
                     }
+
+/*sign_in page*/
+    #sign_in .ui-header h1 {
+        font-family: MS_Three;
+    }
 
 /*all_streams page*/
 
