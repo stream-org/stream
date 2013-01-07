@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<title>mobileWeb rewrite</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	
+	<!-- import stylesheets: jQueryMobile & custom-->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+	<link rel="stylesheet" href="index.css" type="text/css" media=all>
+	
+	<!-- import javascript frameworks: jQuery, custom, jQuery mobile  -->
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+	<script src="http://75.101.134.112/ChanningsWork/rewrite/index.js"></script>
+	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+
+	<!-- custom javascript imported at bottom -->	
+</head>
+
+<body>
+	<div data-role="page" id="intro">
+<!-- 		<div data-role="header"></div> -->
+		<div data-role="content">
+			<!-- <img src="assets/logo_stand_alone@2x.png" id="intro_logo" />
+			<div id="intro_copy">
+				<p id="title">STREAM</p>
+				<p id="description">LET THE GOOD TIMES FLOW</p>
+			</div> -->
+			<div id="intro_buttons">
+				<a href="#sign_up" data-role="button" data-theme="oj" id="sign_up_btn">SIGN UP</a>
+				<a href="#sign_up" data-role="button" data-theme="blk" id="sign_in_btn">SIGN IN</a>
+			</div>
+		</div>
+<!-- 		<div data-role="footer"></div> -->
+	</div>
+
+	<div data-role="page" id="sign_in">
+	</div>
+
+	<div data-role="page" id="sign_up">
+	</div>
+
+	<div data-role="page" id="all_streams">
+		<div data-role="header">
+			<h1>STREAM</h1>
+			<a href="#create_stream" data-role="button"  class="ui-btn-right" data-theme="oj">CREATE</a>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview">
+				<li>
+					
+					<a href="the_stream">
+						<img src="test/2013firsthack.jpg">
+						<h1>First Hack of 2013</h1>
+						<p>...</p>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div data-role="page" id="the_stream">
+	</div>
+
+	<div data-role="page" id="create_stream">
+	</div>
+
+	<div data-role="page" id="photo_view">
+	</div>
+
+	<div data-role="page" id="participant_list">
+	</div>
+
+	<div data-role="page" id="like_list">
+	</div>
+
+
+</body>
+
+</html>
