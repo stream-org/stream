@@ -19,9 +19,9 @@ delete_picture.php
 sign_in.php
 sign_up.php
 unlike_picture.php
-upload_picture.php
 view_comments.php
-upload_file.php
+// upload_picture.php (suman) (complete)
+// upload_file.php (suman) (complete)
 
 dependencies 
   - class.googlevoice.php
