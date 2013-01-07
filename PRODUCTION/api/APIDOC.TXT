@@ -1,6 +1,6 @@
 stream apidoc.txt
 
-add_comment.php
+add_comment.php (suman)
 get_users_in_stream.php
 get_users_who_like_the_picture.php
 get_picture_metadata.php
