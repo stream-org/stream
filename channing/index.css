@@ -6,55 +6,131 @@
 */
 
 /*import all the fonts*/
-    @font-face {
-        font-family: MS_One;
-        src: url(assets/Museo_Sans/museosans-100-webfont.ttf);
+    /*    @font-face {
+        font-family: 'MS_One';
+        src: url('fonts/Museo_Sans/museosans-100-webfont.ttf');
     }
 
     @font-face {
-        font-family: MS_One_I;
-        src: url(assets/Museo_Sans/museosans-100italic-webfont.ttf);
+        font-family: 'MS_One_I';
+        src: url('fonts/Museo_Sans/museosans-100italic-webfont.ttf');
     }
 
     @font-face {
-        font-family: MS_Three;
-        src: url(assets/Museo_Sans/museosans-300-webfont.ttf);
+        font-family: 'MS_Three';
+        src: url('channing/fonts/Museo_Sans/museosans-300-webfont.ttf') format('truetype');
     }
 
     @font-face {
-        font-family: MS_Three_I;
-        src: url(assets/Museo_Sans/museosans-300italic-webfont.ttf);
+        font-family: 'MS_Three_I';
+        src: url('fonts/Museo_Sans/museosans-300italic-webfont.ttf');
     }
 
     @font-face {
-        font-family: MS_Five;
-        src: url(assets/Museo_Sans/museosans-500-webfont.ttf);
+        font-family: 'MS_Five';
+        src: url('fonts/Museo_Sans/museosans-500-webfont.ttf');
     }
 
     @font-face {
-        font-family: MS_Five_I;
-        src: url(assets/Museo_Sans/museosans-500italic-webfont.ttf);
+        font-family: 'MS_Five_I';
+        src: url('fonts/Museo_Sans/museosans-500italic-webfont.ttf');
     }
 
     @font-face {
-        font-family: MS_Seven;
-        src: url(assets/Museo_Sans/museosans-700-webfont.ttf);
+        font-family: 'MS_Seven';
+        src: url('fonts/Museo_Sans/museosans-700-webfont.ttf');
     }
 
     @font-face {
-        font-family: MS_Seven_I;
-        src: url(assets/Museo_Sans/museosans-700italic-webfont.ttf);
+        font-family: 'MS_Seven_I';
+        src: url('fonts/Museo_Sans/museosans-700italic-webfont.ttf');
     }
 
     @font-face {
-        font-family: MS_Nine;
-        src: url(assets/Museo_Sans/museosans-900-webfont.ttf);
+        font-family: 'MS_Nine';
+        src: url('fonts/Museo_Sans/museosans-900-webfont.ttf');
     }
 
     @font-face {
-        font-family: MS_Nine_I;
-        src: url(assets/Museo_Sans/museosans-900italic-webfont.ttf);
+        font-family: 'MS_Nine_I';
+        src: url('fonts/Museo_Sans/museosans-900italic-webfont.ttf');
+    }*/
+
+    /*fuck that - make it all sans-serif :D*/
+    body * {
+        font-family: sans-serif;
     }
+
+/*custom themes*/
+    /*orange button*/
+        /* up state */
+        .ui-btn-up-oj,
+        .ui-btn-hover-oj,
+        .ui-btn-down-oj {
+            border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px;
+            box-shadow: none !important; -webkit-box-shadow: none !important; -moz-box-shadow: none !important;
+            text-decoration: none;
+            }
+            .ui-btn-up-oj .ui-btn-inner,
+            .ui-btn-hover-oj .ui-btn-inner,
+            .ui-btn-down-oj .ui-btn-inner {
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+                border: 1px solid #333;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+                /*box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
+                    -webkit-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
+                    -moz-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);*/
+                }
+
+            /* hover state color */
+            .ui-btn-hover-oj .ui-btn-inner {
+                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+                }
+
+            /* down state color */
+            .ui-btn-down-oj .ui-btn-inner {
+                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+                }
+
+    /*black button*/
+        .ui-btn-up-blk,
+        .ui-btn-hover-blk,
+        .ui-btn-down-blk {
+            margin-top: 10px;
+            border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px;
+            box-shadow: none !important; -webkit-box-shadow: none !important; -moz-box-shadow: none !important;
+            text-decoration: none;
+            }
+            .ui-btn-up-blk .ui-btn-inner{
+                height: 35px;
+                line-height: 35px;
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+                border: 1px solid #333;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #3D3D3D, #1B1B1B);
+                /*box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
+                    -webkit-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
+                    -moz-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);*/
+                }
+
+            /* hover state color */
+            .ui-btn-hover-oj .ui-btn-inner {
+                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+                }
+
+            /* down state color */
+            .ui-btn-down-oj .ui-btn-inner {
+                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+                }
 
 /*intro page*/
     .ui-page#intro {
@@ -88,110 +164,44 @@
             sthg
         }*/
 
+    /*buttons*/
         #intro_buttons {
-            font-family:MS_Seven, sans-serif;
             width: 90%;
             right: 5%;
             position: fixed;
-            bottom:10px;
+            bottom:5px;
             text-align: center;
             margin: auto;
         }
 
-    /*buttons*/
-        /*sign up button*/
-            /* up state */
-            .ui-btn-up-oj,
-            .ui-btn-hover-oj,
-            .ui-btn-down-oj {
-                border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px;
-                box-shadow: none !important; -webkit-box-shadow: none !important; -moz-box-shadow: none !important;
-                text-decoration: none;
-                }
-                .ui-btn-up-oj .ui-btn-inner,
-                .ui-btn-hover-oj .ui-btn-inner,
-                .ui-btn-down-oj .ui-btn-inner {
-                    height: 40px;
-                    line-height: 40px;
-                    color: white;
-                    overflow: visible;
-                    text-shadow: 0 -1px 0 #000;
-                    padding-left: 10px !important;
-                    padding-right: 10px !important;
-                    border: 1px solid #333;
-                    border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
-                    background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
-                    box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
-                        -webkit-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
-                        -moz-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
-                    }
-
-                /* hover state color */
-                .ui-btn-hover-oj .ui-btn-inner {
-                    background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
-                    }
-
-                /* down state color */
-                .ui-btn-down-oj .ui-btn-inner {
-                    background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
-                    }
-
-        /*sign in button*/
-            .ui-btn-up-blk,
-            .ui-btn-hover-blk,
-            .ui-btn-down-blk {
-                margin-top: 15px;
-                border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px;
-                box-shadow: none !important; -webkit-box-shadow: none !important; -moz-box-shadow: none !important;
-                text-decoration: none;
-                }
-                .ui-btn-up-blk .ui-btn-inner{
-                    height: 40px;
-                    line-height: 40px;
-                    color: white;
-                    overflow: visible;
-                    text-shadow: 0 -1px 0 #000;
-                    padding-left: 10px !important;
-                    padding-right: 10px !important;
-                    border: 1px solid #333;
-                    border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
-                    background: -webkit-linear-gradient(top, #3D3D3D, #1B1B1B);
-                    box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
-                        -webkit-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
-                        -moz-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
-                    }
-
-                /* hover state color */
-                .ui-btn-hover-oj .ui-btn-inner {
-                    background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
-                    }
-
-                /* down state color */
-                .ui-btn-down-oj .ui-btn-inner {
-                    background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
-                    }
+        #intro_buttons .ui-btn-inner {
+            height: 35px;
+            line-height: 35px;
+        }
 
 /*sign_in page*/
-    #sign_in .ui-header h1 {
-        font-family: MS_Three;
-    }
+
 
 /*all_streams page*/
-
-    .ui-header {
-        font-family: MS_five;
+    #all_streams .ui-header {
+        padding: 5px;
     }
-
-    .ui-header h1 {
+    
+    #all_streams .ui-header h1 {
+        font-weight: 100;
         font-size: 30px;
+        margin:.2em 30% .2em;
     }
 
-    .ui-header-blk {
-        background: -webkit-linear-gradient(top, #3D3D3D, #1B1B1B);
+    #all_streams .ui-header .ui-btn {
+        margin-top: 5px;
+        margin-right: 5px;
     }
 
-    .ui-header-btn .ui-btn-inner {
-        height: 10px;
+    #all_streams .ui-header .ui-btn-inner {
+        height: 22px;
+        line-height: 22px;
+        font-size: 16px;
     }
 
     .ui-page#all_streams img {

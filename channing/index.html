@@ -7,7 +7,8 @@
 	
 	<!-- import stylesheets: jQueryMobile & custom-->
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-	<link rel="stylesheet" href="index.css" type="text/css" media=all>
+	<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'> -->
+	<link rel="stylesheet" href="index.css" type="text/css">
 	
 	<!-- import javascript frameworks: jQuery, custom, jQuery mobile  -->
 	<script src="http://code.jquery.com/jquery.min.js"></script>
@@ -22,14 +23,14 @@
 	<div data-role="page" id="intro">
 		<!-- <div data-role="header"></div> -->
 		<div data-role="content">
-			<!-- <img src="assets/logo_stand_alone@2x.png" id="intro_logo" />
+			<!-- <img src="fonts/logo_stand_alone@2x.png" id="intro_logo" />
 			<div id="intro_copy">
 				<p id="title">STREAM</p>
 				<p id="description">LET THE GOOD TIMES FLOW</p>
 			</div> -->
 			<div id="intro_buttons">
 				<a href="#sign_up" data-role="button" data-theme="oj" id="sign_up_btn">SIGN UP</a>
-				<a href="#sign_up" data-role="button" data-theme="blk" id="sign_in_btn">SIGN IN</a>
+				<a href="#sign_in" data-role="button" data-theme="blk" id="sign_in_btn">SIGN IN</a>
 			</div>
 		</div>
 		<!-- <div data-role="footer"></div> -->
@@ -50,9 +51,9 @@
 	</div>
 
 	<div data-role="page" id="all_streams">
-		<div data-role="header">
-			<h1>STREAM</h1>
-			<a href="#create_stream" data-role="button"  class="ui-btn-right" data-theme="oj">CREATE</a>
+		<div data-role="header" data-theme="a">
+			<h1>STREAMS</h1>
+			<a href="#create_stream" data-role="button"  class="ui-btn-right" data-theme="oj" id="create">create</a>
 		</div>
 		<div data-role="content">
 			<ul data-role="listview">
