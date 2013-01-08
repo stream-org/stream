@@ -3,7 +3,7 @@
 // This API is used to upload files from either the iPhone or the Mobile Web Layer
 
 // Input: Picture
-// Output: nothing output if file sucessfully uploads. Else returns error in dictionary form
+// Output: If successful upload form the phone, calls upload_picture.php which outputs ok status and picture_id of picture uploaded. Else returns error in dictionary form
 
 include('dependencies.php');
 

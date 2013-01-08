@@ -1,7 +1,7 @@
 stream apidoc.txt
 
-add_comment.php (suman)
-get_users_in_stream.php
+//add_comment.php (suman) (complete)
+get_users_in_stream.php (suman)
 get_users_who_like_the_picture.php
 get_picture_metadata.php
 get_stream_id.php
@@ -70,6 +70,11 @@ Here are the following objects with possible attributes:
   - phone
   - token
   - count
+- commenter
+  - first
+  - last
+  - phone
+  - token
 - picture
   - array
   - created
@@ -77,4 +82,9 @@ Here are the following objects with possible attributes:
   - tinyurl
   - latest
   - count
+  - id
+-comment 
+  - created
+  - commenter
+  
 
