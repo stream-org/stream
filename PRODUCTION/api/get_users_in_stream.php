@@ -7,8 +7,8 @@
 
 //output::
 //	array of
-//		viewer_phone  
 //		name
+// 		phone
 //		how many photos they have uploaded 
 
 include('dependencies.php');
@@ -45,6 +45,8 @@ while($picture_id_row = mysql_fetch_array($picture_id_result))
 }
 
 $output['status'] = "ok";
+$output['$stream_id'] = $stream_id;
+
 
 echo json_encode($output);
 
