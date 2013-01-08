@@ -3,7 +3,7 @@ stream apidoc.txt
 //add_comment.php (suman) (complete)
 //get_users_in_stream.php (suman) (complete)
 //get_users_who_like_picture.php (suman) (complete)
-get_picture_metadata.php
+get_picture_metadata.php (suman) 
 get_stream_id.php
 get_pictures_uploaded_by_user.php
 invite_users.php
