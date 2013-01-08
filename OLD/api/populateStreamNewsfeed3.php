@@ -1,0 +1,79 @@
+<?php
+
+//input:phone_number
+
+//output:: 
+//	viwer's phone number
+//	stream_id
+//	stream_name
+//	# of participants 
+//	# of pictures
+//	most recent photo 
+
+include "connection.php";
+
+
+//gets number standardization function
+include "formatPhoneNumbers.php";
+
+//Mixpanel Tracking
+require_once("mixPanel.php");
+$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
+
+//grabbing the arguments 
+$phone = $_GET['phone'];
+$phone = standardizePhone($phone);
+	
+$streamID;
+$streamName;
+$numberOfParticipants;
+$numberOfPictures;
+$latestPicture;
+
+$responseArray = array();
+
+$streamArray = array();
+
+$streamidResult = mysql_query("SELECT * FROM UserStreams WHERE Phone='$phone' ORDER BY StreamJoinDate DESC");
+while($streamidRow = mysql_fetch_array($streamidResult))
+{
+	$streamID = $streamidRow['StreamID'];
+
+	$streamNameResult = mysql_query("SELECT * FROM Streams WHERE StreamID='$streamID'");
+	while($streamNameRow = mysql_fetch_array($streamNameResult))
+	{
+		$streamName = $streamNameRow['StreamName'];
+	}
+
+	$participantResult = mysql_query("SELECT COUNT(Distinct Phone) FROM UserStreams WHERE StreamID='$streamID'");
+	while($participantRow = mysql_fetch_array($participantResult))
+	{
+		$numberOfParticipants = (int) $participantRow[0];
+	}
+
+	$pictureResult = mysql_query("SELECT COUNT(PictureID) FROM StreamActivity WHERE StreamID='$streamID'");
+	while($pictureRow = mysql_fetch_array($pictureResult))
+	{
+		$numberOfPictures = (int) $pictureRow[0];
+	}
+	$latestPictureArray = null;
+	$latestPictureResult = mysql_query("SELECT * FROM StreamActivity WHERE StreamID='$streamID' ORDER BY Created DESC LIMIT 1");
+	while($latestPictureRow = mysql_fetch_array($latestPictureResult))
+	{
+		$latestPictureArray = array();
+		$latestPictureArray['url'] = $latestPictureRow['TinyPicURL'];
+		$latestPictureArray['id'] = $latestPictureRow['PictureID'];
+	}
+
+	array_push($streamArray, array('streamID'=>$streamID,'streamName'=>$streamName, 'numberOfParticipants'=>$numberOfParticipants, 'numberOfPictures'=>$numberOfPictures, 'latestPicture'=>$latestPictureArray));
+
+}
+
+$responseArray ["streams"] = $streamArray;
+$responseArray ["user"] = $phone;
+
+echo json_encode($responseArray);
+
+$metrics->track('view_stream_news_feed', array('viewer'=>$phone,'distinct_id'=>$phone));
+	
+?>
