@@ -3,8 +3,8 @@ stream apidoc.txt
 //add_comment.php (suman) (complete)
 //get_users_in_stream.php (suman) (complete)
 //get_users_who_like_picture.php (suman) (complete)
-get_picture_metadata.php (suman) 
-get_stream_id.php
+//get_picture_metadata.php (suman) (complete)
+get_stream_id.php (suman)
 get_pictures_uploaded_by_user.php
 invite_users.php
 is_in_beta.php
@@ -84,6 +84,7 @@ Here are the following objects with possible attributes:
   - latest
   - count
   - id
+  - likecount
 -comment 
   - created
   - commenter
