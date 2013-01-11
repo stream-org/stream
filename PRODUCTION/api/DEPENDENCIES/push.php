@@ -3,6 +3,7 @@
 require_once('connection.php');
 require_once('mixPanel.php');
 require_once('sendText.php');
+require_once('googlevoice_text.php');
 
 function likePushNotification($liker_phone, $picture_id)
 {
@@ -100,7 +101,7 @@ function singleInvitePushNotification($inviter_phone, $invitee_phone, $stream_id
 	else
 	{
 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
-		sendText($invitee_phone, $message);	
+		googlevoice_text($invitee_phone, $message);	
 		$metrics->track('invite_notification', array('notification_type'=>'text','notified_phone'=>$invitee_phone,'stream_invited_to'=>$stream_id,'distinct_id'=>$stream_id));
 	}
 }
@@ -171,7 +172,7 @@ function multipleInvitePushNotification($inviter_phone, $stream_id)
 	{
 		$current_phone = $invited_non_iPhone_users_array[$non_iPhone_user_phone_index];
 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
-		sendText($current_phone, $message);
+		googlevoice_text($current_phone, $message);
 
 		$metrics->track('invite_notification', array('notification_type'=>'text','notified_phone'=>$current_phone,'stream_invited_to'=>$stream_id,'distinct_id'=>$stream_id));
 	}
@@ -248,7 +249,7 @@ function uploadPicturePushNotification($uploader_phone, $stream_id)
 	{
 		$current_phone = $invited_non_iPhone_users_array[$non_iPhone_user_phone_index];
 		$message = $uploader_name . ' just uploaded a photo to ' . $stream_name . ' stream. bit.ly/12Dy6u5';
-		sendText($current_phone, $message);
+		googlevoice_text($current_phone, $message);
 
 		$metrics->track('photo_notification', array('notification_type'=>'text','notified_phone'=>$current_phone,'stream_uploaded_to'=>$stream_id,'distinct_id'=>$stream_id));
 	}

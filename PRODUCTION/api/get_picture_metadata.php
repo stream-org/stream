@@ -86,13 +86,7 @@ while($stream_id_row = mysql_fetch_array($stream_id_result))
 
 $output['Comments'] = $tempOutput;
 
-
-//Gets full sized picture
-$uploader_name_result = mysql_query("SELECT PicURL FROM StreamActivity WHERE PictureID='$picture_id'");
-while($uploader_name_row = mysql_fetch_array($uploader_name_result))
-{
-	
-}
+$output['status'] = "ok";
 
 echo json_encode($output);
 

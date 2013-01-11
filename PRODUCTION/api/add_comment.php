@@ -48,7 +48,7 @@ else
 
 	}
 
-	$output['status'] = "error";
+	$output['status'] = "ok";
 
 	echo json_encode($output);
 }

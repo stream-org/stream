@@ -4,17 +4,16 @@ stream apidoc.txt
 //get_users_in_stream.php (suman) (complete)
 //get_users_who_like_picture.php (suman) (complete)
 //get_picture_metadata.php (suman) (complete)
-get_stream_id.php (suman)
-get_pictures_uploaded_by_user.php
-invite_users.php
+get_pictures_uploaded_by_user.php (suman)
+invite_users.php (suman) - need help with push notifications!!
 is_in_beta.php
 likes_picture.php
-googlevoice_text.php
+// googlevoice_text.php (suman) (Finished)
 text_notification.php
-populate_user_streams.php
+populate_user_streams.php (suman)
 push_notification.php
 register_push_token.php
-delete_from_stream.php
+delete_from_stream.php (Suman)
 delete_picture.php
 sign_in.php
 sign_up.php
@@ -50,6 +49,18 @@ Here are the following objects with possible attributes:
   - created
   - array
   - usercount
+- picture
+  - array
+  - created
+  - url
+  - tinyurl
+  - latest
+  - count
+  - id
+  - likecount
+-comment 
+  - created
+  - commenter
 - viewer
   - first
   - last
@@ -76,16 +87,9 @@ Here are the following objects with possible attributes:
   - last
   - phone
   - token
-- picture
-  - array
-  - created
-  - url
-  - tinyurl
-  - latest
-  - count
-  - id
-  - likecount
--comment 
-  - created
-  - commenter
+- inviter
+  - phone
+- invitee
+  -phone
+
 
