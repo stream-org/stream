@@ -1,0 +1,94 @@
+stream apidoc.txt
+
+push_notification.php
+register_push_token.php
+invite_users.php (suman) - need help with push notifications!!
+likes_picture.php (suman) - need help with push notifications!!
+// add_comment.php (suman) (complete)
+// get_users_in_stream.php (suman) (complete)
+// get_users_who_like_picture.php (suman) (complete)
+// get_picture_metadata.php (suman) (complete)
+// get_pictures_uploaded_by_user.php (suman) (complete)
+// googlevoice_text.php (suman) (complete)
+// populate_user_streams.php (suman) (complete)
+// delete_from_stream.php (Suman) (complete)
+// delete_picture.php (suman) (complete)
+// sign_in.php (suman) (complete)
+// sign_up.php (suman) (complete)
+// unlike_picture.php (suman) (complete)
+// view_comments.php (suman) (complete)
+// upload_picture.php (suman) (complete)
+// upload_file.php (suman) (complete)
+
+dependencies 
+  - class.googlevoice.php
+  - connection.php
+  - format_phone_numbers.php
+  - mixPanel.php
+  - //push.php (rousseau) (completed)
+  - SimpleImage.php
+
+scripts
+  - numberStandardization.py
+  - pictureResizing.py
+  - pictureIDMigration.py
+  - removeEmptyPictures.py
+
+
+conventions 
+  - comments at the top 
+    - description, input, output 
+  - comment each sql query call 
+Here are the following objects with possible attributes:
+
+- stream
+  - id
+  - name
+  - created
+  - array
+  - usercount
+- picture
+  - array
+  - created
+  - url
+  - tinyurl
+  - latest
+  - count
+  - id
+  - likecount
+-comment 
+  - created
+  - commenter
+- viewer
+  - first
+  - last
+  - phone
+  - hash
+  - salt
+  - password
+  - token
+  - hasliked
+  - profilepic
+- uploader
+  - first
+  - last
+  - phone
+  - token
+  - photosuploaded
+- liker
+  - first
+  - last
+  - phone
+  - token
+  - count
+- commenter
+  - first
+  - last
+  - phone
+  - token
+- inviter
+  - phone
+- invitee
+  -phone
+
+
