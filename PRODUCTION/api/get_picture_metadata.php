@@ -4,7 +4,7 @@
 
 //input::
 //	picture_id
-//	viewer_viewer_phone
+//	viewer_phone
 
 //output:: 
 //	picture URL ['picture_url']
@@ -76,15 +76,18 @@ while($uploader_name_row = mysql_fetch_array($uploader_name_result))
 // Gets comment, commenter's first, last, and phone, and created
 $stream_id_result = mysql_query("SELECT First, Last, Comments.Phone as Phone, Comment, Comments.Created as Created FROM Comments INNER JOIN Users ON Comments.Phone = Users.Phone WHERE PictureID='$picture_id' ORDER BY Created ASC");
 
-$tempOutput= array();
+$commentArray= array();
 
 while($stream_id_row = mysql_fetch_array($stream_id_result))
 {
 	$tempArray = array('commenter_first'=>$stream_id_row['First'], 'commenter_last'=>$stream_id_row['Last'], 'commenter_phone'=>$stream_id_row['Phone'],'comment'=>$stream_id_row['Comment'], 'comment_created'=>$stream_id_row['Created']);
-	array_push($tempOutput, $tempArray);
+	array_push($commentArray, $tempArray);
 }
 
-$output['Comments'] = $tempOutput;
+$output['Comments'] = $commentArray;
+$output['picture_id'] = $picture_id;
+$output['viewer_phone'] = $viewer_phone;
+
 
 $output['status'] = "ok";
 

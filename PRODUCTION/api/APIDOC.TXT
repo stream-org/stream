@@ -14,10 +14,10 @@ populate_user_streams.php (suman)
 push_notification.php
 register_push_token.php
 delete_from_stream.php (Suman)
-delete_picture.php
+delete_picture.php (suman)
 sign_in.php
 sign_up.php
-unlike_picture.php
+unlike_picture.php (suman)
 view_comments.php
 // upload_picture.php (suman) (complete)
 // upload_file.php (suman) (complete)

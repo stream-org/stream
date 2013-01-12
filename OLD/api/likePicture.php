@@ -1,42 +1,45 @@
-<?php
+<?PHP
 
 //input::
-//	pictureID
-//	phone
+//	picture_id
+//	liker_phone
 
 //output::
 //	number of people who like it 
 
-include "connection.php";
+include('dependencies.php');
 
-//gets number standardization function
-include "formatPhoneNumbers.php";
-include('push.php');
-
-//Mixpanel Tracking
-require_once("mixPanel.php");
-$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
+$output = array();
 
 //grabbing the arguments 
-$pictureID = $_GET['pictureID'];
-$phone = $_GET['phone'];
-$phone = standardizePhone($phone);
+$picture_id = $_GET['picture_id'];
+$liker_phone = $_GET['liker_phone'];
+$liker_phone = standardizePhone($liker_phone);
 
-mysql_query("INSERT INTO PictureLikes (PictureID, Phone) VALUES ('$pictureID', '$phone')");
+//	Adds the picture like to the database
+$like_result = mysql_query("INSERT INTO PictureLikes (PictureID, Phone) VALUES ('$picture_id', '$liker_phone')");
+
+if($like_result){
+	$output ["status"] = "ok";
+}
+else
+{
+	$output ["status"] = "error";
+	$output['error_description'] = "Picture not not liked! ";
+}
 
 //send like push notification
-likePush($phone, $pictureID);
+likePush($liker_phone, $picture_id);
 
-$metrics->track('like_picture', array('liker_phone'=>$phone,'liked_picture'=>$pictureID,'distinct_id'=>$phone));
+$like_result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE PictureID='$picture_id'");
 
-$result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE PictureID='$pictureID'");
+$picture_likecount = mysql_fetch_row($like_result);
+$picture_likecount = $picture_likecount[0];
 
-$count = mysql_fetch_row($result);
+$output['picture_id'] = $picture_id;
+$output['liker_phone'] = $liker_phone;
+$output['picture_likecount'] = $picture_likecount;
 
-$count = $count[0];
-
-$responseArray['likes'] = $count;
-
-echo json_encode($responseArray);
+echo json_encode($output);
 
 ?>

@@ -117,9 +117,20 @@ else{
 	if ($picture_id_row) 
 	{
 		$output['picture_id'] = $picture_id;
+		$output['status'] = "ok";
 	}
-	$output['status'] = "ok";
-
+	else
+	{
+		$output ["status"] = "error";
+		$output['error_description'] = "Photo not uploaded";
+	}
+	
+	$output['uploader_phone'] = $uploader_phone;
+	$output['picture_url'] = $picture_url;
+	$output['tiny_picture_url'] = $tiny_picture_url;
+	$output['stream_id'] = $stream_id;
+	$output['caption'] = $caption;
+	
 	echo json_encode($output);
 }
 ?>
