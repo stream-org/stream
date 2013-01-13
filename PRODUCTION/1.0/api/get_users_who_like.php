@@ -12,7 +12,7 @@
 // 		-liker_phone
 
 // example:
-// 
+// http://75.101.134.112/stream/1.0/api/get_users_who_like.php?picture_id=1984c05a7f989fdf53c6ea96b86f6bfd8784ff22b3272793a6339716f936ff285977d699b69111a6655abde9ed19c6d2d53a6f588c85a7c26e8473f8680053e8
 
 include('dependencies.php');
 
