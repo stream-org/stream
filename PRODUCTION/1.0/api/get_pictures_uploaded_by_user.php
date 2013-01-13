@@ -4,11 +4,19 @@
 
 //input::
 //	stream_id
-//	uploader phone
-//  viewer phone
+//	uploader_phone
+//  viewer_phone
 
 //output::
-//	array of photos user has uploaded
+//	stream_id
+//	uploader_phone
+//  viewer_phone
+//  Pictures which is an array of all pictures a particular uploader has uploaded ordered reverse chronologically tht includes
+// 		-picture_tinyurl
+// 		-picture_id
+
+// example:
+// http://75.101.134.112/stream/1.0/api/get_pictures_uploaded_by_user.php?viewer_phone=8477226071&uploader_phone=6508420492&stream_id=6933fb99f4867cb94b1e0e32287bb12df8636de1386bebf73b54442011bd15a1775eef990f9595cfd052a2f2da8f185145f2931a0bf0fa4a947d0e9a59eb52a5
 
 include('dependencies.php');
 
@@ -23,7 +31,7 @@ $output = array();
 
 $picture_array = array();
 
-$picture_result = mysql_query("SELECT * FROM StreamActivity WHERE Phone='$uploader_phone' AND StreamID='$stream_id' ORDER BY Created");
+$picture_result = mysql_query("SELECT * FROM StreamActivity WHERE Phone='$uploader_phone' AND StreamID='$stream_id' ORDER BY Created DESC");
 
 while($picture_row = mysql_fetch_array($picture_result))
 {
