@@ -29,7 +29,8 @@ else
 }
 
 //send like push notification
-likePush($liker_phone, $picture_id);
+likePushNotification($liker_phone, $picture_id);
+
 
 $like_result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE PictureID='$picture_id'");
 
