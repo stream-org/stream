@@ -11,6 +11,9 @@
 // 		-liker_last
 // 		-liker_phone
 
+// example:
+// http://75.101.134.112/stream/1.0/api/get_users_who_like.php?picture_id=1984c05a7f989fdf53c6ea96b86f6bfd8784ff22b3272793a6339716f936ff285977d699b69111a6655abde9ed19c6d2d53a6f588c85a7c26e8473f8680053e8
+
 include('dependencies.php');
 
 //grabbing the arguments 
@@ -31,8 +34,6 @@ while ($liker_row = mysql_fetch_array($liker_result))
 	$liker_array = array('liker_phone'=>$liker_phone,'liker_first'=>$liker_first, 'liker_last'=>$liker_last);
 
 	array_push($Likers, $liker_array);
-
-	
 }
 
 $output['Likers'] = $Likers;
