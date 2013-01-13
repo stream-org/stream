@@ -13,6 +13,9 @@
 //	invitees_phone which is an array of invitees phone numbers
 //  inviter_phone
 
+//example::
+//	http://75.101.134.112/stream/1.0/api/invite_users.php?inviter_phone=16508420492&invitees_phone=18477226071&stream_id=d4d18a4f110bfbc3c4a750815a592c6fd167964addc458c01e3c610f52ddcddab53bbdd25177753b88bebd69513594fb39282ef9601614d671bdb96d87d46858
+
 include('dependencies.php');
 
 //grabbing the arguments 
@@ -21,14 +24,7 @@ $invitees_phone = $_GET['invitees_phone'];
 $inviter_phone = $_GET['inviter_phone'];
 $phone_array = explode(',', $invitees_phone);
 $output = array();
-
-// //Gets streamName
-// $stream_name_result = mysql_query("SELECT * FROM Streams WHERE StreamID='$stream_id'");
-
-// while($stream_name_row = mysql_fetch_array($stream_name_result))
-// {
-// 	$stream_name = $stream_name_row['StreamName'];
-// }
+$should_push = array();
 
 for ($i=0; $i < count($phone_array); $i++) 
 { 
@@ -80,14 +76,14 @@ for ($i=0; $i < count($phone_array); $i++)
 				mysql_query("INSERT INTO UserStreams (Phone, StreamID, StreamToUser) VALUES ('$current_phone', '$stream_id','$stream_to_user')");
 
 				// Invite user through push notification
-				echo "singleInvitePushNotification";
-				singleInvitePushNotification($inviter_phone, $current_phone, $stream_id);
+				// singleInvitePushNotification($inviter_phone, $current_phone, $stream_id);
+				array_push($should_push, $current_phone);
 			}
-				// check if an error occurred previously
-				if(!$output ["status"] == "error")
-				{
-					$output['status'] = "ok";
-				}
+			// check if an error occurred previously
+			if(!$output ["status"] == "error")
+			{
+				$output['status'] = "ok";
+			}
 		}
 		else
 		{
@@ -103,10 +99,16 @@ for ($i=0; $i < count($phone_array); $i++)
 
 }
 
-$output['stream_id'] = $stream_id;
-$output['invitees_phone'] = $phone_array;
-$output['inviter_phone'] = $inviter_phone;
+// $output['stream_id'] = $stream_id;
+// $output['invitees_phone'] = $phone_array;
+// $output['inviter_phone'] = $inviter_phone;
 
-echo json_encode($output);
+// echo json_encode($output);
+
+for ($i=0; $i < count($should_push) ; $i++) 
+{ 
+	$current_phone = $should_push[$i];
+	singleInvitePushNotification($inviter_phone, $current_phone, $stream_id);
+}
 
 ?>

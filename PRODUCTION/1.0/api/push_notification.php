@@ -51,7 +51,7 @@ $result = fwrite($fp, $msg, strlen($msg));
 if (!$result)
 	echo 'Message not delivered' . PHP_EOL;
 else
-	echo 'Message successfully delivered' . PHP_EOL;
+	// echo 'Message successfully delivered' . PHP_EOL;
 
 // Close the connection to the server
 fclose($fp);
