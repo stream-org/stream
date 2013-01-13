@@ -11,6 +11,9 @@
 // 		-liker_last
 // 		-liker_phone
 
+// example:
+// 
+
 include('dependencies.php');
 
 //grabbing the arguments 
@@ -31,8 +34,6 @@ while ($liker_row = mysql_fetch_array($liker_result))
 	$liker_array = array('liker_phone'=>$liker_phone,'liker_first'=>$liker_first, 'liker_last'=>$liker_last);
 
 	array_push($Likers, $liker_array);
-
-	
 }
 
 $output['Likers'] = $Likers;
