@@ -2,8 +2,8 @@ stream apidoc.txt
 
 push_notification.php
 register_push_token.php
-invite_users.php (suman) - need help with push notifications!!
-likes_picture.php (suman) - need help with push notifications!!
+invite_users.php (suman) - need help with push notifications!! I GOT YOU (rousseau)
+likes_picture.php (suman) - need help with push notifications!! I GOT YOU (rousseau)
 create_stream.php (suman) 
 delete_from_stream.php (Suman) (complete) (need to retest)
 delete_picture.php (suman) (complete) (need to retest)
