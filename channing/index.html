@@ -1,3 +1,14 @@
+<!-- 
+TO DO:
+ 1 - finish all_streams
+ 2 - finish create_stream
+ 3 - finish the_stream
+ 4 - make photo_view filler
+ 5 - finish participant_list
+ 6 - finish like_list
+ 7 - all jQuery Mobile console.log primers working
+ -->
+
 <!DOCTYPE html> 
 <html> 
 <head> 
@@ -12,7 +23,7 @@
 	
 	<!-- import javascript frameworks: jQuery, custom, jQuery mobile  -->
 	<script src="http://code.jquery.com/jquery.min.js"></script>
-	<script src="http://75.101.134.112/ChanningsWork/rewrite/index.js"></script>
+	<script src="http://75.101.134.112/channing/index.js"></script>
 	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
 
 	<!-- custom javascript imported at bottom -->	
@@ -37,32 +48,108 @@
 	</div>
 
 	<div data-role="page" id="sign_in">
-		<div data-role="header" data-theme="a">
-			<a href="#intro">log out</a>
+		<div data-role="header" data-theme="a" id="sign_in_header">
+			<a href="#intro" data-theme="blk">back</a>
 			<h1>SIGN IN</h1>
-			<a href="#all_streams">sign in</a>
+			<a href="#all_streams" data-theme="blk">sign in</a>
 		</div>
 
 		<div data-role="content">
+			<h2>WELCOME BACK</h2>
+
+			<div data-role="fieldcontain">
+			    <label for="username" class="ui-hidden-accessible">Username:</label>
+			    <input type="text" name="username" id="username" value="" placeholder="Username"  />
+			    <label for="password" class="ui-hidden-accessible">Password:</label>
+			    <input type="password" name="password" id="password" value="" placeholder="Password"  />
+			</div>	
+
+			<br>
+
+			<a href="#bummer" id="forgot_password">
+				Forgot Password?
+			</a>
+		</div>
+	</div>
+
+	<div data-role="page" id="bummer">
+		<div data-role="header" data-theme="a" id="bummer_header">
+			<a href="#sign_in" data-theme="blk">fuck.</a>
+			<h1></h1>
+		</div>
+
+		<div data-role="content">
+			<h2 id="BUMMER">BUMMER.</h1>
 		</div>
 	</div>
 
 	<div data-role="page" id="sign_up">
+		<div data-role="header" data-theme="a" id="sign_up_header">
+			<a href="#intro" data-theme="blk">back</a>
+			<h1>SIGN UP</h1>
+			<a href="#all_streams" data-theme="oj">sign up</a>
+		</div>
+
+		<div data-role="content">
+			<h3>Profile</h3>
+			<div data-role="fieldcontain">
+			    <label for="first_name" class="ui-hidden-accessible">First Name:</label>
+			    <input type="text" name="first_name" id="first_name" value="" placeholder="First Name"  />
+			    <label for="last_name" class="ui-hidden-accessible">Last Name:</label>
+			    <input type="text" name="last_name" id="last_name" value="" placeholder="Last Name"  />
+			    <label for="phone_number" class="ui-hidden-accessible">Phone Number:</label>
+			    <input type="text" name="phone_number" id="phone_number" value="" placeholder="Phone Number"  />
+			</div>	
+
+			<h3>Account</h3>
+			<div data-role="fieldcontain">
+			    <label for="password1" class="ui-hidden-accessible">Password:</label>
+			    <input type="password" name="password1" id="password1" value="" placeholder="Password"  />
+			    <label for="password2" class="ui-hidden-accessible">Retype Password:</label>
+			    <input type="password" name="password2" id="password2" value="" placeholder="Retype Password"  />
+			</div>
+
+		</div>
 	</div>
 
 	<div data-role="page" id="all_streams">
 		<div data-role="header" data-theme="a">
+			<a href="#intro" data-theme="blk">log out</a>
 			<h1>STREAMS</h1>
-			<a href="#create_stream" data-role="button"  class="ui-btn-right" data-theme="oj" id="create">create</a>
+			<a href="#create_stream" data-role="button" data-theme="oj" id="create">create</a>
 		</div>
 		<div data-role="content">
 			<ul data-role="listview">
-				<li>
-					
-					<a href="the_stream">
+				<li>					
+					<a class="stream_button" id="a_stream_id">
 						<img src="test/2013firsthack.jpg">
 						<h1>First Hack of 2013</h1>
-						<p>...</p>
+						<p>
+							<img class="tiny_icon" src="app_assets/Global/icons/participants@2x.png">
+							Participants
+						</p>
+					</a>
+				</li>
+
+				<li>					
+					<a class="stream_button" id="a_stream_id">
+						<img src="test/2013firsthack.jpg">
+						<h1>Crossfittin'</h1>
+						<p>
+							<img class="tiny_icon" src="app_assets/Global/icons/participants@2x.png">
+							Participants
+						</p>
+					</a>
+				</li>
+
+				<li>					
+					<a class="stream_button" id="a_stream_id">
+						<img src="test/2013firsthack.jpg">
+						<h1>Shred Sesh</h1>
+						<img class="tiny_icon" src="app_assets/Global/icons/participants@2x.png">
+						<p>
+							Participants
+						</p>
 					</a>
 				</li>
 			</ul>

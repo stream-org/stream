@@ -5,6 +5,11 @@
         red-oj: #d94342;
 */
 
+/*known issues that need fixing
+    - inner borders of form elements are too thick
+
+    */
+
 /*import all the fonts*/
     /*    @font-face {
         font-family: 'MS_One';
@@ -77,9 +82,7 @@
                 color: white;
                 overflow: visible;
                 text-shadow: 0 -1px 0 #000;
-                padding-left: 10px !important;
-                padding-right: 10px !important;
-                border: 1px solid #333;
+                border: 2px solid black;
                 border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
                 background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
                 /*box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
@@ -89,12 +92,25 @@
 
             /* hover state color */
             .ui-btn-hover-oj .ui-btn-inner {
-                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                border: 2px solid black;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);             
+                opacity: 0.9;
                 }
 
             /* down state color */
             .ui-btn-down-oj .ui-btn-inner {
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                border: 2px solid black;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
                 background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+                opacity: 0.9;
+                box-shadow: 0 0 2px 2px #d94342;
                 }
 
     /*black button*/
@@ -107,13 +123,9 @@
             text-decoration: none;
             }
             .ui-btn-up-blk .ui-btn-inner{
-                height: 35px;
-                line-height: 35px;
                 color: white;
                 overflow: visible;
                 text-shadow: 0 -1px 0 #000;
-                padding-left: 10px !important;
-                padding-right: 10px !important;
                 border: 1px solid #333;
                 border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
                 background: -webkit-linear-gradient(top, #3D3D3D, #1B1B1B);
@@ -123,27 +135,108 @@
                 }
 
             /* hover state color */
-            .ui-btn-hover-oj .ui-btn-inner {
-                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+            .ui-btn-hover-blk .ui-btn-inner {
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                border: 1px solid #333;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #3D3D3D, #1B1B1B);
+                opacity: 0.9;
+
                 }
 
             /* down state color */
-            .ui-btn-down-oj .ui-btn-inner {
-                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+            .ui-btn-down-blk .ui-btn-inner {
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                border: 1px solid #333;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #3D3D3D, #1B1B1B);
+                opacity: 0.9;
+                box-shadow:0 0 2px 2px #1B1B1B;
                 }
+
+/*global css*/
+    /*elemental*/
+        input {
+            width: 100% !important;
+            right: 5% !important;
+            height:45px !important;
+            padding-left: 3% !important;
+            font-size: 16px !important;
+            font-weight: 300 !important;
+        }
+
+    /*classy*/
+        .tiny_icon {
+            height: 16px !important;
+            width: 16px !important;
+        }
+
+
+
+    /*page*/
+        .ui-page {
+            background-color: #BABABA;
+            text-align: center;
+        }
+
+    /*headers*/
+        .ui-header {
+            padding: 5px;
+        }
+
+        .ui-header h1 {
+            font-size: 27px !important;    
+            margin:.1em 20% .1em !important;
+            font-weight: 100 !important;
+        }
+
+        .ui-header .ui-btn {
+            margin: 3px;
+        }
+
+        .ui-header .ui-btn-inner {
+            height: 18px !important;
+            line-height: 20px !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+        }
+
+    /*content*/
+        .ui-content {
+            padding: 10px 15px;
+        }
+
+        .ui-content h2 {
+            color: #595959;
+        }
+
+        .ui-content h3 {
+            color: #595959;
+            text-align: left;
+            font-size: 1.17em;
+            -webkit-margin-before: .5em;
+            -webkit-margin-after: .3em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            font-weight: 600;
+        }
+
+        .ui-field-contain {
+            border: 0px !important;
+            margin: 0px !important;
+        }
 
 /*intro page*/
     .ui-page#intro {
         background: url("iPhone5.png");
         position:fixed;
         background-size:cover;
-        text-align: center;
         background-position: bottom;
         bottom: -10px;
-    }
-
-    .ui-page#intro .ui-content {
-        height: 100%;
     }
 
     /*intro page elements [commented]*/
@@ -177,34 +270,87 @@
         #intro_buttons .ui-btn-inner {
             height: 35px;
             line-height: 35px;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
         }
 
 /*sign_in page*/
-
-
-/*all_streams page*/
-    #all_streams .ui-header {
-        padding: 5px;
+    #username {
+        border-radius: 5px 5px 0px 0px;
     }
+
+    #password {
+        border-radius: 0px 0px 5px 5px;
+    }
+
+    #forgot_password {
+        margin-top: 40px !important;
+        color: #8C8C8C;
+        font-size: 14px;
+        font-weight: 400;
+        /*text-decoration: none;*/
+    }
+
+/*bummer page*/
+    #BUMMER {
+        font-size: 60px;
+    }
+
+/*sign_up page*/
+    /*form headers*/
+
     
-    #all_streams .ui-header h1 {
-        font-weight: 100;
-        font-size: 30px;
-        margin:.2em 30% .2em;
+
+    /*form elements*/
+
+        #first_name {
+            border-radius: 5px 5px 0px 0px;
+            border-bottom: 1px solid #BABABA !important;
+        }
+
+        #last_name {
+            border-radius: 0px; 
+            border-top: 1px solid #BABABA !important;
+            border-bottom: 1px solid #BABABA !important;
+        }
+
+        #phone_number {
+            border-radius: 0px 0px 5px 5px;
+            border-top: 1px solid #BABABA !important;
+        }
+
+        #password1 {
+            border-radius: 5px 5px 0px 0px;
+            border-bottom: 1px solid #BABABA !important;
+        }
+
+        #password2 {
+            border-radius: 0px 0px 5px 5px;
+            border-top: 1px solid #BABABA !important;
+        }
+
+/*all_streams page*/w
+
+    .stream_button {
+        background-color: white;
     }
 
-    #all_streams .ui-header .ui-btn {
-        margin-top: 5px;
-        margin-right: 5px;
-    }
-
-    #all_streams .ui-header .ui-btn-inner {
-        height: 22px;
-        line-height: 22px;
-        font-size: 16px;
-    }
-
-    .ui-page#all_streams img {
+    .stream_button img {
         height:80px;
         width:80px;
+    }
+
+    .stream_button .tiny_icon {
+        display: inline-block;
+        margin-top: .5em;
+    }
+
+    .stream_button h1 {
+        margin: .3em 0;
+    }
+
+    .stream_button p {
+        display: inline-block;
+        margin: 0px;
+        padding-bottom: 1em
     }

@@ -1,0 +1,17 @@
+Chris Lo list
+
+new pages:
+
+	poor connectivity page
+	
+	
+current page enhancements:
+
+	user_streams
+		visual feedback when you click on stream (so user knows they selected the correct stream)
+		visual indication (light red text or sthg) for streams that have had a new photo uploaded since user last accessed
+		
+	photo_view
+		add captions
+		add comments
+		
