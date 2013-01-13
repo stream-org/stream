@@ -4,11 +4,14 @@
 
 //input::
 //	stream_id
-//	invitees phone
-//  inviter phone
+//	invitees_phone which is either an array of invitees phone numbers or a comma-seperated list of invitee phone number
+//  inviter_phone
 
-//$output::
+//output::
 //	Status message
+// 	stream_id
+//	invitees_phone which is an array of invitees phone numbers
+//  inviter_phone
 
 include('dependencies.php');
 
@@ -100,7 +103,7 @@ for ($i=0; $i < count($phone_array); $i++)
 }
 
 $output['stream_id'] = $stream_id;
-$output['invitees_phone'] = $invitees_phone;
+$output['invitees_phone'] = $phone_array;
 $output['inviter_phone'] = $inviter_phone;
 
 echo json_encode($output);
