@@ -87,7 +87,7 @@ elseif ($tiny_picture_url == ""){
 
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL) VALUES ('$stream_id', '$uploader_phone', '$picture_id','$pictureFilePath', '$tinyPictureFilePath')");
 
-	photoPush($uploader_phone, $stream_id);
+	uploadPicturePushNotification($uploader_phone, $stream_id);
 
 	$metrics->track('upload_photo', array('medium'=>'text','uploader'=>$uploader_phone,'stream'=>$stream_id,'picture_url'=>$picture_url,'distinct_id'=>$uploader_phone));
 
@@ -101,7 +101,7 @@ else{
 
 
 	// Sends out iPhone push notification
-	photoPush($uploader_phone, $stream_id);
+	uploadPicturePushNotification($uploader_phone, $stream_id);
 
 	// MixPanel tracking
 	$metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$uploader_phone,'stream'=>$stream_id,'picture_url'=>$picture_url,'distinct_id'=>$uploader_phone));

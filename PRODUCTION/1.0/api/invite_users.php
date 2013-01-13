@@ -80,6 +80,7 @@ for ($i=0; $i < count($phone_array); $i++)
 				mysql_query("INSERT INTO UserStreams (Phone, StreamID, StreamToUser) VALUES ('$current_phone', '$stream_id','$stream_to_user')");
 
 				// Invite user through push notification
+				echo "singleInvitePushNotification";
 				singleInvitePushNotification($inviter_phone, $current_phone, $stream_id);
 			}
 				// check if an error occurred previously

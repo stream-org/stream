@@ -31,7 +31,7 @@ mysql_query("INSERT INTO Streams (StreamName, StreamID, Phone) VALUES ('$stream_
 mysql_query("INSERT INTO UserStreams (Phone, StreamID) VALUES ('$inviter_phone', '$stream_id')");
 
 //Invite invitees to stream
-$url = 'http://75.101.134.112/api/invite_users.php?invitees_phone=' . $invitees_phone . '&stream_id=' . $stream_id . '&inviter_phone=' . $inviter_phone;
+$url = 'http://75.101.134.112/stream/1.0/api/invite_users.php?invitees_phone=' . $invitees_phone . '&stream_id=' . $stream_id . '&inviter_phone=' . $inviter_phone;
 $ch = curl_init($url);
 $response = curl_exec($ch);
 curl_close($ch);
