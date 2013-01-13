@@ -23,7 +23,7 @@ $viewer_phone = standardizePhone($viewer_phone);
 $picture_id = $_GET['picture_id'];
 
 //Removes viewer's picture from Stream
-mysql_query("DELETE FROM StreamActivity WHERE Phone = '$viewer_phone' AND PictureID = '$picture_id'");
+mysql_query("UPDATE StreamActivity SET IsActive = 0 WHERE Phone = '$viewer_phone' AND PictureID = '$picture_id'");
 
 if(mysql_affected_rows()==0)
 {

@@ -34,11 +34,11 @@ for ($i=0; $i < count($phone_array); $i++)
 	if (substr($current_phone,0,5) != 'Error')
 	{
 
-		// Check if user is already part of the stream		
-		$user_in_stream_result = mysql_query("SELECT * FROM UserStreams WHERE Phone='$current_phone' AND StreamID = '$stream_id'");
-		$user_in_stream_row = mysql_fetch_array($user_in_stream_result);
+		// Check if user is already part of the stream or was part of the stream	
+		$user_active_result = mysql_query("SELECT IsActive FROM UserStreams WHERE Phone='$current_phone' AND StreamID = '$stream_id'");
+		$user_active_row = mysql_fetch_array($user_active_result);
 
-		if(empty($user_in_stream_row))
+		if(empty($user_active_row))
 		{
 
 			// Checks if a new user or existing user
@@ -67,14 +67,9 @@ for ($i=0; $i < count($phone_array); $i++)
 
 			//Already a user
 			else{
-
-				//Get the max stream to user number. This is a feature built out for texting
-				$max_stream_to_user_result = mysql_query("SELECT MAX(StreamToUser) FROM UserStreams WHERE Phone='$current_phone'");
-				$max_stream_to_user_row = mysql_fetch_array($max_stream_to_user_result);
-				$stream_to_user = $max_stream_to_user_row[0] + 1;
-
+			
 				//Insert user into UserStream 
-				mysql_query("INSERT INTO UserStreams (Phone, StreamID, StreamToUser) VALUES ('$current_phone', '$stream_id','$stream_to_user')");
+				mysql_query("INSERT INTO UserStreams (Phone, StreamID) VALUES ('$current_phone', '$stream_id')");
 
 				// Invite user through push notification
 				singleInvitePushNotification($inviter_phone, $current_phone, $stream_id);
@@ -87,8 +82,16 @@ for ($i=0; $i < count($phone_array); $i++)
 		}
 		else
 		{
-			$output['status'] = "error";
-			$output['error_description'] = $output['error_description']. " Error: User already in stream: ".$phone_array[$i];
+			//Check if user was already part of the Stream. If so simply switch IsActive to 1
+			if($user_active_row[0] ==1 )
+			{
+				mysql_query("UPDATE UserStreams SET IsActive = 1 WHERE Phone='$current_phone' AND StreamID = '$stream_id'");
+			}
+			else
+			{
+				$output['status'] = "error";
+				$output['error_description'] = $output['error_description']. " Error: User already in stream: ".$phone_array[$i];
+			}
 		}
 	}
 	else

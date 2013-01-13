@@ -29,7 +29,7 @@ $output = array();
 
 $stream_array = array();
 
-$stream_id_result = mysql_query("SELECT * FROM UserStreams WHERE Phone='$viewer_phone' ORDER BY StreamJoinDate DESC");
+$stream_id_result = mysql_query("SELECT * FROM UserStreams WHERE Phone='$viewer_phone' AND IsActive = 1 ORDER BY StreamJoinDate DESC");
 while($stream_id_row = mysql_fetch_array($stream_id_result))
 {
 	$stream_id = $stream_id_row['StreamID'];

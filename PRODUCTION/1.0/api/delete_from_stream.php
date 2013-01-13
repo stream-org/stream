@@ -21,7 +21,7 @@ $output = array();
 $stream_id = $_GET['stream_id'];
 
 //Removes user from Stream
-mysql_query("DELETE FROM  UserStreams WHERE Phone = '$viewer_phone' AND StreamID = '$stream_id'");
+mysql_query("UPDATE UserStreams SET IsActive = 0 WHERE Phone = '$viewer_phone' AND StreamID = '$stream_id'");
 
 if(mysql_affected_rows()==0)
 {
@@ -31,7 +31,7 @@ if(mysql_affected_rows()==0)
 else
 {
 	//Removes users pictures from Stream
-	mysql_query("DELETE FROM  StreamActivity WHERE Phone = '$viewer_phone' AND StreamID = '$stream_id'");
+	mysql_query("UPDATE StreamActivity SET IsActive = 0 WHERE Phone = '$viewer_phone' AND StreamID = '$stream_id'");
 
 	if(mysql_affected_rows()==0)
 	{
