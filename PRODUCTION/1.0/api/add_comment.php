@@ -8,7 +8,18 @@
 //	comment
 
 //output::
-//	JSON object of picture_id, status, commenter_phone, and comment array
+//	picture_id
+//  status
+//  commenter_phone
+//  Comments which is an array ordered chronologically that includes
+//  	-commenter_first
+//  	-commenter_last
+//  	-commenter_phone
+//  	-commenter_created
+//  	-comment
+
+// Example: 
+// http://75.101.134.112/stream/1.0/api/add_comment.php?commenter_phone=8477226071&comment=eyyyy&picture_id=1532d2aefcb206383390e28214a9a326933626b6bb33ad4864b810f20299e3b6a9e99c63de11c960756479456f422f6fad695e4ee618cc64c20af15c0ad2c1ff
 
 include "dependencies.php";
 
@@ -19,7 +30,7 @@ $commenter_phone = standardizePhone($commenter_phone);
 $comment = $_GET['comment'];
 
 $output = array();
-$commentArray = array();
+$Comments = array();
 
 
 //Error if no comment passed through
@@ -43,15 +54,17 @@ else
 //Returns updated array of comments with commenter's name, created, and the comment
 $stream_id_result = mysql_query("SELECT First, Last, Comments.Phone as Phone, Comment, Comments.Created as Created FROM Comments INNER JOIN Users ON Comments.Phone = Users.Phone WHERE PictureID='$picture_id' ORDER BY Created ASC");
 
+
+
 while($stream_id_row = mysql_fetch_array($stream_id_result))
 {
 	$commentArray = array('commenter_first'=>$stream_id_row['First'], 'commenter_last'=>$stream_id_row['Last'], 'commenter_phone'=>$stream_id_row['Phone'],'comment'=>$stream_id_row['Comment'], 'comment_created'=>$stream_id_row['Created']);
 
-	array_push($output, $commentArray);
+	array_push($Comments, $commentArray);
 
 }
 
-$output['Comments'] = $commentArray;
+$output['Comments'] = $Comments;
 $output['picture_id'] = $picture_id;
 $output['commenter_phone'] = $commenter_phone;
 $output['comment'] = $comment;

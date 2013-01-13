@@ -13,14 +13,14 @@
 //  stream_name
 //  stream_usercount
 //  viewer_phone
-//	array of photos ranked reverse chronologically which includes
+//	Pictures which is an array of pictures ranked reverse chronologically that includes
 // 		-picture_id
 // 		-picture_likecount
 // 		-picture_tinyurl
 // 		-picture_commentcount
 
 // example:
-// 
+// http://75.101.134.112/stream/1.0/api/populate_stream_profile.php?viewer_phone=8477226071&stream_id=6a31acf92db81a21c1300221058166df22820821d361962bfc41cbf1619767de392b40694dd49e50c7feb1e9aaa670aebc34bc3ed4e29273f8fbe64ffee1a153
 
 
 include('dependencies.php');
@@ -34,8 +34,8 @@ $picture_array = array();
 
 // Gets the number of partcipants in the stream
 $usercount_result = mysql_query("SELECT COUNT(Distinct Phone) FROM UserStreams WHERE StreamID='$stream_id'");
-
-$stream_usercount = $usercount_result[0];
+$usercount_row = mysql_fetch_array($usercount_result);
+$stream_usercount = $usercount_row[0];
 
 // Gets the tinyPictureURL, pictureID, and the number of likes for each picture in a stream
 $picture_result = mysql_query("SELECT * FROM StreamActivity WHERE StreamID='$stream_id' ORDER BY Created DESC");
@@ -79,7 +79,7 @@ while($stream_name_row=mysql_fetch_array($stream_name_result))
 $output['stream_id'] = $stream_id;
 $output['stream_name'] = $stream_name;
 $output['stream_usercount'] = $stream_usercount;
-$output['picture_array'] = $picture_array;
+$output['Pictures'] = $picture_array;
 $output['viewer_phone'] = $viewer_phone;
 $output["status"] = "ok";
 
