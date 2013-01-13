@@ -4,23 +4,25 @@ push_notification.php
 register_push_token.php
 invite_users.php (suman) - need help with push notifications!!
 likes_picture.php (suman) - need help with push notifications!!
-create_stream??
-get_stream_metadata??
+create_stream.php (suman) 
 delete_from_stream.php (Suman) (complete) (need to retest)
 delete_picture.php (suman) (complete) (need to retest)
-// add_comment.php (suman) (complete)
-// get_users_in_stream.php (suman) (complete)
-// get_users_who_like_picture.php (suman) (complete)
-// get_picture_metadata.php (suman) (complete)
-// get_pictures_uploaded_by_user.php (suman) (complete)
-// googlevoice_text.php (suman) (complete)
-// populate_user_streams.php (suman) (complete)
-// sign_in.php (suman) (complete)
-// sign_up.php (suman) (complete)
-// unlike_picture.php (suman) (complete)
-// view_comments.php (suman) (complete)
-// upload_picture.php (suman) (complete)
-// upload_file.php (suman) (complete)
+
+populate_stream_profile.php (suman) (API complete)
+add_comment.php (suman) (API complete)
+get_users_in_stream.php (suman) (complete) (API complete)
+
+get_users_who_like_picture.php (suman) (complete)
+get_picture_metadata.php (suman) (complete)
+get_pictures_uploaded_by_user.php (suman) (complete)
+googlevoice_text.php (suman) (complete)
+populate_user_streams.php (suman) (complete)
+sign_in.php (suman) (complete)
+sign_up.php (suman) (complete)
+unlike_picture.php (suman) (complete)
+view_comments.php (suman) (complete)
+upload_picture.php (suman) (complete)
+upload_file.php (suman) (complete)
 
 dependencies 
   - class.googlevoice.php
@@ -47,10 +49,8 @@ Here are the following objects with possible attributes:
   - id
   - name
   - created
-  - array
   - usercount
 - picture
-  - array
   - created
   - url
   - tinyurl
@@ -58,6 +58,7 @@ Here are the following objects with possible attributes:
   - count
   - id
   - likecount
+  - commentcount
 -comment 
   - created
   - commenter
@@ -91,6 +92,8 @@ Here are the following objects with possible attributes:
 - inviter
   - phone
 - invitee
-  -phone
-
+  - phone
+- Users
+- Pictures
+- Comments
 
