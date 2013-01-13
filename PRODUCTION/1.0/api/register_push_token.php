@@ -1,25 +1,29 @@
-<?php
+<?PHP
 
 //Registers the unique apple ID token for a given user 
 
 //input::
-//	phone
+//	viewer_phone
 //	token
 
-//example::
-//	http://75.101.112.134/stream/1.0/api/register_push_token.php?phone=18585238764&token=6e27be3b0190dd6ec5893febc5e92a915e5b7f8aa7d2c5c25f0ae8fa867209a1
+//ouput::
+//	status
 
+//example::
+//	http://75.101.112.134/stream/1.0/api/register_push_token.php?viewer_phone=18585238764&token=6e27be3b0190dd6ec5893febc5e92a915e5b7f8aa7d2c5c25f0ae8fa867209a1
+
+$output = array();
 
 include('dependencies.php');
 
-$phone = $_GET['phone'];
-$phone = standardizePhone($phone);
+$viewer_phone = $_GET['viewer_phone'];
+$viewer_phone = standardizePhone($viewer_phone);
 $token = $_GET['token'];
 
-mysql_query("UPDATE Users SET Token='$token' WHERE Phone='$phone'");
+mysql_query("UPDATE Users SET Token='$token' WHERE Phone='$viewer_phone'");
 
-$responseArray['response'] = "okay";
+$output['status'] = "ok";
 
-echo json_encode($responseArray);
+echo json_encode($output);
 
 ?>
