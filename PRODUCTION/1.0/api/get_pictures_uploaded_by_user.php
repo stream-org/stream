@@ -32,7 +32,7 @@ $output = array();
 
 $picture_array = array();
 
-$picture_result = mysql_query("SELECT * FROM StreamActivity WHERE Phone='$uploader_phone' AND StreamID='$stream_id' ORDER BY Created DESC");
+$picture_result = mysql_query("SELECT * FROM StreamActivity WHERE Phone='$uploader_phone' AND StreamID='$stream_id' AND IsActive = 1 ORDER BY Created DESC");
 
 while($picture_row = mysql_fetch_array($picture_result))
 {

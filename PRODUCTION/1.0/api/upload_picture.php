@@ -105,7 +105,7 @@ elseif ($picture_tinyurl == ""){
 else{
 
 	//Inserts picture and tiny picture into database
-	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption) VALUES ('$stream_id', '$uploader_phone', '$picture_id', '$picture_url','$picture_tinyurl','$caption')");
+	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption, IsActive) VALUES ('$stream_id', '$uploader_phone', '$picture_id', '$picture_url','$picture_tinyurl','$caption',1)");
 
 
 	// Sends out iPhone push notification

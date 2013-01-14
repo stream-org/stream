@@ -39,7 +39,7 @@ $usercount_row = mysql_fetch_array($usercount_result);
 $stream_usercount = $usercount_row[0];
 
 // Gets the tinyPictureURL, pictureID, and the number of likes for each picture in a stream
-$picture_result = mysql_query("SELECT * FROM StreamActivity WHERE StreamID='$stream_id' ORDER BY Created DESC");
+$picture_result = mysql_query("SELECT * FROM StreamActivity WHERE StreamID='$stream_id' AND IsActive = 1 ORDER BY Created DESC");
 while($picture_row = mysql_fetch_array($picture_result))
 {
 	$picture = array();

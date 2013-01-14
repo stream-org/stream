@@ -10,6 +10,10 @@
 //	viewer_phone
 //	picture_id
 
+// example:
+// use http://75.101.134.112/stream/1.0/api/upload.html to create picture then
+// use http://75.101.134.112/stream/1.0/api/delete_picture.php?viewer_phone=*******&picture_id=*****
+
 include('dependencies.php');
 
 $output = array();
