@@ -3,14 +3,14 @@
 // Sends the push notification to a particular iPhone according to the token
 
 //input::
-//	token
-//	message
+//token
+//message
 
 //output::
-//	string whether message was sent or not
+//string whether message was sent or not
 
 // example::
-//	http://75.101.134.112/stream/1.0/api/push_notification.php?token=6e27be3b0190dd6ec5893febc5e92a915e5b7f8aa7d2c5c25f0ae8fa867209a1&message=push_notification_test
+//http://75.101.134.112/stream/1.0/api/push_notification.php?token=6e27be3b0190dd6ec5893febc5e92a915e5b7f8aa7d2c5c25f0ae8fa867209a1&message=push_notification_test
 
 
 

@@ -5,6 +5,46 @@ require_once('mixPanel.php');
 require_once('sendText.php');
 require_once('googlevoice_text.php');
 
+function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
+{	
+	$inviter_name;
+	$stream_name;
+
+	$stream_name_result = mysql_query("SELECT * FROM Streams WHERE StreamID='$stream_id'");
+	while($stream_name_row = mysql_fetch_array($stream_name_result))
+	{
+		$stream_name = $stream_name_row['StreamName'];
+	}
+
+	$inviter_name_result = mysql_query("SELECT * FROM Users WHERE Phone='$inviter_phone'");
+	while($inviter_name_row = mysql_fetch_array($inviter_name_result))
+	{
+		$inviter_name = $inviter_name_row['First'];
+	}
+
+	for ($i = 0; $i < count($invitee_array); $i++)
+	{
+		$current_phone = $invitee_array[$i];
+	 	$invited_iPhone_users_result = mysql_query("SELECT * FROM Users WHERE Phone='$current_phone' AND Token!=''");
+	 	$invited_iPhone_users_row = mysql_fetch_array($invited_iPhone_users_result);
+
+	 	if(!empty($invited_iPhone_users_row))
+	 	{	
+	 		$current_token = $invited_iPhone_users_row['Token'];
+			$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
+			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
+			$ch = curl_init($url);
+			$response = curl_exec($ch);
+			curl_close($ch);
+	 	}
+	 	else
+	 	{
+	 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
+	 		googlevoice_text($current_phone, $message);
+	 	}
+	}
+}
+
 function likePushNotification($liker_phone, $picture_id)
 {
 	$liker_name;
@@ -60,8 +100,10 @@ function likePushNotification($liker_phone, $picture_id)
 	}
 }
 
+
+
 //this is used for inviting someone post stream creation.
-function singleInvitePushNotification($inviter_phone, $invitee_phone, $stream_id)
+function createStreamPushNotification($inviter_phone, $invitee_phone, $stream_id)
 {
 	$inviter_name;
 	$stream_name;
@@ -107,83 +149,83 @@ function singleInvitePushNotification($inviter_phone, $invitee_phone, $stream_id
 }
 
 //this is used for stream creation
-function multipleInvitePushNotification($inviter_phone, $stream_id)
-{
-	$inviter_name;
-	$stream_name;
-	$user_token;
-	$invited_iPhone_users_array = array();
-	$invited_non_iPhone_users_array = array();
+// function multipleInvitePushNotification($inviter_phone, $stream_id)
+// {
+// 	$inviter_name;
+// 	$stream_name;
+// 	$user_token;
+// 	$invited_iPhone_users = array();
+// 	$invited_non_iPhone_users_array = array();
 
-	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
+// 	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
 
-	//fetching the inviter's name by using the $inviter_phone
-	$inviter_name_result = mysql_query("SELECT * FROM Users WHERE Phone='$inviter_phone'");
-	while($inviter_name_row = mysql_fetch_array($inviter_name_result))
-	{
-		$inviter_name = $inviter_name_row['First'];
-	}
+// 	//fetching the inviter's name by using the $inviter_phone
+// 	$inviter_name_result = mysql_query("SELECT * FROM Users WHERE Phone='$inviter_phone'");
+// 	while($inviter_name_row = mysql_fetch_array($inviter_name_result))
+// 	{
+// 		$inviter_name = $inviter_name_row['First'];
+// 	}
 
-	//fetching the stream name by using the $stream_id
-	$stream_name_result = mysql_query("SELECT * FROM Streams WHERE StreamID='$stream_id'");
-	while($stream_name_row = mysql_fetch_array($stream_name_result))
-	{
-		$stream_name = $stream_name_row['StreamName'];
-	}
+// 	//fetching the stream name by using the $stream_id
+// 	$stream_name_result = mysql_query("SELECT * FROM Streams WHERE StreamID='$stream_id'");
+// 	while($stream_name_row = mysql_fetch_array($stream_name_result))
+// 	{
+// 		$stream_name = $stream_name_row['StreamName'];
+// 	}
 
-	//fetching the users that have iPhones and that are in the stream, and putting their Tokens in an array
-	$invited_iPhone_users_array_result = mysql_query("SELECT * FROM UserStreams, Users WHERE UserStreams.Phone=Users.Phone AND StreamID='$stream_id' AND Token!=''");
-	while($invited_iPhone_users_array_row = mysql_fetch_array($invited_iPhone_users_array_result))
-	{
-		if($invited_iPhone_users_array_row['Phone'] == $inviter_phone)
-		{
-			continue;
-		}
-		array_push($invited_iPhone_users_array, $invited_iPhone_users_array_row['Token']);
-	}
+// 	//fetching the users that have iPhones and that are in the stream, and putting their Tokens in an array
+// 	$invited_iPhone_users_result = mysql_query("SELECT * FROM UserStreams, Users WHERE UserStreams.Phone=Users.Phone AND StreamID='$stream_id' AND Token!=''");
+// 	while($invited_iPhone_users_row = mysql_fetch_array($invited_iPhone_users_result))
+// 	{
+// 		if($invited_iPhone_users_row['Phone'] == $inviter_phone)
+// 		{
+// 			continue;
+// 		}
+// 		array_push($invited_iPhone_users, $invited_iPhone_users_row['Token']);
+// 	}
 
-	//fetching the users that don't have iPhones and that are in the stream, and putting their phone number in an array
-	$invited_non_iPhone_users_array_result = mysql_query("SELECT * FROM UserStreams, Users WHERE UserStreams.Phone=Users.Phone AND StreamID='$stream_id' AND Token=''");
-	while($invited_non_iPhone_users_array_row = mysql_fetch_array($invited_non_iPhone_users_array_result))
-	{
-		if($invited_non_iPhone_users_array_row['Phone'] == $inviter_phone)
-		{
-			continue;
-		}
-		array_push($invited_non_iPhone_users_array, $invited_non_iPhone_users_array_row['Phone']);
-	}
+// 	//fetching the users that don't have iPhones and that are in the stream, and putting their phone number in an array
+// 	$invited_non_iPhone_users_array_result = mysql_query("SELECT * FROM UserStreams, Users WHERE UserStreams.Phone=Users.Phone AND StreamID='$stream_id' AND Token=''");
+// 	while($invited_non_iPhone_users_array_row = mysql_fetch_array($invited_non_iPhone_users_array_result))
+// 	{
+// 		if($invited_non_iPhone_users_array_row['Phone'] == $inviter_phone)
+// 		{
+// 			continue;
+// 		}
+// 		array_push($invited_non_iPhone_users_array, $invited_non_iPhone_users_array_row['Phone']);
+// 	}
 
-	//sending push notifications out to the iPhone users
+// 	//sending push notifications out to the iPhone users
 
-	for($iPhone_user_token_index = 0; $iPhone_user_token_index < count($invited_iPhone_users_array); $iPhone_user_token_index++)
-	{
-		$current_token = $invited_iPhone_users_array[$iPhone_user_token_index];
-		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
-		$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
-	  	$ch = curl_init($url);
-	  	$response = curl_exec($ch);
-	  	curl_close($ch);
+// 	for($iPhone_user_token_index = 0; $iPhone_user_token_index < count($invited_iPhone_users); $iPhone_user_token_index++)
+// 	{
+// 		$current_token = $invited_iPhone_users[$iPhone_user_token_index];
+// 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
+// 		$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
+// 	  	$ch = curl_init($url);
+// 	  	$response = curl_exec($ch);
+// 	  	curl_close($ch);
 
-	  	$metrics->track('invite_notification', array('notification_type'=>'iPhone Push','notified_phone'=>$current_token,'stream_invited_to'=>$stream_id,'distinct_id'=>$stream_id));
-	}
+// 	  	$metrics->track('invite_notification', array('notification_type'=>'iPhone Push','notified_phone'=>$current_token,'stream_invited_to'=>$stream_id,'distinct_id'=>$stream_id));
+// 	}
 
-	//sending text messages out to non iPhone users
-	for($non_iPhone_user_phone_index = 0; $non_iPhone_user_phone_index < count($invited_non_iPhone_users_array); $non_iPhone_user_phone_index++)
-	{
-		$current_phone = $invited_non_iPhone_users_array[$non_iPhone_user_phone_index];
-		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
-		googlevoice_text($current_phone, $message);
+// 	//sending text messages out to non iPhone users
+// 	for($non_iPhone_user_phone_index = 0; $non_iPhone_user_phone_index < count($invited_non_iPhone_users_array); $non_iPhone_user_phone_index++)
+// 	{
+// 		$current_phone = $invited_non_iPhone_users_array[$non_iPhone_user_phone_index];
+// 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
+// 		googlevoice_text($current_phone, $message);
 
-		$metrics->track('invite_notification', array('notification_type'=>'text','notified_phone'=>$current_phone,'stream_invited_to'=>$stream_id,'distinct_id'=>$stream_id));
-	}
-}
+// 		$metrics->track('invite_notification', array('notification_type'=>'text','notified_phone'=>$current_phone,'stream_invited_to'=>$stream_id,'distinct_id'=>$stream_id));
+// 	}
+// }
 
 function uploadPicturePushNotification($uploader_phone, $stream_id)
 {
 	$uploader_name;
 	$stream_name;
 	$user_token;
-	$invited_iPhone_users_array = array();
+	$invited_iPhone_users = array();
 	$invited_non_iPhone_users_array = array();
 
 	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
@@ -209,14 +251,14 @@ function uploadPicturePushNotification($uploader_phone, $stream_id)
 	echo '<br>';
 
 		//fetching the users that have iPhones and that are in the stream, and putting their Tokens in an array
-	$invited_iPhone_users_array_result = mysql_query("SELECT * FROM UserStreams, Users WHERE UserStreams.Phone=Users.Phone AND StreamID='$stream_id' AND Token!=''");
-	while($invited_iPhone_users_array_row = mysql_fetch_array($invited_iPhone_users_array_result))
+	$invited_iPhone_users_result = mysql_query("SELECT * FROM UserStreams, Users WHERE UserStreams.Phone=Users.Phone AND StreamID='$stream_id' AND Token!=''");
+	while($invited_iPhone_users_row = mysql_fetch_array($invited_iPhone_users_result))
 	{
-		if($invited_iPhone_users_array_row['Phone'] == $uploader_phone)
+		if($invited_iPhone_users_row['Phone'] == $uploader_phone)
 		{
 			continue;
 		}
-		array_push($invited_iPhone_users_array, $invited_iPhone_users_array_row['Token']);
+		array_push($invited_iPhone_users, $invited_iPhone_users_row['Token']);
 	}
 
 	//fetching the users that don't have iPhones and that are in the stream, and putting their phone number in an array
@@ -232,9 +274,9 @@ function uploadPicturePushNotification($uploader_phone, $stream_id)
 
 	//sending push notifications out to the iPhone users
 
-	for($iPhone_user_token_index = 0; $iPhone_user_token_index < count($invited_iPhone_users_array); $iPhone_user_token_index++)
+	for($iPhone_user_token_index = 0; $iPhone_user_token_index < count($invited_iPhone_users); $iPhone_user_token_index++)
 	{
-		$current_token = $invited_iPhone_users_array[$iPhone_user_token_index];
+		$current_token = $invited_iPhone_users[$iPhone_user_token_index];
 		$message = $uploader_name . ' just uploaded a photo to ' . $stream_name . '.';
 		$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
 	  	$ch = curl_init($url);
