@@ -15,7 +15,7 @@
 //  inviter_phone
 
 //example::
-//		
+//	this gets called in create_stream.php
 
 include('dependencies.php');
 

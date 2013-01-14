@@ -14,6 +14,9 @@
 //	invitees_phone which is an array of invitees phone numbers
 //  inviter_phone
 
+//example::
+//	http://75.101.134.112/stream/1.0/api/create_stream.php?inviter_phone=18477226071&invitees_phone=16508420492&stream_name=testThisOut
+
 include('dependencies.php');
 
 // //grabbing the arguments 
