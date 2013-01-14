@@ -88,6 +88,7 @@ $output['Comments'] = $commentArray;
 $output['picture_id'] = $picture_id;
 $output['viewer_phone'] = $viewer_phone;
 $output['viewer_hasLiked'] = $viewer_hasLiked;
+$output['api_name'] = "get_picture_metadata";
 $output['status'] = "ok";
 
 echo json_encode($output);
