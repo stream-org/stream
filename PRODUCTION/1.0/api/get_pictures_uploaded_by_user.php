@@ -10,6 +10,7 @@
 //output::
 //  status
 //	stream_id
+//	api_name
 //	uploader_phone
 //  viewer_phone
 //  Pictures which is an array of all pictures a particular uploader has uploaded ordered reverse chronologically tht includes
@@ -46,6 +47,7 @@ $output['stream_id'] = $stream_id;
 $output['uploader_phone'] = $uploader_phone;
 $output['viewer_phone'] = $viewer_phone;
 $output['Pictures'] = $picture_array;
+$output['api_name'] = "get_pictures_uploaded_by_user";	
 $output ["status"] = "ok";
 
 

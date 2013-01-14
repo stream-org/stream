@@ -8,13 +8,14 @@
 //  inviter_phone
 
 //output::
+//	api_name
 //	Status message
 // 	stream_id
 //	invitees_phone which is an array of invitees phone numbers
 //  inviter_phone
 
 //example::
-//	http://75.101.134.112/stream/1.0/api/invite_users.php?inviter_phone=16508420492&invitees_phone=18477226071&stream_id=d4d18a4f110bfbc3c4a750815a592c6fd167964addc458c01e3c610f52ddcddab53bbdd25177753b88bebd69513594fb39282ef9601614d671bdb96d87d46858
+//		
 
 include('dependencies.php');
 
@@ -105,6 +106,7 @@ invitePushNotification($inviter_phone, $should_push_array, $stream_id);
 $output['stream_id'] = $stream_id;
 $output['invitees_phone'] = $phone_array;
 $output['inviter_phone'] = $inviter_phone;
+$output['api_name'] = "invite_users";
 
 echo json_encode($output);
 

@@ -8,6 +8,7 @@
 //  invitees_phone
 
 //output::
+//  api_name
 //	status
 // 	stream_id
 //	invitees_phone which is an array of invitees phone numbers

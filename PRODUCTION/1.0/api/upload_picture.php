@@ -11,6 +11,7 @@
 //	caption
 
 //output::
+//  api_name
 // 	status
 //	uploader_phone
 //	picture_url
@@ -133,6 +134,7 @@ else{
 		$output['error_description'] = "Photo not uploaded";
 	}
 	
+	$output['api_name'] = "upload_picture";
 	$output['uploader_phone'] = $uploader_phone;
 	$output['picture_url'] = $picture_url;
 	$output['picture_tinyurl'] = $picture_tinyurl;

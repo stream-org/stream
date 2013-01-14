@@ -5,6 +5,7 @@
 //	liker_phone
 
 //output::
+//	api_name
 //	picture_id
 //	liker_phone
 //	picture_likecount 
@@ -42,6 +43,7 @@ $like_result = mysql_query("SELECT COUNT(DISTINCT Phone) FROM PictureLikes WHERE
 $picture_likecount = mysql_fetch_row($like_result);
 $picture_likecount = $picture_likecount[0];
 
+$output['api_name'] = "like_picture";
 $output['picture_id'] = $picture_id;
 $output['liker_phone'] = $liker_phone;
 $output['picture_likecount'] = $picture_likecount;
