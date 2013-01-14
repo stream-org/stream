@@ -4,12 +4,10 @@
 
 //input:: 
 //	viewer_phone
-//	stream_id
 //	picture_id
 
 //output::
 //	viewer_phone
-//	stream_id
 //	picture_id
 
 include('dependencies.php');

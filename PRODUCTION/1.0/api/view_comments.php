@@ -4,13 +4,17 @@
 //	picture_id
 
 //output::
-//	array of comments. Includes per comment:
+// 	picture_id
+// 	status
+//	Comments, which is array of comments ordered chronologically that includes for each comment:
 // 		commenter_first
 // 		commenter_last
 // 		commenter_phone
 // 		comment
 // 		comment_created
-// 	picture_id
+
+// example:
+// http://75.101.134.112/stream/1.0/api/view_comments.php?commenter_phone=8477226071&comment=eyyyy&picture_id=1532d2aefcb206383390e28214a9a326933626b6bb33ad4864b810f20299e3b6a9e99c63de11c960756479456f422f6fad695e4ee618cc64c20af15c0ad2c1ff
 
 include('dependencies.php');
 

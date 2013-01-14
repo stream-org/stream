@@ -1,14 +1,15 @@
 <?PHP
 
 require_once('class.googlevoice.php');
+require_once('format_phone_numbers.php');
 
 function googlevoice_text($inviteePhone,$textString)
 {
 
-$gv = new GoogleVoice("streamapp1@gmail.com", "ninjas1158!");
-$gv->sms($inviteePhone, $textString);
-echo $gv->status; 
-
+	$phone = standardizePhone($inviteePhone);
+	$gv = new GoogleVoice("streamapp1@gmail.com", "ninjas1158!");
+	$gv->sms($phone, $textString);
+	
 }
 
 

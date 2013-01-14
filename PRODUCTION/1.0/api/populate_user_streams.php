@@ -1,18 +1,24 @@
 <?PHP
 
-// Gets all of the meta data for teh streams a user is part of
+// Gets all of the metadata for the streams a user is part of
 
-//input: viewer_phone 
+//input: 
+// 	viewer_phone 
 
 //output:: 
 //	viewer_phone 
-// 	array of streams:
-//		stream_id
-//		stream_name
-//		# of participants 
-//		# of pictures
-//		most recent photo 
+//  status
+// 	Streams which is an array ordered reverse chronologically by StreamJoinDate that includes:
+//		-stream_id
+//		-stream_name
+//		-stream_usercount 
+//		-picture_count
+//		-picture_latest which is an array which contains metadata on the latest picture that includes
+//			-picture_tinyurl
+//			-picture_id
 
+// example:
+// http://75.101.134.112/stream/1.0/api/populate_user_streams.php?viewer_phone=8477226071
 
 include('dependencies.php');
 //grabbing the arguments 
@@ -56,8 +62,8 @@ while($stream_id_row = mysql_fetch_array($stream_id_result))
 	while($latest_picture_row = mysql_fetch_array($latest_picture_result))
 	{
 		$latest_picture_array = array();
-		$latest_picture_array['url'] = $latest_picture_row['TinyPicURL'];
-		$latest_picture_array['id'] = $latest_picture_row['PictureID'];
+		$latest_picture_array['picture_tinyurl'] = $latest_picture_row['TinyPicURL'];
+		$latest_picture_array['picture_id'] = $latest_picture_row['PictureID'];
 	}
 
 	array_push($stream_array, array('stream_id'=>$stream_id,'stream_name'=>$stream_name, 'stream_usercount'=>$stream_usercount, 'picture_count'=>$picture_count, 'picture_latest'=>$latest_picture_array));

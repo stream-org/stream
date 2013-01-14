@@ -8,6 +8,7 @@
 //  viewer_phone
 
 //output::
+//  status
 //	stream_id
 //	uploader_phone
 //  viewer_phone

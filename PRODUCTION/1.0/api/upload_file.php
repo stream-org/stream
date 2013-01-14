@@ -2,8 +2,19 @@
 
 // This API is used to upload files from either the iPhone or the Mobile Web Layer
 
-// Input: Picture
-// Output: If successful upload form the phone, calls upload_picture.php which outputs ok status and picture_id of picture uploaded. Else returns error in dictionary form
+//input::
+//	stream_id
+//	uploader_phone
+//output::
+// If successful upload form and calls upload_picture.php which outputs:
+// 		-status
+//  	-picture_id
+// 		-picture
+// Else:
+// 		-status (error)
+
+// example:
+// http://75.101.134.112/stream/1.0/api/upload.html
 
 include('dependencies.php');
 
@@ -20,6 +31,7 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 	$filename = $_FILES["file"]["name"];
 
 	// Changes to the upload directory
+	chdir('../');
 	chdir('../');
 	chdir('../');
 	chdir('upload');
@@ -55,7 +67,7 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 	$image->save($filename);
 
 	// calls uploadPhoto to upload file paths to database
-	$url = 'http://75.101.134.112/stream/api/uploadPhoto.php?picture_url=' . $pictureFilePath . '&stream_id=' . $stream_id . '&uploader_phone=' . $uploader_phone . '&tiny_picture_url=' . $tinyPictureFilePath;
+	$url = 'http://75.101.134.112/stream/1.0/api/upload_picture.php?picture_url=' . $pictureFilePath . '&stream_id=' . $stream_id . '&uploader_phone=' . $uploader_phone . '&picture_tinyurl=' . $tinyPictureFilePath;
 	$ch = curl_init($url);
 	$response = curl_exec($ch);
 	curl_close($ch);

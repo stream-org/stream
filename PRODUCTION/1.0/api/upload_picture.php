@@ -4,14 +4,22 @@
 // Saves the photo if photo uploaded through text
 
 //input::
-//	uploader_phone number
+//	uploader_phone
 //	picture_url 
 //	stream_id
 //  tinyPicture url
 //	caption
 
 //output::
-//	picture_id or error
+// 	status
+//	uploader_phone
+//	picture_url
+//	picture_tinyurl
+//	stream_id
+//	caption
+
+// example:
+// http://75.101.134.112/stream/1.0/api/upload.html
 
 include('dependencies.php');
 
@@ -22,7 +30,7 @@ $metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
 $uploader_phone = $_GET['uploader_phone'];
 $uploader_phone = standardizePhone($uploader_phone);
 $picture_url = $_GET['picture_url'];
-$tiny_picture_url = $_GET['tiny_picture_url'];
+$picture_tinyurl = $_GET['picture_tinyurl'];
 $stream_id = $_GET['stream_id'];
 $caption = $_GET['caption'];
 $picture_id = $picture_url . $uploader_phone . $stream_id . time();
@@ -37,7 +45,7 @@ if($picture_url == "test"){
 
 // Logic for photos uploaded through text
 
-elseif ($tiny_picture_url == ""){
+elseif ($picture_tinyurl == ""){
 
 	$val = time().$picture_url;
 	$filename = hash('sha512', $val) . '.jpg';
@@ -97,7 +105,7 @@ elseif ($tiny_picture_url == ""){
 else{
 
 	//Inserts picture and tiny picture into database
-	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption) VALUES ('$stream_id', '$uploader_phone', '$picture_id', '$picture_url','$tiny_picture_url','$caption')");
+	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL, Caption) VALUES ('$stream_id', '$uploader_phone', '$picture_id', '$picture_url','$picture_tinyurl','$caption')");
 
 
 	// Sends out iPhone push notification
@@ -127,7 +135,7 @@ else{
 	
 	$output['uploader_phone'] = $uploader_phone;
 	$output['picture_url'] = $picture_url;
-	$output['tiny_picture_url'] = $tiny_picture_url;
+	$output['picture_tinyurl'] = $picture_tinyurl;
 	$output['stream_id'] = $stream_id;
 	$output['caption'] = $caption;
 	

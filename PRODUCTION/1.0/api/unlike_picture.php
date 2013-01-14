@@ -7,7 +7,9 @@
 //	liker_phone
 
 //output::
-//	number of likes after the photo was unliked
+//	picture_likecount
+//  picture_id
+//  liker_phone 
 
 include('dependencies.php');
 
@@ -19,7 +21,6 @@ $liker_phone = $_GET['liker_phone'];
 $liker_phone = standardizePhone($liker_phone);
 
 mysql_query("DELETE FROM PictureLikes WHERE PictureID='$picture_id' AND Phone='$liker_phone'");
-
 
 // If the SQL delete query didn't work return error
 if(mysql_affected_rows()==0){
