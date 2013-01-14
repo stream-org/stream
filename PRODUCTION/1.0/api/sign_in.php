@@ -9,6 +9,7 @@
 //output::
 // 	status
 //	viewer_phone
+//  api_name
 //  if successful login (correct phone number and password):
 //  	-viewer_first
 //	    -viewer_last
@@ -59,6 +60,7 @@ else
 }
 
 $output['viewer_phone'] = $viewer_phone;
+$output['api_name'] = "sign_in";
 
 echo json_encode($output);
 

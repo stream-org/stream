@@ -8,14 +8,16 @@
 
 //output::
 //	a string denoting that the message was unsuccessful, or nothing is the message was successful
+//  api_name
 
 // example::
-//http://75.101.134.112/stream/1.0/api/push_notification.php?token=6e27be3b0190dd6ec5893febc5e92a915e5b7f8aa7d2c5c25f0ae8fa867209a1&message=push_notification_test
+// http://75.101.134.112/stream/1.0/api/push_notification.php?token=6e27be3b0190dd6ec5893febc5e92a915e5b7f8aa7d2c5c25f0ae8fa867209a1&message=push_notification_test
 
 
 
 $theToken = $_GET['token'];
 $theMessage = $_GET['message'];
+$output = array();
 
 // Put your device token here (without spaces):
 $deviceToken = $theToken;
@@ -58,9 +60,17 @@ $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($pay
 $result = fwrite($fp, $msg, strlen($msg));
 
 if (!$result)
-	echo 'Message not delivered' . PHP_EOL;
-else
-	// echo 'Message successfully delivered' . PHP_EOL;
+{	
+	$output['status'] = "error";
+	$output['error_description'] = 'Message not delivered' . PHP_EOL;
+}
 
-// Close the connection to the server
+else
+{
+	$output['status'] = "ok";
+}
+
+$output['api_name'] = "push_notification";
+echo json_encode($output);
+
 fclose($fp);

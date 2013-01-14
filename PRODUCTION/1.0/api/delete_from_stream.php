@@ -8,6 +8,7 @@
 
 //output::
 //	status
+//  api_name
 // 	viewer phone
 //	stream_id
 
@@ -43,7 +44,7 @@ else
 
 
 
-
+$output['api_name'] = "delete_from_stream";
 $output ["viewer_phone"] = $viewer_phone;
 $output ["stream_id"] = $stream_id;
 

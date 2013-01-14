@@ -6,6 +6,7 @@
 //	stream_id
 //	uploader_phone
 //output::
+// api_name
 // If successful upload form and calls upload_picture.php which outputs:
 // 		-status
 //  	-picture_id
@@ -80,7 +81,7 @@ else
 
 	$output['status'] = "error";
 	$output['error_description'] = "Photo did not upload!";
-
+	$output['api_name'] = "upload_file";
 	echo json_encode($output);
 }
 

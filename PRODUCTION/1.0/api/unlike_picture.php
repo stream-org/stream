@@ -7,6 +7,8 @@
 //	liker_phone
 
 //output::
+//	status
+//	api_name
 //	picture_likecount
 //  picture_id
 //  liker_phone 
@@ -37,6 +39,7 @@ $count = mysql_fetch_row($like_result);
 
 $count = $count[0];
 
+$output['api_name'] = "unlike_picture";
 $output['picture_likecount'] = $count;
 $output['picture_id'] = $picture_id;
 $output['liker_phone'] = $liker_phone;

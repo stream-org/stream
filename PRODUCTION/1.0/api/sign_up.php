@@ -10,6 +10,7 @@
 
 //output::
 //	status
+//	api_name
 //	viewer_first 
 //	viewer_last 
 //	viewer_phone
@@ -85,6 +86,7 @@ else
 	}
 }
 
+$output['api_name'] = "sign_up";
 echo json_encode($output);
 
 ?>

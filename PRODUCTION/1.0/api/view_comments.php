@@ -6,6 +6,7 @@
 //output::
 // 	picture_id
 // 	status
+//	api_name
 //	Comments, which is array of comments ordered chronologically that includes for each comment:
 // 		commenter_first
 // 		commenter_last
@@ -39,6 +40,7 @@ while($stream_id_row = mysql_fetch_array($stream_id_result))
 $output['status'] = "ok";
 $output['picture_id'] = $picture_id;
 $output['Comments'] = $commentArray;
+$output['api_name'] = "view_comments";
 
 echo json_encode($output);
 

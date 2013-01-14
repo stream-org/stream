@@ -7,6 +7,7 @@
 //	picture_id
 
 //output::
+//	api_name
 //	viewer_phone
 //	picture_id
 
@@ -37,6 +38,7 @@ else
 	$output ["status"] = "ok";
 }
 
+$output['api_name'] = "delete_picture";
 $output['viewer_phone'] = $viewer_phone;
 $output['picture_id'] = $picture_id;
 
