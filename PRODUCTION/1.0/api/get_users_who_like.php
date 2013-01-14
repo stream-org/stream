@@ -6,6 +6,7 @@
 //	picture_id
 
 //output::
+//  api_name
 //  Likers which is an array of people who liked it that includes
 // 		-liker_first
 // 		-liker_last
@@ -39,6 +40,7 @@ while ($liker_row = mysql_fetch_array($liker_result))
 $output['Likers'] = $Likers;
 $output['status'] = "ok";
 $output['picture_id'] = $picture_id;
+$output['api_name'] = "get_users_who_like";
 
 echo json_encode($output);
 

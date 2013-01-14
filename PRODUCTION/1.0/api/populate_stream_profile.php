@@ -13,6 +13,7 @@
 //  stream_name
 //  stream_usercount
 //  viewer_phone
+//  api_name
 //	Pictures which is an array of pictures ranked reverse chronologically that includes
 // 		-picture_id
 // 		-picture_likecount
@@ -81,7 +82,8 @@ $output['stream_name'] = $stream_name;
 $output['stream_usercount'] = $stream_usercount;
 $output['Pictures'] = $picture_array;
 $output['viewer_phone'] = $viewer_phone;
-$output["status"] = "ok";
+$output['status'] = "ok";
+$output['api_name'] = "populate_stream_profile";
 
 
 echo json_encode($output);

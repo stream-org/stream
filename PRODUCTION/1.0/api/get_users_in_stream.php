@@ -8,6 +8,7 @@
 //output::
 //  status
 //  stream_id
+//	api_name
 //	Users which is an array of users that are part of the stream ordered chronoligically by join date that includes
 //		- uploader_first
 // 		- uploader_last
@@ -53,6 +54,7 @@ while($picture_id_row = mysql_fetch_array($picture_id_result))
 $output['Users'] = $Users;
 $output['status'] = "ok";
 $output['stream_id'] = $stream_id;
+$output['api_name'] = "get_users_in_stream";
 
 
 echo json_encode($output);

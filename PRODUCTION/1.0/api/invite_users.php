@@ -75,7 +75,7 @@ for ($i=0; $i < count($phone_array); $i++)
 				//Insert user into UserStream 
 				mysql_query("INSERT INTO UserStreams (Phone, StreamID, StreamToUser) VALUES ('$current_phone', '$stream_id','$stream_to_user')");
 
-				// Invite user through push notification
+				// creates an array of existing users that need to receive either a pushNotif of a textNotif
 				array_push($should_push_array, $current_phone);
 				
 			}
@@ -99,6 +99,7 @@ for ($i=0; $i < count($phone_array); $i++)
 
 }
 
+//sends push notifications out to the existing users
 invitePushNotification($inviter_phone, $should_push_array, $stream_id);
 
 $output['stream_id'] = $stream_id;

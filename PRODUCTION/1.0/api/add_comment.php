@@ -11,6 +11,7 @@
 //	picture_id
 //  status
 //  commenter_phone
+//	api_name
 //  Comments which is an array ordered chronologically that includes
 //  	-commenter_first
 //  	-commenter_last
@@ -68,6 +69,7 @@ $output['Comments'] = $Comments;
 $output['picture_id'] = $picture_id;
 $output['commenter_phone'] = $commenter_phone;
 $output['comment'] = $comment;
+$output['api_name'] = "add_comment";
 
 
 echo json_encode($output);
