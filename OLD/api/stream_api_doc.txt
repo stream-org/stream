@@ -1,0 +1,65 @@
+sign_in.php
+	input:
+		viewer_phone
+		
+	output:
+
+sign_up.php
+	input:
+	output:
+
+delete_from_stream.php
+	input:
+	output:
+
+delete_picture.php
+	input:
+	output:
+
+dependencies.php
+	input:
+	output:
+
+get_picture_metadata.php
+	input:
+	output:
+
+get_picture_uploaded_by_user.php
+	input:
+	output:
+
+get_users_in_stream.php
+	input:
+	output:
+
+get_users_who_like_picture.php
+	input:
+	output:
+
+invite_users.php
+	input:
+	output:
+
+populate_user_streams.php
+	input:
+	output:
+
+push_notifications.php
+	input:
+	output:
+
+unline_picture.php
+	input:
+	output:
+
+upload_file.php
+	input:
+	output:
+
+upload_picture.php
+	input:
+	output:
+
+view_comments.php
+	input:
+	output:
