@@ -3,7 +3,7 @@
 require_once('connection.php');
 require_once('mixPanel.php');
 require_once('googlevoice_text.php');
-require_once('googlevoice_text.php');
+require_once('shorten.php');
 
 function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 {	
@@ -24,6 +24,10 @@ function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 
 	for ($i = 0; $i < count($invitee_array); $i++)
 	{
+		// $current_phone = $invitee_array[$i];
+		// $invited_user_result = mysql_query("SELECT * FROM Users WHERE Phone='$current_phone'");
+		// $invited_user_row = 
+
 		$current_phone = $invitee_array[$i];
 	 	$invited_iPhone_users_result = mysql_query("SELECT * FROM Users WHERE Phone='$current_phone' AND Token!=''");
 	 	$invited_iPhone_users_row = mysql_fetch_array($invited_iPhone_users_result);
