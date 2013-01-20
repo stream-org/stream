@@ -31,6 +31,7 @@ for ($i=0; $i < count($phone_array); $i++)
 { 
 	$current_phone = standardizePhone($phone_array[$i]);
 
+	//only invite if phone number a valid 
 	if (substr($current_phone,0,5) != 'Error')
 	{
 
@@ -57,21 +58,14 @@ for ($i=0; $i < count($phone_array); $i++)
 				
 				mysql_query("INSERT INTO UserStreams (Phone, StreamID, StreamToUser) VALUES ('$current_phone', '$stream_id',1)");
 				mysql_query("INSERT INTO Users (Phone, InvitedBy) VALUES ('$current_phone', '$inviter_phone')");
-
-				$textString = $inviter_first . " invited you to Stream! Stream lets you easily share pictures with your close friends. See what " . $inviter_first . " uploaded here: bit.ly/12Dy6u5";
-
-				// Texts new user
-				googlevoice_text($current_phone,$textString);
+				
+				// creates an array of existing users that need to receive either a pushNotif of a textNotif
+				array_push($should_push_array, $current_phone);
 
 			}
 
 			//Already a user
 			else{
-
-				//Get the max stream to user number. This is a feature built out for texting
-				$max_stream_to_user_result = mysql_query("SELECT MAX(StreamToUser) FROM UserStreams WHERE Phone='$current_phone'");
-				$max_stream_to_user_row = mysql_fetch_array($max_stream_to_user_result);
-				$stream_to_user = $max_stream_to_user_row[0] + 1;
 
 				//Insert user into UserStream 
 				mysql_query("INSERT INTO UserStreams (Phone, StreamID, StreamToUser) VALUES ('$current_phone', '$stream_id','$stream_to_user')");
@@ -100,7 +94,7 @@ for ($i=0; $i < count($phone_array); $i++)
 
 }
 
-//sends push notifications out to the existing users
+//sends push notifications out to invited users
 invitePushNotification($inviter_phone, $should_push_array, $stream_id);
 
 $output['stream_id'] = $stream_id;
