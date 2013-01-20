@@ -1,3 +1,4 @@
+//// TIER I ////
 - full photo view 
   - add coments
   - likes
@@ -11,13 +12,20 @@
 - create a stream action
 - upload a photo call to action 
 - NUX
+	 - create stream
+	 - sync contacts
+	 - post photo
+	 - like/comment on photos
+	 - invite participants post-creation
 
-
+//// TIER II ////
 - settings page
+	  - logout
+	  - notifications [click => lists streams w/ on/off knob for each]
+	  - account
+	  - terms & conditions
 - sync contacts  
 - forget password flow 
-
-
 - signout page
 
 v1 what do we need?
