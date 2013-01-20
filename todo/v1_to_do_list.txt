@@ -1,3 +1,25 @@
+- full photo view 
+  - add coments
+  - likes
+  - name 
+  - delte 
+  - back
+- visual feedback on the stream newsfeed 
+- feedback page
+- notifcations on streams
+- notifications on pictures 
+- create a stream action
+- upload a photo call to action 
+- NUX
+
+
+- settings page
+- sync contacts  
+- forget password flow 
+
+
+- signout page
+
 v1 what do we need?
    - NUX
    - sync contacts
@@ -9,14 +31,19 @@ first 3 (mediocre launch)
   - full photo view (chris and peter)
   - add comments (chris and peter)
   - invite flow/mobile web page (us)
+    - //shorten the url 
+    - check if the person is in the DB
+    - send them a text if they aren't in the DB
+    - send them a text if they are in the DB but don't have a token 
+    - send them a push notification for everything else
 
 next 4
 
   - delete photo (chris and peter)
-  - iOS5 & iOS6 (peter)
+  - //iOS5 & iOS6 (peter)
   - notification taking you straight to that event (peter)
   - signout (chris and peter)
-  - photo rotation (peter)
+  - //photo rotation (peter)
 
  
 
