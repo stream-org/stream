@@ -1,3 +1,12 @@
+notification logic 
+ - someone upload a photo
+ - we insert that photo in the db 
+ - we iterate through everyone in that stream 
+ - we take their phone number, and get all of the pictures that they haven't uploaded
+ - if the total number of pictures%3 == 0, send a notification to that person. 
+ - if not, then skip that person.
+
+
 //salting 
 //practice salting passwords in a separate file
 //insert and then see if you can pull that same password out

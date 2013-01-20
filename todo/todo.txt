@@ -1,3 +1,38 @@
+1.19.2013 to-do list 
+
+backy == backend
+webby = mobile web page 
+
+  - user A creates a stream
+  - user A invites user B, C, D, and E to the stream 
+    - user b has an iPhone and the stream app
+    - user c has an iPhone and does not have the stream app	
+    - user d does not have an iPhone, but has an account with stream 
+    - user e does not have an iPhone, and does not have an account with stream 
+  - backy sends user b push notification letting him know that he's been invited to a stream
+  - backy sends user d a text message letting her know that she's been invited to a stream and gets a link that send them to the mobile web verison 
+  - backy sends user c and e a text message inviting them to stream, and tells them what stream is all about as well as gives them a link.
+  - backy inserts c and e into the users table and the userstreams table 
+  - user c and e both click on the link, and gets sent to webby. 
+  - webby figures out that user c is on an iPhone with iOS5 and above, and that user e does not have an iPhone. 
+  - if there is a photo on the stream, webby shows both user c and user e the latest photo in the stream
+  - webby shows user c a button that says "download the iPhone app here" and shows user e "go to stream" here. 
+  - user c registers, and sees a stream already in their stream newsfeed
+  - user e registers, and see a stream already in their stream newsfeed
+
+
+
+
+  - backy checks if the phone number is in the database
+  - if the phone number is in the database, backy check if it has a token or not. 
+  - if it has a token, backy sends the user a push notification.
+  - if it doesn't, backy sends the user a text message.
+  - if the phone number is not in the database, backy creates a new row for that user.
+
+
+
+
+
 notification logic 
  - someone upload a photo
  - we insert that photo in the db 
