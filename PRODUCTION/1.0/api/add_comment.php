@@ -47,9 +47,19 @@ if ($comment == '')
 else
 {
 	// Inserts commenter's comments into database
-	mysql_query("INSERT INTO Comments (PictureID, Phone, Comment) VALUES ('$picture_id', '$commenter_phone', '$comment')");
+	$comment_result = mysql_query("INSERT INTO Comments (PictureID, Phone, Comment) VALUES ('$picture_id', '$commenter_phone', '$comment')");
 
-	$output['status'] = "ok";
+	if($comment_result){
+		$output ["status"] = "ok";
+
+		//send like push notification
+		commentPushNotification($commenter_phone, $picture_id, $comment);
+	}
+	else
+	{
+		$output ["status"] = "error";
+		$output['error_description'] = "Picture not liked! ";
+	}
 }
 
 //Returns updated array of comments with commenter's name, created, and the comment
