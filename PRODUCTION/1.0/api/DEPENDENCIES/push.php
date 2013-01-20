@@ -24,28 +24,52 @@ function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 
 	for ($i = 0; $i < count($invitee_array); $i++)
 	{
-		// $current_phone = $invitee_array[$i];
-		// $invited_user_result = mysql_query("SELECT * FROM Users WHERE Phone='$current_phone'");
-		// $invited_user_row = 
-
 		$current_phone = $invitee_array[$i];
-	 	$invited_iPhone_users_result = mysql_query("SELECT * FROM Users WHERE Phone='$current_phone' AND Token!=''");
-	 	$invited_iPhone_users_row = mysql_fetch_array($invited_iPhone_users_result);
+		$invited_user_result = mysql_query("SELECT * FROM Users WHERE Phone='$current_phone'");
+		$invited_user_row = mysql_fetch_array($invited_user_result);
 
-	 	if(!empty($invited_iPhone_users_row))
-	 	{	
-	 		$current_token = $invited_iPhone_users_row['Token'];
+		if($invited_user_row['Token'] != '')
+		{
+			$current_token = $invited_user_row['Token'];
 			$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
 			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
 			$ch = curl_init($url);
 			$response = curl_exec($ch);
 			curl_close($ch);
-	 	}
-	 	else
-	 	{
-	 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
-	 		googlevoice_text($current_phone, $message);
-	 	}
+		}
+
+		elseif($invited_user_row['Token'] == '' and $invited_user_row['JoinDate'] != '')
+		{
+			$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
+	 		googlevoice_text($current_phone, $message);	
+		}
+
+		elseif($invited_user_row['Token'] == '' and $invited_user_row['JoinDate'] == '')
+		{
+			$url = "75.101.134.112/test.php?phone=" . $current_phone;
+			$shortUrl = shorten($url);
+			$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. ' . $shortUrl;
+	 		googlevoice_text($current_phone, $message);		
+		}
+
+		// $current_phone = $invitee_array[$i];
+	 // 	$invited_iPhone_users_result = mysql_query("SELECT * FROM Users WHERE Phone='$current_phone' AND Token!=''");
+	 // 	$invited_iPhone_users_row = mysql_fetch_array($invited_iPhone_users_result);
+
+	 // 	if(!empty($invited_iPhone_users_row))
+	 // 	{	
+	 // 		$current_token = $invited_iPhone_users_row['Token'];
+		// 	$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
+		// 	$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
+		// 	$ch = curl_init($url);
+		// 	$response = curl_exec($ch);
+		// 	curl_close($ch);
+	 // 	}
+	 // 	else
+	 // 	{
+	 // 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
+	 // 		googlevoice_text($current_phone, $message);
+	 // 	}
 	}
 }
 
