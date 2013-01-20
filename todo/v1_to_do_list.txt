@@ -16,3 +16,10 @@ next 4
   - iOS5 & iOS6 (peter)
   - notification taking you straight to that event (peter)
   - signout (chris and peter)
+
+
+
+NUX list
+  - how to create stream
+  - how to post photo
+  - how to like/comment after post photo
