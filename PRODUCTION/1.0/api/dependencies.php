@@ -9,5 +9,6 @@ require_once('DEPENDENCIES/push.php');
 require_once('DEPENDENCIES/SimpleImage.php'); 
 require_once('DEPENDENCIES/sendText.php'); 
 require_once('DEPENDENCIES/shorten.php');
+require_once('DEPENDENCIES/twilio_text.php');
 
 ?>
