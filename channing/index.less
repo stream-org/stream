@@ -289,8 +289,11 @@
             margin: 0px !important;
         }
 
+
+
 /*intro page*/
-    .ui-page#intro {
+    .ui-page#intro,
+    .ui-page#router {
         background: url("iPhone5.png");
         position:fixed;
         background-size:cover;
@@ -317,20 +320,25 @@
         }*/
 
     /*buttons*/
-        #intro_buttons {
+        #intro_buttons,
+        #download_app {
             width: 90%;
             right: 5%;
             position: fixed;
             bottom:5px;
             text-align: center;
             margin: auto;
-        }
 
-        #intro_buttons .ui-btn-inner {
-            height: 35px;
-            line-height: 35px;
-            padding-left: 10px !important;
-            padding-right: 10px !important;
+            img {
+
+            }
+
+            .ui-btn-inner {
+                height: 35px;
+                line-height: 35px;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
         }
 
 /*sign_in page*/
@@ -461,8 +469,10 @@
         }
 
     // content
-        #the_stream .ui-content {
-            padding: 2px;
+        #the_stream {
+            .ui-content {
+                padding: 2px;
+            }
         }
 
         #participants_btn {
@@ -486,26 +496,15 @@
             }
         }
 
-        .ui-block-a {
-            padding: 2px;
-            img {
-                width:140px;
-                height:140px;
-                border: 4px solid white;
-                -moz-box-shadow: 0 0 2px 2px #888;
-                -webkit-box-shadow: 0 0 2px 2px#888;
-                box-shadow: 0 0 2px 2px #888;
-            }
-        }
-
+        .ui-block-a,
         .ui-block-b {
             padding: 2px;
             img {
-                width:140px;
-                height:140px;
+                max-width:140px;
+                max-height:140px;
                 border: 4px solid white;
                 -moz-box-shadow: 0 0 2px 2px #888;
-                -webkit-box-shadow: 0 0 2px 2px#888;
+                -webkit-box-shadow: 0 0 2px 2px #888;
                 box-shadow: 0 0 2px 2px #888;                
             }
         }
