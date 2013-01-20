@@ -1,13 +1,13 @@
 //// TIER I ////
 - full photo view 
-  - add coments
+  - add comments
   - likes
   - name 
-  - delte 
+  - delete 
   - back
 - visual feedback on the stream newsfeed 
 - feedback page
-- notifcations on streams
+- notifications on streams
 - notifications on pictures 
 - create a stream action
 - upload a photo call to action 
