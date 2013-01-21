@@ -2,7 +2,7 @@
 
 require_once('connection.php');
 require_once('mixPanel.php');
-require_once('googlevoice_text.php');
+require_once('twilio_text.php');
 require_once('shorten.php');
 
 function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
@@ -41,7 +41,7 @@ function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 		elseif($invited_user_row['Token'] == '' and $invited_user_row['JoinDate'] != 0)
 		{
 			$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
-	 		googlevoice_text($current_phone, $message);	
+	 		twilio_text($current_phone, $message);	
 		}
 
 		elseif($invited_user_row['Token'] == '' and $invited_user_row['JoinDate'] == 0)
@@ -49,8 +49,30 @@ function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 			$url = "75.101.134.112/test.php?phone=" . $current_phone;
 			$shortUrl = shorten($url);
 			$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. ' . $shortUrl;
-	 		googlevoice_text($current_phone, $message);		
+	 		twilio_text($current_phone, $message);		
 		}
+<<<<<<< HEAD
+=======
+
+		// $current_phone = $invitee_array[$i];
+	 // 	$invited_iPhone_users_result = mysql_query("SELECT * FROM Users WHERE Phone='$current_phone' AND Token!=''");
+	 // 	$invited_iPhone_users_row = mysql_fetch_array($invited_iPhone_users_result);
+
+	 // 	if(!empty($invited_iPhone_users_row))
+	 // 	{	
+	 // 		$current_token = $invited_iPhone_users_row['Token'];
+		// 	$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
+		// 	$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
+		// 	$ch = curl_init($url);
+		// 	$response = curl_exec($ch);
+		// 	curl_close($ch);
+	 // 	}
+	 // 	else
+	 // 	{
+	 // 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
+	 // 		twilio_text($current_phone, $message);
+	 // 	}
+>>>>>>> 203453d80038cd2fff71e2c217a3b66ea97c3639
 	}
 }
 
@@ -103,7 +125,7 @@ function likePushNotification($liker_phone, $picture_id)
 		else
 		{
 			$message = $liker_name . ' likes the photo you posted on ' . $stream_name . '. bit.ly/12Dy6u5';
-			googlevoice_text($uploader_phone, $message);	
+			twilio_text($uploader_phone, $message);	
 			$metrics->track('like_notification', array('notification_type'=>'text','notified_phone'=>$uploaderPhone,'liker_phone'=>$liker_phone,'liked_picture'=>$picture_id,'distinct_id'=>$picture_id));
 		}
 	}
@@ -164,7 +186,7 @@ function commentPushNotification($commenter_phone, $picture_id, $comment)
 			else
 			{
 				$message = $commenter_name . ' commented on the photo you posted on ' . $stream_name . ': '. $comment_snippet.'... bit.ly/12Dy6u5';
-				googlevoice_text($uploader_phone, $message);	
+				twilio_text($uploader_phone, $message);	
 				$metrics->track('comment_notification', array('notification_type'=>'text','notified_phone'=>$uploaderPhone,'commenter_phone'=>$commenter_phone,'commented_picture'=>$picture_id,'distinct_id'=>$picture_id));
 			}
 		}
@@ -192,7 +214,7 @@ function commentPushNotification($commenter_phone, $picture_id, $comment)
 			else
 			{
 				$message = $commenter_name . ' commented on a photo in ' . $stream_name . ': '.$comment_snippet.'... bit.ly/12Dy6u5';
-				googlevoice_text($user_phone, $message);	
+				twilio_text($user_phone, $message);	
 				$metrics->track('comment_notification', array('notification_type'=>'text','notified_phone'=>$user_phone,'commenter_phone'=>$commenter_phone,'commented_picture'=>$picture_id,'distinct_id'=>$picture_id));
 			}
 		}
@@ -274,7 +296,7 @@ function uploadPicturePushNotification($uploader_phone, $stream_id)
 	{
 		$current_phone = $invited_non_iPhone_users_array[$non_iPhone_user_phone_index];
 		$message = $uploader_name . ' just uploaded a photo to ' . $stream_name . ' stream. bit.ly/12Dy6u5';
-		googlevoice_text($current_phone, $message);
+		twilio_text($current_phone, $message);
 
 		$metrics->track('photo_notification', array('notification_type'=>'text','notified_phone'=>$current_phone,'stream_uploaded_to'=>$stream_id,'distinct_id'=>$stream_id));
 	}
@@ -321,7 +343,7 @@ function uploadPicturePushNotification($uploader_phone, $stream_id)
 // 	else
 // 	{
 // 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
-// 		googlevoice_text($invitee_phone, $message);	
+// 		twilio_text($invitee_phone, $message);	
 // 		$metrics->track('invite_notification', array('notification_type'=>'text','notified_phone'=>$invitee_phone,'stream_invited_to'=>$stream_id,'distinct_id'=>$stream_id));
 // 	}
 // }
@@ -392,7 +414,7 @@ function uploadPicturePushNotification($uploader_phone, $stream_id)
 // 	{
 // 		$current_phone = $invited_non_iPhone_users_array[$non_iPhone_user_phone_index];
 // 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
-// 		googlevoice_text($current_phone, $message);
+// 		twilio_text($current_phone, $message);
 
 // 		$metrics->track('invite_notification', array('notification_type'=>'text','notified_phone'=>$current_phone,'stream_invited_to'=>$stream_id,'distinct_id'=>$stream_id));
 // 	}
