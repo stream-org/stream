@@ -51,7 +51,7 @@ while($picture_id_row = mysql_fetch_array($picture_id_result))
 
 }
 
-$output['Users'] = $Users;
+$output['users'] = $Users;
 $output['status'] = "ok";
 $output['stream_id'] = $stream_id;
 $output['api_name'] = "get_users_in_stream";

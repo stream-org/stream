@@ -71,7 +71,7 @@ while($stream_id_row = mysql_fetch_array($stream_id_result))
 
 }
 
-$output["Streams"] = $stream_array;
+$output["streams"] = $stream_array;
 $output["viewer_phone"] = $viewer_phone;
 $output["api_name"] = "populate_user_streams";
 $output["status"] = "ok";

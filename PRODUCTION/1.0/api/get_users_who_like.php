@@ -37,7 +37,7 @@ while ($liker_row = mysql_fetch_array($liker_result))
 	array_push($Likers, $liker_array);
 }
 
-$output['Likers'] = $Likers;
+$output['likers'] = $Likers;
 $output['status'] = "ok";
 $output['picture_id'] = $picture_id;
 $output['api_name'] = "get_users_who_like";
