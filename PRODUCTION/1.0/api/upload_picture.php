@@ -94,7 +94,7 @@ elseif ($picture_tinyurl == ""){
 		$image->save(tinyfilename);
 	}
 
-	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL) VALUES ('$stream_id', '$uploader_phone', '$picture_id','$pictureFilePath', '$tinyPictureFilePath')");
+	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL,Caption, IsActive) VALUES ('$stream_id', '$uploader_phone', '$picture_id','$pictureFilePath', '$tinyPictureFilePath','$caption',1)");
 
 	uploadPicturePushNotification($uploader_phone, $stream_id);
 
