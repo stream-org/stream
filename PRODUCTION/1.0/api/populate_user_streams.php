@@ -53,7 +53,7 @@ while($stream_id_row = mysql_fetch_array($stream_id_result))
 		$stream_usercount = (int) $usercount_row[0];
 	}
 
-	$picture_result = mysql_query("SELECT COUNT(PictureID) FROM StreamActivity WHERE StreamID='$stream_id'");
+	$picture_result = mysql_query("SELECT COUNT(PictureID) FROM StreamActivity WHERE StreamID='$stream_id' AND IsActive = 1 ");
 	while($picture_row = mysql_fetch_array($picture_result))
 	{
 		$picture_count = (int) $picture_row[0];
