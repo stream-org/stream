@@ -15,6 +15,7 @@
 //  uploader_last
 //  uploader_phone
 //	api_name
+//  can_delete
 //  Comments which is an array ordered chronologically that includes
 //  	-commenter_first
 //  	-commenter_last
@@ -84,11 +85,19 @@ while($stream_id_row = mysql_fetch_array($stream_id_result))
 	array_push($commentArray, $tempArray);
 }
 
+// Allows for deletion option if uploader is the same as the viewer
+$can_delete = 0;
+
+if($uploader_phone==$viewer_phone){
+	$can_delete = 1;
+}
+
 $output['Comments'] = $commentArray;
 $output['picture_id'] = $picture_id;
 $output['viewer_phone'] = $viewer_phone;
 $output['viewer_hasLiked'] = $viewer_hasLiked;
 $output['api_name'] = "get_picture_metadata";
+$output['can_delete'] = $can_delete;
 $output['status'] = "ok";
 
 echo json_encode($output);
