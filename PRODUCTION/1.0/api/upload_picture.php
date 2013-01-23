@@ -77,7 +77,7 @@ elseif ($picture_tinyurl == ""){
 		$image->load($filename);
 		chdir('../');	
 		chdir('TinyPictures');
-		$image->resizeToWidth(600);
+		$image->resizeToWidth(1024);
 		$image->save($tinyfilename);
 	}
 	else
@@ -90,7 +90,7 @@ elseif ($picture_tinyurl == ""){
 		$image->load($filename);
 		chdir('../');
 		chdir('TinyPictures');
-		$image->resizeToHeight(600);
+		$image->resizeToHeight(1024);
 		$image->save(tinyfilename);
 	}
 

@@ -59,11 +59,11 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 	// resizes picture to tiny picture (600x600)
 	if(intval($width) >= intval($height))
 	{
-		$image->resizeToWidth(600);
+		$image->resizeToWidth(1024);
 	}
 	else
 	{
-		$image->resizeToHeight(600);
+		$image->resizeToHeight(1024);
 	}
 	$image->save($filename);
 
