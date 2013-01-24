@@ -74,14 +74,16 @@ $uploader_name_row = mysql_fetch_array($uploader_name_result);
 $output['uploader_first'] = $uploader_name_row['First'];
 $output['uploader_last'] = $uploader_name_row['Last'];
 
-// Gets number of comments
-$stream_id_result = mysql_query("SELECT COUNT(*) FROM Comments WHERE PictureID='$picture_id'");
+// Gets metadata for all comments: commenter's first, last, and phone, and created
+$stream_id_result = mysql_query("SELECT First, Last, Comments.Phone as Phone, Comment, Comments.Created as Created FROM Comments INNER JOIN Users ON Comments.Phone = Users.Phone WHERE PictureID='$picture_id' ORDER BY Created ASC");
 
-$picture_commentcount = mysql_fetch_array($stream_id_result);
-
-$picture_commentcount = $picture_commentcount[0];
 $commentArray= array();
 
+while($stream_id_row = mysql_fetch_array($stream_id_result))
+{
+	$tempArray = array('commenter_first'=>$stream_id_row['First'], 'commenter_last'=>$stream_id_row['Last'], 'commenter_phone'=>$stream_id_row['Phone'],'comment'=>$stream_id_row['Comment'], 'comment_created'=>$stream_id_row['Created']);
+	array_push($commentArray, $tempArray);
+}
 
 // Allows for deletion option if uploader is the same as the viewer
 $can_delete = 0;
@@ -90,7 +92,7 @@ if($uploader_phone==$viewer_phone){
 	$can_delete = 1;
 }
 
-$output['picture_commentcount'] = $picture_commentcount;
+$output['comments'] = $commentArray;
 $output['picture_id'] = $picture_id;
 $output['viewer_phone'] = $viewer_phone;
 $output['viewer_hasLiked'] = $viewer_hasLiked;
