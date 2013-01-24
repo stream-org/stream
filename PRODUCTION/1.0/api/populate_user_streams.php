@@ -23,7 +23,7 @@
 
 include('dependencies.php');
 //grabbing the arguments 
-$viewer_phone = $_GET['viewer_phone'];
+$viewer_phone = $_POST['viewer_phone'];
 $viewer_phone = standardizePhone($viewer_phone);
 	
 $stream_id;

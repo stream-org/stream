@@ -20,7 +20,7 @@
 include('dependencies.php');
 
 //grabbing the arguments 
-$stream_id = $_GET['stream_id'];
+$stream_id = $_POST['stream_id'];
 $output = array();
 $Users = array();
 

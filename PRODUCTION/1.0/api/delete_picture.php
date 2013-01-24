@@ -20,10 +20,10 @@ include('dependencies.php');
 $output = array();
 
 //grabbing the arguments 
-$viewer_phone = $_GET['viewer_phone'];
+$viewer_phone = $_POST['viewer_phone'];
 $viewer_phone = standardizePhone($viewer_phone);
 
-$picture_id = $_GET['picture_id'];
+$picture_id = $_POST['picture_id'];
 
 //Removes viewer's picture from Stream
 mysql_query("UPDATE StreamActivity SET IsActive = 0 WHERE Phone = '$viewer_phone' AND PictureID = '$picture_id'");

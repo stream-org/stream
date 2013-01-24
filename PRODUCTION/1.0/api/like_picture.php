@@ -19,8 +19,8 @@ include('dependencies.php');
 $output = array();
 
 //grabbing the arguments 
-$picture_id = $_GET['picture_id'];
-$liker_phone = $_GET['liker_phone'];
+$picture_id = $_POST['picture_id'];
+$liker_phone = $_POST['liker_phone'];
 $liker_phone = standardizePhone($liker_phone);	
 
 //	Adds the picture like to the database

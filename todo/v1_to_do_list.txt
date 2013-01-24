@@ -1,4 +1,4 @@
-//// TIER I ////
+  //// TIER I ////
 - full photo view 
   - add comments
   - likes

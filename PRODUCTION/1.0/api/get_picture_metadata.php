@@ -29,8 +29,8 @@
 include('dependencies.php');
 
 //grabbing the arguments 
-$picture_id = $_GET['picture_id'];
-$viewer_phone = $_GET['viewer_phone'];
+$picture_id = $_POST['picture_id'];
+$viewer_phone = $_POST['viewer_phone'];
 $viewer_phone = standardizePhone($viewer_phone);
 $picture_likecount;
 $uploader_phone;

@@ -17,9 +17,9 @@ $output = array();
 
 include('dependencies.php');
 
-$viewer_phone = $_GET['viewer_phone'];
+$viewer_phone = $_POST['viewer_phone'];
 $viewer_phone = standardizePhone($viewer_phone);
-$token = $_GET['token'];
+$token = $_POST['token'];
 
 mysql_query("UPDATE Users SET Token='$token' WHERE Phone='$viewer_phone'");
 

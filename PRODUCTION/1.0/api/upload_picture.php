@@ -24,16 +24,16 @@
 
 include('dependencies.php');
 
-//Mixpanel Tracking
-$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
+// //Mixpanel Tracking
+// $metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
 
 //grabbing the arguments 
-$uploader_phone = $_GET['uploader_phone'];
+$uploader_phone = $_POST['uploader_phone'];
 $uploader_phone = standardizePhone($uploader_phone);
-$picture_url = $_GET['picture_url'];
-$picture_tinyurl = $_GET['picture_tinyurl'];
-$stream_id = $_GET['stream_id'];
-$caption = $_GET['caption'];
+$picture_url = $_POST['picture_url'];
+$picture_tinyurl = $_POST['picture_tinyurl'];
+$stream_id = $_POST['stream_id'];
+$caption = $_POST['caption'];
 $picture_id = $picture_url . $uploader_phone . $stream_id . time();
 $picture_id = hash('sha512', $picture_id);
 
@@ -112,8 +112,8 @@ else{
 	// Sends out iPhone push notification
 	uploadPicturePushNotification($uploader_phone, $stream_id);
 
-	// MixPanel tracking
-	$metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$uploader_phone,'stream'=>$stream_id,'picture_url'=>$picture_url,'distinct_id'=>$uploader_phone));
+	// // MixPanel tracking
+	// $metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$uploader_phone,'stream'=>$stream_id,'picture_url'=>$picture_url,'distinct_id'=>$uploader_phone));
 
 	// Checks if the picture was actually uploaded to the database
 	$picture_id_result = mysql_query("SELECT * FROM StreamActivity WHERE PictureID='$picture_id' AND Phone='$uploader_phone' AND StreamID='$stream_id'");

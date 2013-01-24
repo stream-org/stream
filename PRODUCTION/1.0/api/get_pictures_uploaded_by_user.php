@@ -23,9 +23,9 @@
 include('dependencies.php');
 
 //grabbing the arguments 
-$stream_id = $_GET['stream_id'];
-$uploader_phone = $_GET['uploader_phone'];
-$viewer_phone = $_GET['viewer_phone'];
+$stream_id = $_POST['stream_id'];
+$uploader_phone = $_POST['uploader_phone'];
+$viewer_phone = $_POST['viewer_phone'];
 $viewer_phone = standardizePhone($viewer_phone);
 $uploader_phone = standardizePhone($uploader_phone);
 
