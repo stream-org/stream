@@ -15,8 +15,8 @@
 
 
 
-$theToken = $_POST['token'];
-$theMessage = $_POST['message'];
+$theToken = $_GET['token'];
+$theMessage = $_GET['message'];
 $output = array();
 
 // Put your device token here (without spaces):

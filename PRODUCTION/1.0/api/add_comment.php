@@ -25,10 +25,10 @@
 include "dependencies.php";
 
 //grabbing the arguments 
-$picture_id = $_POST['picture_id'];
-$commenter_phone = $_POST['commenter_phone'];
+$picture_id = $_GET['picture_id'];
+$commenter_phone = $_GET['commenter_phone'];
 $commenter_phone = standardizePhone($commenter_phone);
-$comment = $_POST['comment'];
+$comment = $_GET['comment'];
 
 $output = array();
 $Comments = array();

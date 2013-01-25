@@ -28,12 +28,12 @@ include('dependencies.php');
 // $metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
 
 //grabbing the arguments 
-$uploader_phone = $_POST['uploader_phone'];
+$uploader_phone = $_GET['uploader_phone'];
 $uploader_phone = standardizePhone($uploader_phone);
-$picture_url = $_POST['picture_url'];
-$picture_tinyurl = $_POST['picture_tinyurl'];
-$stream_id = $_POST['stream_id'];
-$caption = $_POST['caption'];
+$picture_url = $_GET['picture_url'];
+$picture_tinyurl = $_GET['picture_tinyurl'];
+$stream_id = $_GET['stream_id'];
+$caption = $_GET['caption'];
 $picture_id = $picture_url . $uploader_phone . $stream_id . time();
 $picture_id = hash('sha512', $picture_id);
 

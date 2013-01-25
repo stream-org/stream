@@ -20,9 +20,9 @@
 include('dependencies.php');
 
 //grabbing the arguments 
-$stream_id = $_POST['stream_id'];
-$invitees_phone = $_POST['invitees_phone'];
-$inviter_phone = $_POST['inviter_phone'];
+$stream_id = $_GET['stream_id'];
+$invitees_phone = $_GET['invitees_phone'];
+$inviter_phone = $_GET['inviter_phone'];
 $phone_array = explode(',', $invitees_phone);
 $output = array();
 $should_push_array = array();

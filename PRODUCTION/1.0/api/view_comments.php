@@ -23,7 +23,7 @@ $output = array();
 $commentArray = array();
 
 //grabbing the arguments 
-$picture_id = $_POST['picture_id'];
+$picture_id = $_GET['picture_id'];
 
 
 //Returns updated array of comments with commenter's name, created, and the comment
