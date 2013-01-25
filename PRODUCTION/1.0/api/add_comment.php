@@ -22,7 +22,9 @@
 // Example: 
 // http://75.101.134.112/stream/1.0/api/add_comment.php?commenter_phone=8477226071&comment=eyyyy&picture_id=1532d2aefcb206383390e28214a9a326933626b6bb33ad4864b810f20299e3b6a9e99c63de11c960756479456f422f6fad695e4ee618cc64c20af15c0ad2c1ff
 
-include "dependencies.php";
+include('dependencies.php');
+
+// commentPushNotification("19519929201", "01a7e8544834e0ffa486aabe99a58b0bc217b4f49beb38207765fa2553dca8e4f3da51cbeefa3e37d94718ade4f9129c5f4f45c956e3cb532e423d2a77a0c5c0", "hey");	
 
 //grabbing the arguments 
 $picture_id = $_GET['picture_id'];

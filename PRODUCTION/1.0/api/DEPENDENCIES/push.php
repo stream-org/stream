@@ -5,6 +5,8 @@ require_once('mixPanel.php');
 require_once('twilio_text.php');
 require_once('shorten.php');
 
+
+
 function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 {	
 	$inviter_name;
@@ -70,7 +72,6 @@ function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 	 // 		$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. bit.ly/12Dy6u5';
 	 // 		twilio_text($current_phone, $message);
 	 // 	}
->>>>>>> 203453d80038cd2fff71e2c217a3b66ea97c3639
 	}
 }
 
