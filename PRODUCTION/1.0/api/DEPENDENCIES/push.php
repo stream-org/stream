@@ -51,8 +51,6 @@ function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 			$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream. ' . $shortUrl;
 	 		twilio_text($current_phone, $message);		
 		}
-<<<<<<< HEAD
-=======
 
 		// $current_phone = $invitee_array[$i];
 	 // 	$invited_iPhone_users_result = mysql_query("SELECT * FROM Users WHERE Phone='$current_phone' AND Token!=''");
