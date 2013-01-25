@@ -24,8 +24,6 @@
 
 include('dependencies.php');
 
-// commentPushNotification("19519929201", "01a7e8544834e0ffa486aabe99a58b0bc217b4f49beb38207765fa2553dca8e4f3da51cbeefa3e37d94718ade4f9129c5f4f45c956e3cb532e423d2a77a0c5c0", "hey");	
-
 //grabbing the arguments 
 $picture_id = $_GET['picture_id'];
 $commenter_phone = $_GET['commenter_phone'];
