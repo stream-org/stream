@@ -20,7 +20,8 @@
 				url: api_call,
 				dataType: "json",
 				success: function(data){
-	           		pic_url = data["Streams"][0]["picture_latest"]["picture_tinyurl"];
+					console.log(data);
+	           		pic_url = data["streams"][0]["picture_latest"]["picture_tinyurl"];
 	           		},
            		data: {},
            		async: false
