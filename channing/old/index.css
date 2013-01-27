@@ -1,0 +1,368 @@
+/* References
+    colors:
+        light-oj: #fa6c3c;
+        med-oj: #ea583f;
+        red-oj: #d94342;
+*/
+
+/*known issues that need fixing
+    - figure out how to remove the fucking padding from around a.ui-link-inherit on all_streams
+
+    */
+
+/*import all the fonts*/
+    /*    @font-face {
+        font-family: 'MS_One';
+        src: url('fonts/Museo_Sans/museosans-100-webfont.ttf');
+    }
+
+    @font-face {
+        font-family: 'MS_One_I';
+        src: url('fonts/Museo_Sans/museosans-100italic-webfont.ttf');
+    }
+
+    @font-face {
+        font-family: 'MS_Three';
+        src: url('channing/fonts/Museo_Sans/museosans-300-webfont.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'MS_Three_I';
+        src: url('fonts/Museo_Sans/museosans-300italic-webfont.ttf');
+    }
+
+    @font-face {
+        font-family: 'MS_Five';
+        src: url('fonts/Museo_Sans/museosans-500-webfont.ttf');
+    }
+
+    @font-face {
+        font-family: 'MS_Five_I';
+        src: url('fonts/Museo_Sans/museosans-500italic-webfont.ttf');
+    }
+
+    @font-face {
+        font-family: 'MS_Seven';
+        src: url('fonts/Museo_Sans/museosans-700-webfont.ttf');
+    }
+
+    @font-face {
+        font-family: 'MS_Seven_I';
+        src: url('fonts/Museo_Sans/museosans-700italic-webfont.ttf');
+    }
+
+    @font-face {
+        font-family: 'MS_Nine';
+        src: url('fonts/Museo_Sans/museosans-900-webfont.ttf');
+    }
+
+    @font-face {
+        font-family: 'MS_Nine_I';
+        src: url('fonts/Museo_Sans/museosans-900italic-webfont.ttf');
+    }*/
+
+    /*fuck that - make it all sans-serif :D*/
+    body * {
+        font-family: sans-serif;
+    }
+
+/*custom themes*/
+    /*orange button*/
+        /* up state */
+        .ui-btn-up-oj,
+        .ui-btn-hover-oj,
+        .ui-btn-down-oj {
+            border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px;
+            box-shadow: none !important; -webkit-box-shadow: none !important; -moz-box-shadow: none !important;
+            text-decoration: none;
+            }
+            .ui-btn-up-oj .ui-btn-inner,
+            .ui-btn-hover-oj .ui-btn-inner,
+            .ui-btn-down-oj .ui-btn-inner {
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                border: 2px solid black;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+                /*box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
+                    -webkit-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
+                    -moz-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);*/
+                }
+
+            /* hover state color */
+            .ui-btn-hover-oj .ui-btn-inner {
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                border: 2px solid black;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);             
+                opacity: 0.9;
+                }
+
+            /* down state color */
+            .ui-btn-down-oj .ui-btn-inner {
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                border: 2px solid black;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
+                opacity: 0.9;
+                box-shadow: 0 0 2px 2px #d94342;
+                }
+
+    /*black button*/
+        .ui-btn-up-blk,
+        .ui-btn-hover-blk,
+        .ui-btn-down-blk {
+            margin-top: 10px;
+            border-radius: 0px; -webkit-border-radius: 0px; -moz-border-radius: 0px;
+            box-shadow: none !important; -webkit-box-shadow: none !important; -moz-box-shadow: none !important;
+            text-decoration: none;
+            }
+            .ui-btn-up-blk .ui-btn-inner{
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                border: 1px solid #333;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #3D3D3D, #1B1B1B);
+                /*box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
+                    -webkit-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
+                    -moz-box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);*/
+                }
+
+            /* hover state color */
+            .ui-btn-hover-blk .ui-btn-inner {
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                border: 1px solid #333;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #3D3D3D, #1B1B1B);
+                opacity: 0.9;
+
+                }
+
+            /* down state color */
+            .ui-btn-down-blk .ui-btn-inner {
+                color: white;
+                overflow: visible;
+                text-shadow: 0 -1px 0 #000;
+                border: 1px solid #333;
+                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
+                background: -webkit-linear-gradient(top, #3D3D3D, #1B1B1B);
+                opacity: 0.9;
+                box-shadow:0 0 2px 2px #1B1B1B;
+                }
+
+/*global css*/
+    /*elemental*/
+        input {
+            width: 100% !important;
+            right: 5% !important;
+            height:45px !important;
+            padding-left: 3% !important;
+            font-size: 16px !important;
+            font-weight: 300 !important;
+        }
+
+    /*classy*/
+        .tiny_icon {
+            height: 16px !important;
+            width: 16px !important;
+        }
+
+
+
+    /*page*/
+        .ui-page {
+            background-color: #BABABA;
+            text-align: center;
+        }
+
+    /*headers*/
+        .ui-header {
+            padding: 5px;
+        }
+
+        .ui-header h1 {
+            font-size: 27px !important;    
+            margin:.1em 20% .1em !important;
+            font-weight: 100 !important;
+        }
+
+        .ui-header .ui-btn {
+            margin: 3px;
+        }
+
+        .ui-header .ui-btn-inner {
+            height: 18px !important;
+            line-height: 20px !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+        }
+
+    /*content*/
+        .ui-content {
+            padding: 10px 15px;
+        }
+
+        .ui-content h2 {
+            color: #595959;
+        }
+
+        .ui-content h3 {
+            color: #595959;
+            text-align: left;
+            font-size: 1.17em;
+            -webkit-margin-before: .5em;
+            -webkit-margin-after: .3em;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            font-weight: 600;
+        }
+
+        .ui-field-contain {
+            border: 0px !important;
+            margin: 0px !important;
+        }
+
+/*intro page*/
+    .ui-page#intro {
+        background: url("iPhone5.png");
+        position:fixed;
+        background-size:cover;
+        background-position: bottom;
+        bottom: -10px;
+    }
+
+    /*intro page elements [commented]*/
+        
+        /*#intro_logo {
+            padding-top: 40px;
+            width:120px;
+            height:auto;
+        }
+
+        #intro_copy p#title {
+            font-family: MS_Three;
+            font-size: 50px
+        }
+
+        #intro_copy{
+            color:white;
+            sthg
+        }*/
+
+    /*buttons*/
+        #intro_buttons {
+            width: 90%;
+            right: 5%;
+            position: fixed;
+            bottom:5px;
+            text-align: center;
+            margin: auto;
+        }
+
+        #intro_buttons .ui-btn-inner {
+            height: 35px;
+            line-height: 35px;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
+        }
+
+/*sign_in page*/
+    #username {
+        border-radius: 5px 5px 0px 0px;
+    }
+
+    #password {
+        border-radius: 0px 0px 5px 5px;
+    }
+
+    #forgot_password {
+        margin-top: 40px !important;
+        color: #8C8C8C;
+        font-size: 14px;
+        font-weight: 400;
+        /*text-decoration: none;*/
+    }
+
+/*bummer page*/
+    #BUMMER {
+        font-size: 60px;
+    }
+
+/*sign_up page*/
+    /*form headers*/
+
+    
+
+    /*form elements*/
+
+        #first_name {
+            border-radius: 5px 5px 0px 0px;
+            border-bottom: 1px solid #BABABA !important;
+        }
+
+        #last_name {
+            border-radius: 0px; 
+            border-top: 1px solid #BABABA !important;
+            border-bottom: 1px solid #BABABA !important;
+        }
+
+        #phone_number {
+            border-radius: 0px 0px 5px 5px;
+            border-top: 1px solid #BABABA !important;
+        }
+
+        #password1 {
+            border-radius: 5px 5px 0px 0px;
+            border-bottom: 1px solid #BABABA !important;
+        }
+
+        #password2 {
+            border-radius: 0px 0px 5px 5px;
+            border-top: 1px solid #BABABA !important;
+        }
+
+/*all_streams page*/w
+
+    .stream_button {
+        min-height: 80px !important;
+    }
+
+    .stream_button img {
+        height:80px;
+        width:80px;
+    }
+
+    a.stream_button {
+        background-color: white !important;
+    }
+
+    /*list item contents*/
+        /*line 1*/
+            .stream_button h1 {
+                margin: .3em 0;
+            }
+
+        /*line 2*/
+            .section_a,
+            .section_b {
+                width: 50%;
+            }
+
+            .section_a,
+            .section_b,
+            .section_a .tiny_icon,
+            .section_b .tiny_icon,
+            .section_a p,
+            .section_b p {
+                display: inline-block;
+            }
+
+    
