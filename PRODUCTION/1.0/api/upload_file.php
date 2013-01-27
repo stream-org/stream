@@ -19,11 +19,6 @@
 
 include('dependencies.php');
 
-if(empty($_GET))
-{
-	echo "empty";
-}
-
 $uploader_phone = $_POST['uploader_phone'];
 $stream_id = $_POST['stream_id'];
 

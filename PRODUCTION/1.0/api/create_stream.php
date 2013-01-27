@@ -19,11 +19,22 @@
 
 include('dependencies.php');
 
-// //grabbing the arguments 
-$inviter_phone = $_GET['inviter_phone'];
-$inviter_phone = standardizePhone($inviter_phone);
-$stream_name = $_GET['stream_name'];
-$invitees_phone = $_GET['invitees_phone'];
+if(empty($_POST))
+{
+	$inviter_phone = $_GET['inviter_phone'];
+	$inviter_phone = standardizePhone($inviter_phone);
+	$stream_name = $_GET['stream_name'];
+	$invitees_phone = $_GET['invitees_phone'];
+}
+
+if(empty($_GET))
+{
+	$inviter_phone = $_POST['inviter_phone'];
+	$inviter_phone = standardizePhone($inviter_phone);
+	$stream_name = $_POST['stream_name'];
+	$invitees_phone = $_POST['invitees_phone'];
+}
+
 $output = array();
 
 $stream_id = $stream_name . time();

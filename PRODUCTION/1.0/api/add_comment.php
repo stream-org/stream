@@ -24,11 +24,27 @@
 
 include('dependencies.php');
 
+if(empty($_POST))
+{
+	$picture_id = $_GET['picture_id'];
+	$commenter_phone = $_GET['commenter_phone'];
+	$commenter_phone = standardizePhone($commenter_phone);
+	$comment = $_GET['comment'];
+}
+
+if(empty($_GET))
+{
+	$picture_id = $_POST['picture_id'];
+	$commenter_phone = $_POST['commenter_phone'];
+	$commenter_phone = standardizePhone($commenter_phone);
+	$comment = $_POST['comment'];
+}
+
 //grabbing the arguments 
-$picture_id = $_GET['picture_id'];
-$commenter_phone = $_GET['commenter_phone'];
-$commenter_phone = standardizePhone($commenter_phone);
-$comment = $_GET['comment'];
+// $picture_id = $_GET['picture_id'];
+// $commenter_phone = $_GET['commenter_phone'];
+// $commenter_phone = standardizePhone($commenter_phone);
+// $comment = $_GET['comment'];
 
 $output = array();
 $Comments = array();
