@@ -44,7 +44,7 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 	$filePath = 'StreamPictures/Pictures/' . $filename;
 
 	$pictureFilePath = 'http://75.101.134.112/upload/StreamPictures/Pictures/' . $filename;
-	$tinyPictureFilePath = 'http://75.101.134.112/upload/StreamPictures/TinyPictures/' . $filename;
+	$tinyPictureFilePath = 'http://75.101.134.112/upload/StreamPictures/TinyPictures/tiny' . $filename;
 
 	list($width, $height) = getimagesize($filePath);
 
