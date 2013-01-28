@@ -30,6 +30,7 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 	// Grabs the picture - POST
 	$_FILES["file"]["name"] = hash('sha512', time()) . '.jpg';
 	$filename = $_FILES["file"]["name"];
+	$tinyPicfilename = "tiny" . $filename;
 
 	// Changes to the upload directory
 	chdir('../');
@@ -44,7 +45,7 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 	$filePath = 'StreamPictures/Pictures/' . $filename;
 
 	$pictureFilePath = 'http://75.101.134.112/upload/StreamPictures/Pictures/' . $filename;
-	$tinyPictureFilePath = 'http://75.101.134.112/upload/StreamPictures/TinyPictures/tiny' . $filename;
+	$tinyPictureFilePath = 'http://75.101.134.112/upload/StreamPictures/TinyPictures/' . $tinyPicfilename;
 
 	list($width, $height) = getimagesize($filePath);
 
@@ -65,7 +66,7 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 	{
 		$image->resizeToHeight(1024);
 	}
-	$image->save($filename);
+	$image->save($tinyPicfilename);
 
 	// calls uploadPhoto to upload file paths to database
 	$url = 'http://75.101.134.112/stream/1.0/api/upload_picture.php?picture_url=' . $pictureFilePath . '&stream_id=' . $stream_id . '&uploader_phone=' . $uploader_phone . '&picture_tinyurl=' . $tinyPictureFilePath;
