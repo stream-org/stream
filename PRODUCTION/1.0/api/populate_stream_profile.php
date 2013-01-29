@@ -27,8 +27,18 @@
 include('dependencies.php');
 
 //grabbing the arguments 
-$stream_id = $_GET['stream_id'];
-$viewer_phone = $_GET['viewer_phone'];
+
+if(empty($_POST))
+{
+	$stream_id = $_GET['stream_id'];
+	$viewer_phone = $_GET['viewer_phone'];
+}
+
+if(empty($_GET))
+{
+	$stream_id = $_POST['stream_id'];
+	$viewer_phone = $_POST['viewer_phone'];
+}
 
 $output = array();
 $picture_array = array();

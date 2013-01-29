@@ -19,9 +19,20 @@ include('dependencies.php');
 $output = array();
 
 //grabbing the arguments 
-$picture_id = $_GET['picture_id'];
-$liker_phone = $_GET['liker_phone'];
-$liker_phone = standardizePhone($liker_phone);	
+
+if(empty($_GET))
+{
+	$picture_id = $_POST['picture_id'];
+	$liker_phone = $_POST['liker_phone'];
+	$liker_phone = standardizePhone($liker_phone);	
+}
+
+if(empty($_POST))
+{
+	$picture_id = $_GET['picture_id'];
+	$liker_phone = $_GET['liker_phone'];
+	$liker_phone = standardizePhone($liker_phone);	
+}
 
 //	Adds the picture like to the database
 $like_result = mysql_query("INSERT INTO PictureLikes (PictureID, Phone) VALUES ('$picture_id', '$liker_phone')");

@@ -21,9 +21,21 @@
 include('dependencies.php');
 
 //grabbing the arguments 
-$viewer_phone = $_GET['viewer_phone'];
-$viewer_phone = standardizePhone($viewer_phone);
-$password = $_GET['password'];
+
+if(empty($_GET))
+{
+	$viewer_phone = $_POST['viewer_phone'];
+	$viewer_phone = standardizePhone($viewer_phone);
+	$password = $_POST['password'];
+}
+
+if(empty($_POST))
+{
+	$viewer_phone = $_GET['viewer_phone'];
+	$viewer_phone = standardizePhone($viewer_phone);
+	$password = $_GET['password'];
+}
+
 $output = array();
 
 //get the salt

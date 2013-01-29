@@ -22,11 +22,26 @@
 include('dependencies.php');
 
 //grabbing the arguments 
-$viewer_first = $_GET['viewer_first'];
-$viewer_last = $_GET['viewer_last'];
-$viewer_phone = $_GET['viewer_phone'];
-$viewer_phone = standardizePhone($viewer_phone);
-$password = $_GET['password'];
+
+
+if(empty($_GET))
+{
+	$viewer_first = $_POST['viewer_first'];
+	$viewer_last = $_POST['viewer_last'];
+	$viewer_phone = $_POST['viewer_phone'];
+	$viewer_phone = standardizePhone($viewer_phone);
+	$password = $_POST['password'];
+}
+
+if(empty($_POST))
+{
+	$viewer_first = $_GET['viewer_first'];
+	$viewer_last = $_GET['viewer_last'];
+	$viewer_phone = $_GET['viewer_phone'];
+	$viewer_phone = standardizePhone($viewer_phone);
+	$password = $_GET['password'];
+
+}
 
 $output = array();
 

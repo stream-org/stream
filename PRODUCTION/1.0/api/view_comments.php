@@ -23,8 +23,15 @@ $output = array();
 $commentArray = array();
 
 //grabbing the arguments 
-$picture_id = $_GET['picture_id'];
 
+if(empty($_GET))
+{
+	$picture_id = $_POST['picture_id'];
+}
+if(empty($_POST))
+{
+	$picture_id = $_GET['picture_id'];
+}
 
 //Returns updated array of comments with commenter's name, created, and the comment
 $stream_id_result = mysql_query("SELECT First, Last, Comments.Phone as Phone, Comment, Comments.Created as Created FROM Comments INNER JOIN Users ON Comments.Phone = Users.Phone WHERE PictureID='$picture_id' ORDER BY Created ASC");

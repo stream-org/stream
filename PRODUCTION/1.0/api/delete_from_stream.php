@@ -15,11 +15,22 @@
 include('dependencies.php');
 
 //grabbing the arguments 
-$viewer_phone = $_GET['viewer_phone'];
-$viewer_phone = standardizePhone($viewer_phone);
-$output = array();
 
-$stream_id = $_GET['stream_id'];
+if(empty($_POST))
+{
+	$viewer_phone = $_GET['viewer_phone'];
+	$viewer_phone = standardizePhone($viewer_phone);
+	$output = array();
+	$stream_id = $_GET['stream_id'];
+}
+
+if(empty($_GET))
+{
+	$viewer_phone = $_POST['viewer_phone'];
+	$viewer_phone = standardizePhone($viewer_phone);
+	$output = array();
+	$stream_id = $_POST['stream_id'];
+}
 
 //Removes user from Stream
 mysql_query("DELETE FROM UserStreams WHERE Phone = '$viewer_phone' AND StreamID = '$stream_id'");

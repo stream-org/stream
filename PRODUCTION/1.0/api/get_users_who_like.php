@@ -18,7 +18,15 @@
 include('dependencies.php');
 
 //grabbing the arguments 
-$picture_id = $_GET['picture_id'];
+
+if(empty($_POST))
+{
+	$picture_id = $_GET['picture_id'];
+
+if(empty($_GET))
+{
+	$picture_id = $_POST['picture_id'];
+}
 
 $output = array();
 $Likers = array();
