@@ -22,6 +22,8 @@ include('dependencies.php');
 $uploader_phone = $_POST['uploader_phone'];
 $stream_id = $_POST['stream_id'];
 
+// Instantiate the class
+$s3 = new S3($AccessKey, $SecretKey);
 
 // Check if a photo was even uploaded
 if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
@@ -31,42 +33,55 @@ if(($_FILES["file"]["size"] > 10) && ($_FILES["file"]["size"] < 20000000))
 	$_FILES["file"]["name"] = hash('sha512', time()) . '.jpg';
 	$filename = $_FILES["file"]["name"];
 	$tinyPicfilename = "tiny" . $filename;
+	$image = $_FILES['file']['tmp_name']; 
 
-	// Changes to the upload directory
+	$pictureFilePath = 'https://s3.amazonaws.com/stream_pictures/' . $filename;
+	$tinyPictureFilePath = 'https://s3.amazonaws.com/stream_tiny_pictures/' . $tinyPicfilename;
+
+	// uploads file to S3 uner bucket stream-pictures
+	$s3->putObjectFile($image, "stream_pictures" , $filename, S3::ACL_PUBLIC_READ);
+
+
+
+	list($width, $height) = getimagesize($image);
+
+	echo $width;
+	echo $height;
+
+	$resizeimage = new SimpleImage();
+	$resizeimage->load($image);
+
+
+	// resizes picture to tiny picture (1024x1024)
+	if(intval($width) >= intval($height))
+	{
+		$resizeimage->resizeToWidth(1024);
+	}
+	else
+	{
+		$resizeimage->resizeToHeight(1024);
+	}
+
 	chdir('../');
 	chdir('../');
 	chdir('../');
 	chdir('upload');
-
-	// uploads file to EC2 Server under html/upload/StreamPictures/Pictures
-	move_uploaded_file($_FILES["file"]["tmp_name"], 'StreamPictures/Pictures/' . $filename);
-
-	// Creating the filepath string for the picture and the tinyPicture
-	$filePath = 'StreamPictures/Pictures/' . $filename;
-
-	$pictureFilePath = 'http://75.101.134.112/upload/StreamPictures/Pictures/' . $filename;
-	$tinyPictureFilePath = 'http://75.101.134.112/upload/StreamPictures/TinyPictures/' . $tinyPicfilename;
-
-	list($width, $height) = getimagesize($filePath);
-
-	// changes directory to the TinyPictures folder
 	chdir('StreamPictures');
-	chdir('Pictures');
-	$image = new SimpleImage();
-	$image->load($filename);
-	chdir('../');
 	chdir('TinyPictures');
 
-	// resizes picture to tiny picture (600x600)
-	if(intval($width) >= intval($height))
-	{
-		$image->resizeToWidth(1024);
-	}
-	else
-	{
-		$image->resizeToHeight(1024);
-	}
-	$image->save($tinyPicfilename);
+	$resizeimage->save($tinyPicfilename);
+
+	$fileUpload = '/var/www/html/upload/StreamPictures/TinyPictures/'. $tinyPicfilename;
+
+	echo $fileUpload;
+	
+	$s3->putObjectFile($fileUpload, "stream_tiny_pictures" , $tinyPicfilename , S3::ACL_PUBLIC_READ);
+
+	// destroys the file, muahhahahaha
+
+	echo $fileUpload;
+
+	unlink($fileUpload);
 
 	// calls uploadPhoto to upload file paths to database
 	$url = 'http://75.101.134.112/stream/1.0/api/upload_picture.php?picture_url=' . $pictureFilePath . '&stream_id=' . $stream_id . '&uploader_phone=' . $uploader_phone . '&picture_tinyurl=' . $tinyPictureFilePath;
