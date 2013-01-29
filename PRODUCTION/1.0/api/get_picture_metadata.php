@@ -22,6 +22,7 @@
 //  	-commenter_phone
 //  	-commenter_created
 //  	-comment
+// 		-comment_id
 
 // example:
 // http://75.101.134.112/stream/1.0/api/get_picture_metadata.php?viewer_phone=8477226071&picture_id=1984c05a7f989fdf53c6ea96b86f6bfd8784ff22b3272793a6339716f936ff285977d699b69111a6655abde9ed19c6d2d53a6f588c85a7c26e8473f8680053e8
@@ -88,13 +89,13 @@ $output['uploader_first'] = $uploader_name_row['First'];
 $output['uploader_last'] = $uploader_name_row['Last'];
 
 // Gets metadata for all comments: commenter's first, last, and phone, and created
-$stream_id_result = mysql_query("SELECT First, Last, Comments.Phone as Phone, Comment, Comments.Created as Created FROM Comments INNER JOIN Users ON Comments.Phone = Users.Phone WHERE PictureID='$picture_id' ORDER BY Created ASC");
+$stream_id_result = mysql_query("SELECT CommentID,First, Last, Comments.Phone as Phone, Comment, Comments.Created as Created FROM Comments INNER JOIN Users ON Comments.Phone = Users.Phone WHERE PictureID='$picture_id' ORDER BY Created ASC");
 
 $commentArray= array();
 
 while($stream_id_row = mysql_fetch_array($stream_id_result))
 {
-	$tempArray = array('commenter_first'=>$stream_id_row['First'], 'commenter_last'=>$stream_id_row['Last'], 'commenter_phone'=>$stream_id_row['Phone'],'comment'=>$stream_id_row['Comment'], 'comment_created'=>$stream_id_row['Created']);
+	$tempArray = array('commenter_first'=>$stream_id_row['First'], 'commenter_last'=>$stream_id_row['Last'], 'commenter_phone'=>$stream_id_row['Phone'],'comment'=>$stream_id_row['Comment'], 'comment_created'=>$stream_id_row['Created'],'comment_id'=>$stream_id_row['CommentID']);
 	array_push($commentArray, $tempArray);
 }
 
