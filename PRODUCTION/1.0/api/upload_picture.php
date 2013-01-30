@@ -114,7 +114,7 @@ elseif ($picture_tinyurl == ""){
 
 	mysql_query("INSERT INTO StreamActivity (StreamID, Phone, PictureID, PicURL, TinyPicURL,Caption, IsActive) VALUES ('$stream_id', '$uploader_phone', '$picture_id','$pictureFilePath', '$tinyPictureFilePath','$caption',1)");
 
-	uploadPicturePushNotification($uploader_phone, $stream_id);
+	uploadPicturePushNotification($uploader_phone, $stream_id, $picture_id);
 
 	$metrics->track('upload_photo', array('medium'=>'text','uploader'=>$uploader_phone,'stream'=>$stream_id,'picture_url'=>$picture_url,'distinct_id'=>$uploader_phone));
 

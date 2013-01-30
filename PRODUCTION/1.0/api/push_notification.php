@@ -18,12 +18,19 @@ if(empty($_GET))
 {
 	$theToken = $_POST['token'];
 	$theMessage = $_POST['message'];
+	$picture_id = $_POST['picture_id'];
+	$stream_id = $_POST['stream_id'];
+	$badge_count = $_POST['badge_count'];
 }
 if(empty($_POST))
 {
 	$theToken = $_GET['token'];
 	$theMessage = $_GET['message'];
+	$picture_id = $_GET['picture_id'];
+	$stream_id = $_GET['stream_id'];
+	$badge_count = $_GET['badge_count'];
 }
+
 
 $output = array();
 
@@ -55,8 +62,15 @@ if (!$fp)
 // Create the payload body
 $body['aps'] = array(
 	'alert' => $message,
-	'sound' => 'default'
+	'sound' => 'default',
+	'badge' => $badge_count
 	);
+
+$body['actions'] = array(
+	'stream_id' => $stream_id,
+	'picture_id' => $stream_id,
+	);
+
 
 // Encode the payload as JSON
 $payload = json_encode($body);
