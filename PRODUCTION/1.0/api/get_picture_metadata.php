@@ -106,6 +106,10 @@ if($uploader_phone==$viewer_phone){
 	$can_delete = 1;
 }
 
+//Reset user's badge to 0
+mysql_query("UPDATE Users SET BadgeCount = 0 WHERE Phone = '$viewer_phone'");
+
+
 $output['comments'] = $commentArray;
 $output['picture_id'] = $picture_id;
 $output['viewer_phone'] = $viewer_phone;

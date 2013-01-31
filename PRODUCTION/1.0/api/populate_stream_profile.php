@@ -87,6 +87,9 @@ while($stream_name_row=mysql_fetch_array($stream_name_result))
 
 }
 
+//Reset user's badge to 0
+mysql_query("UPDATE Users SET BadgeCount = 0 WHERE Phone = '$viewer_phone'");
+
 $output['stream_id'] = $stream_id;
 $output['stream_name'] = $stream_name;
 $output['stream_usercount'] = $stream_usercount;
