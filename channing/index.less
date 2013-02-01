@@ -290,26 +290,36 @@
         }
 
 // router page
-    #router {
-        .ui-block-a,
-        .ui-block-b,
-        .ui-block-c {
-        padding: 2px;
-        img {
-            width:100px;
-            height:100px;
-            border: 4px solid white;
-            -moz-box-shadow: 0 0 2px 2px #888;
-            -webkit-box-shadow: 0 0 2px 2px #888;
-            box-shadow: 0 0 2px 2px #888;                
-        }  
-    }
+        
 
 
 
 /*intro page*/
-    .ui-page#intro,
-    .ui-page#router {
+    #intro .ui-grid-b{
+            margin-right: -5px;
+        }
+
+    #intro .ui-block-a,
+    #intro .ui-block-b,
+    #intro .ui-block-c {
+        padding: 8px;
+        width:33%;
+        height:80px;
+ 
+        div {
+            border: 2px solid white;
+            -moz-box-shadow: 0 0 2px 2px #888;
+            -webkit-box-shadow: 0 0 2px 2px #888;
+            box-shadow: 0 0 2px 2px #888;    
+            
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }                        
+    }
+
+    .ui-page#intro {
         background: url("iPhone5.png");
         position:fixed;
         background-size:cover;
@@ -344,10 +354,6 @@
             bottom:5px;
             text-align: center;
             margin: auto;
-
-            img {
-
-            }
 
             .ui-btn-inner {
                 height: 35px;
