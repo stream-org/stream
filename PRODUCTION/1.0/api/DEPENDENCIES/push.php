@@ -35,7 +35,7 @@ function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 			$current_token = $invited_user_row['Token'];
 			$badge_count = $invited_user_row['BadgeCount'] +1;
 			$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
-			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message) . '&stream_id='.$stream_id. '&badge_count='.$badge_count; 
+			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message) .'&stream_id='.$stream_id. '&badge_count='.$badge_count; 
 			$ch = curl_init($url);
 			$response = curl_exec($ch);
 			curl_close($ch);
@@ -117,7 +117,7 @@ function likePushNotification($liker_phone, $picture_id)
 		{
 			$badge_count = $uploader_information_row['BadgeCount'] +1;
 			$message = $liker_name . ' likes the photo you posted on ' . $stream_name . '.';
-			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message). '&picture_id='.$picture_id. '&stream_id='.$stream_id. '&badge_count='.$badge_count ; 
+			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message). '&picture_id='.$picture_id. '&badge_count='.$badge_count ; 
 		  	$ch = curl_init($url);
 		  	$response = curl_exec($ch);
 		  	curl_close($ch);
@@ -179,7 +179,7 @@ function commentPushNotification($commenter_phone, $picture_id, $comment)
 			{
 				$badge_count = $uploader_information_row['BadgeCount'] +1;
 				$message = $commenter_name . ' commented the photo you posted on ' . $stream_name . ': '.$comment_snippet.'...';
-				$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message). '&picture_id=' .$picture_id. '&stream_id=' .$stream_id . '&badge_count='.$badge_count; 
+				$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message). '&picture_id=' .$picture_id. '&badge_count='.$badge_count; 
 			  	$ch = curl_init($url);
 			  	$response = curl_exec($ch);
 			  	curl_close($ch);
@@ -208,7 +208,7 @@ function commentPushNotification($commenter_phone, $picture_id, $comment)
 			{
 				$badge_count = $user_information_row['BadgeCount'] +1;
 				$message = $commenter_name . ' commented on a photo in ' . $stream_name . ': '.$comment_snippet.'...';
-				$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $user_token . '&message=' . urlencode($message). '&picture_id=' .$picture_id. '&stream_id='.$stream_id. '&badge_count='.$badge_count; 
+				$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $user_token . '&message=' . urlencode($message). '&picture_id=' .$picture_id.  '&badge_count='.$badge_count; 
 			  	$ch = curl_init($url);
 			  	$response = curl_exec($ch);
 			  	curl_close($ch);
@@ -290,7 +290,7 @@ function uploadPicturePushNotification($uploader_phone, $stream_id, $picture_id)
 		$current_token = $invited_iPhone_users[$iPhone_user_token_index];
 		$current_token = $current_token[0];
 		$message = $uploader_name . ' just uploaded a photo to ' . $stream_name . '.';
-		$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message). '&picture_id='.$picture_id. '&stream_id=' .$stream_id. '&badge_count='.$badge_count; 
+		$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message). '&picture_id='.$picture_id. '&badge_count='.$badge_count; 
 	  	$ch = curl_init($url);
 	  	$response = curl_exec($ch);
 	  	curl_close($ch);
