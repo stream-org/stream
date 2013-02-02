@@ -6,7 +6,6 @@ require_once('twilio_text.php');
 require_once('shorten.php');
 
 
-
 function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 {	
 	$inviter_name;
@@ -114,8 +113,9 @@ function likePushNotification($liker_phone, $picture_id)
 		$uploader_token = $uploader_information_row['Token'];
 		if($uploader_token !== '')
 		{
+			$badge_count = $uploader_information_row['BadgeCount'] +1;
 			$message = $liker_name . ' likes the photo you posted on ' . $stream_name . '.';
-			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message); 
+			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message) . '&picture_id=' . $picture_id.'&badge_count='.$badge_count; 
 		  	$ch = curl_init($url);
 		  	$response = curl_exec($ch);
 		  	curl_close($ch);
