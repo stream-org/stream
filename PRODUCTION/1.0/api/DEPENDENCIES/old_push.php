@@ -5,7 +5,9 @@ require_once('mixPanel.php');
 require_once('twilio_text.php');
 require_once('shorten.php');
 
-//like push notifciations [DONE]
+// likePushNotification('18477226071', '297e5926fc018131177d4b4f2673aa4b1619773d073d1cb5582dab6ed14e9592e713f5bf0d787a82a3e627c97ef27d6c13762d8e3bd3c457c062470a10a288cc');
+
+//like push notifciations
 function likePushNotification($liker_phone, $picture_id)
 {
 	$liker_name;
@@ -47,9 +49,7 @@ function likePushNotification($liker_phone, $picture_id)
 		{
 			$badge_count = $uploader_information_row['BadgeCount'] +1;
 			$message = $liker_name . ' likes the photo you posted on ' . $stream_name . '.';
-			$small_picture_id = substr($picture_id, 0, 5);
-			$small_stream_id = substr($stream_id, 0, 5);
-			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message) . '&picture_id=' . $small_picture_id . '&stream_id=' . $small_stream_id . '&badge_count='.$badge_count; 
+			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message) . '&picture_id=' . $picture_id.'&badge_count='.$badge_count; 
 		  	$ch = curl_init($url);
 		  	$response = curl_exec($ch);
 		  	curl_close($ch);
@@ -64,7 +64,7 @@ function likePushNotification($liker_phone, $picture_id)
 	}
 }
 
-//invite push notifications [DONE]
+//invite push notifications
 function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 {	
 	$inviter_name;
@@ -90,11 +90,9 @@ function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 
 		if($invited_user_row['Token'] != '')
 		{
-			$badge_count = $uploader_information_row['BadgeCount'] +1;
 			$current_token = $invited_user_row['Token'];
 			$message = $inviter_name . ' invited you to the ' . $stream_name . ' stream.';
-			$small_stream_id = substr($stream_id, 0, 5);
-			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message) . '&stream_id=' . $small_stream_id . '&badge_count=' . $badge_count; 
+			$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
 			$ch = curl_init($url);
 			$response = curl_exec($ch);
 			curl_close($ch);
@@ -116,7 +114,7 @@ function invitePushNotification($inviter_phone, $invitee_array, $stream_id)
 	}
 }
 
-//comment push notifications [DONE]
+//comment push notifications
 function commentPushNotification($commenter_phone, $picture_id, $comment)
 {
 	$commenter_name;
@@ -124,7 +122,6 @@ function commentPushNotification($commenter_phone, $picture_id, $comment)
 	$uploader_token;
 	$uploader_phone;
 	$stream_id;
-	$is_comment = TRUE; 
 
 	$metrics = new MetricsTracker("b0002cbf8ca96f2dfdd463bdc2902c28");
 
@@ -155,7 +152,7 @@ function commentPushNotification($commenter_phone, $picture_id, $comment)
 
 	
 	//if the commenter is not the uploader, fetch the token of the person who uploaded the photo and send him/her a push notification
-	if($commenter_phone !== $uploader_phone)
+	if($commenter_phone <> $uploader_phone)
 	{
 		$uploader_information_result = mysql_query("SELECT * FROM Users WHERE Phone='$uploader_phone'");
 		while($uploader_information_row = mysql_fetch_array($uploader_information_result))
@@ -164,10 +161,7 @@ function commentPushNotification($commenter_phone, $picture_id, $comment)
 			if($uploader_token !== '')
 			{
 				$message = $commenter_name . ' commented the photo you posted on ' . $stream_name . ': '.$comment_snippet.'...';
-				$small_picture_id = substr($picture_id, 0, 5);
-				$small_stream_id = substr($stream_id, 0, 5);
-				$badge_count = $uploader_information_row['BadgeCount'] +1;
-				$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message) . '&stream_id=' . $small_stream_id . '&picture_id=' . $small_picture_id . '&badge_count=' . $badge_count . '&is_comment=' . $is_comment; 
+				$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $uploader_token . '&message=' . urlencode($message); 
 			  	$ch = curl_init($url);
 			  	$response = curl_exec($ch);
 			  	curl_close($ch);
@@ -195,10 +189,7 @@ function commentPushNotification($commenter_phone, $picture_id, $comment)
 			if($user_token !== '')
 			{
 				$message = $commenter_name . ' commented on a photo in ' . $stream_name . ': '.$comment_snippet.'...';
-				$small_picture_id = substr($picture_id, 0, 5);
-				$small_stream_id = substr($stream_id, 0, 5);
-				$badge_count = $uploader_information_row['BadgeCount'] +1;
-				$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $user_token . '&message=' . urlencode($message) . '&stream_id=' . $small_stream_id . '&picture_id=' . $small_picture_id . '&badge_count=' . $badge_count; 
+				$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $user_token . '&message=' . urlencode($message); 
 			  	$ch = curl_init($url);
 			  	$response = curl_exec($ch);
 			  	curl_close($ch);
@@ -211,11 +202,15 @@ function commentPushNotification($commenter_phone, $picture_id, $comment)
 				$metrics->track('comment_notification', array('notification_type'=>'text','notified_phone'=>$user_phone,'commenter_phone'=>$commenter_phone,'commented_picture'=>$picture_id,'distinct_id'=>$picture_id));
 			}
 		}
+
+
 	}
+
+
 }
 
-//upload push notifications [DONE]
-function uploadPicturePushNotification($uploader_phone, $stream_id, $picture_id)
+//upload push notifications
+function uploadPicturePushNotification($uploader_phone, $stream_id)
 {
 	$uploader_name;
 	$stream_name;
@@ -232,12 +227,18 @@ function uploadPicturePushNotification($uploader_phone, $stream_id, $picture_id)
 		$uploader_name = $uploader_name_row['First'];
 	}
 
+	echo $uploader_name;
+	echo '<br>';
+
 	//fetching the stream name by using the $stream_id
 	$stream_name_result = mysql_query("SELECT * FROM Streams WHERE StreamID='$stream_id'");
 	while($stream_name_row = mysql_fetch_array($stream_name_result))
 	{
 		$stream_name = $stream_name_row['StreamName'];
 	}
+
+	echo $stream_name;
+	echo '<br>';
 
 		//fetching the users that have iPhones and that are in the stream, and putting their Tokens in an array
 	$invited_iPhone_users_result = mysql_query("SELECT * FROM UserStreams, Users WHERE UserStreams.Phone=Users.Phone AND StreamID='$stream_id' AND Token!=''");
@@ -267,10 +268,7 @@ function uploadPicturePushNotification($uploader_phone, $stream_id, $picture_id)
 	{
 		$current_token = $invited_iPhone_users[$iPhone_user_token_index];
 		$message = $uploader_name . ' just uploaded a photo to ' . $stream_name . '.';
-		$small_stream_id = substr($stream_id, 0, 5);
-		$small_picture_id = substr($picture_id, 0, 5);
-		$badge_count = $uploader_information_row['BadgeCount'] +1;
-		$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message) . '&stream_id=' . $small_stream_id . '&picture_id=' . $small_picture_id . '&badge_count=' . $badge_count; 
+		$url = 'http://75.101.134.112/stream/1.0/api/push_notification.php?token=' . $current_token . '&message=' . urlencode($message); 
 	  	$ch = curl_init($url);
 	  	$response = curl_exec($ch);
 	  	curl_close($ch);
