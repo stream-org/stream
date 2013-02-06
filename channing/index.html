@@ -1,12 +1,19 @@
 <!-- 
-TO DO:
- DONE - finish all_streams
- 2 - finish create_stream
- 3 - finish the_stream
- 4 - make photo_view filler
- 5 - finish participant_list
- 6 - finish like_list
- 7 - all jQuery Mobile console.log primers working
+ROUSSEAU:
+ - figure out how to get/hold the phone # or w/e we need from the query params of the link that sends users to the #intro page
+ - getting cracking on calling the APIs in the buckets I have provided + saving the necessary extracted data from the response object into variables for injection
+
+CHANNING
+ - finish building pages:
+ 	 - photo-view page
+ 	 	 - photo resizing
+ 	 	 - comments
+ 	 	 - likes
+ 	 - stream: [participant's name]'s Photos
+ 	 - send feedback 
+ 	 	 - button to all_streams
+ 	 	 - create page
+
  -->
 
 <!DOCTYPE html> 
@@ -107,127 +114,22 @@ TO DO:
 		};
 
 		// call everything that needs to run as soon as the page is initiated
-		$( document ).on( 'pageinit', function(){
-			$.mobile.ajaxEnabled = false;
-			
-			arrival();	
-
-/////////// EVENT: CLICK 'SIGN IN' BUTTON ON INTRO PAGE
-			$("#sign_in_btn").on("vclick", function(event, ui) {
-				// wtf is these?! :D
-				console.log(event);
-				console.log(ui);
-
-				console.log("You CLICKED:'Sign In' on PAGE:'intro'!");
-				$.mobile.changePage("#sign_in", {transition: "flip"});
-			});	
-
-/////////// EVENT: CLICK 'SIGN UP' BUTTON ON INTRO PAGE 				
-			$("#sign_up_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED:'Sign Up' on PAGE:'intro'!");
-				$.mobile.changePage("#sign_up", {transition: "flip"});
-			});
-
-/////////// EVENT: CLICK 'BACK' BUTTON ON SIGN_IN PAGE
-
-
-/////////// EVENT: CLICK 'BACK' BUTTON ON SIGN_UP PAGE
-
-
-/////////// EVENT: CLICK 'SIGN IN' BUTTON ON SIGN_IN PAGE
-			$("#confirm_sign_in_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED:'Sign In' on PAGE:'sign_in'!");
-				$.mobile.changePage("#all_streams", {transition: "flip"});
-			});
-
-/////////// EVENT: CLICK 'SIGN UP' BUTTON ON SIGN_UP PAGE
-			$("#confirm_sign_up_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED:'Sign Up' on PAGE:'sign_up'!");
-				$.mobile.changePage("#all_streams", {transition: "flip"});
-			});
-
-/////////// EVENT: CLICK SIGN OUT/SETTINGS BUTTON ON ALL_STREAMS PAGE
-
-
-/////////// EVENT: CLICK CREATE STREAM BUTTON ON ALL_STREAMS PAGE
-			$("#create_stream_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED: '+' on PAGE:'all_streams'!");
-				$.mobile.changePage("#new_stream", {transition: "flip"});
-			});
-
-/////////// EVENT: CLICK A STREAM ON ALL_STREAMS PAGE
-			$("#all_streams li").on("vclick", function(event, ui) {
-				console.log("You CLICKED: A Stream on PAGE:'all_streams'!");
-				$.mobile.changePage("#the_stream", {transition: "flip"});
-			});
-
-/////////// EVENT: CLICK CANCEL ON NEW_STREAM PAGE
-
-
-/////////// EVENT: CLICK CREATE ON NEW_STREAM PAGE	
-			$("#confirm_create_stream_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED: Create Stream on PAGE:'new_stream'!");
-				$.mobile.changePage("#all_streams", {transition: "flip"});
-			});
-
-/////////// EVENT: CLICK '+' ICON ON NEW_STREAM PAGE	
-
-
-/////////// EVENT: CLICK BACK BUTTON ON THE_STREAM PAGE
-
-
-/////////// EVENT: CLICK CAMERA BUTTON ON THE_STREAM PAGE
-			$(".camera_button").on("vclick", function(event, ui) {
-				console.log("You CLICKED: Camera Button on PAGE:'the_stream'!");
-				$.mobile.changePage("#take_photo", {transition: "flip"});
-			});
-
-/////////// EVENT: CLICK PARTICIPANTS BUTTON ON THE_STREAM PAGE
-			$(".participants_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED: Participants Button on PAGE:'the_stream'!");
-				$.mobile.changePage("#participant_list", {transition: "flip"});
-			});
-
-/////////// EVENT: CLICK A PICTURE ON THE_STREAM PAGE
-			$(".a_photo").on("vclick", function(event, ui) {
-				console.log("You CLICKED: A Photo on PAGE:'the_stream'!");
-				$.mobile.changePage("#photo_view", {transition: "flip"});
-			});
-
-/////////// EVENT: CLICK X ON PHOTO_VIEW PAGE
-
-
-/////////// EVENT: CLICK LIKE ON PHOTO_VIEW PAGE
-
-
-/////////// EVENT: CLICK COMMENT ON PHOTO_VIEW PAGE
-
-
-/////////// EVENT: CLICK NUM COMMENTS ON PHOTO_VIEW PAGE
-
-
-/////////// EVENT: CLICK NUM LIKES ON PHOTO_VIEW PAGE
-
-
-
-
-		});
-
-		// $( document ).on('pagebeforechange', function (e, data) {
-		// 	console.log(e);
-
-		// 	var target = data.toPage;
-		// 	console.log(target);
-		// });
+	
 		
 	</script>
+	<script type="text/javascript">
+		$(document).on('pageinit', function () {
+		    $.mobile.ajaxEnabled = false;
 
+		});		
+	</script>
 	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js" type="text/javascript"></script>
 	<script src="http://75.101.134.112/channing/less.js" type="text/javascript"></script>
 
 </head>
 
 <body>
+
 
 	<div data-role="page" id="intro">
 		<!-- <div data-role="header"></div> -->
@@ -243,6 +145,37 @@ TO DO:
 			</div>
 		</div>
 		<!-- <div data-role="footer"></div> -->
+		<script type="text/javascript">
+			$("#intro").on( 'pageinit', function(){
+				arrival();
+			});	
+
+			// setup for grabbing the URL from page that sends user here;
+			// use with 'getQueryParams(qs)' above - I haven't figured this 
+			// out yet
+			$("#intro").on('pagebeforechange', function (e, data) {
+				console.log(e);
+
+				var target = data.toPage;
+				console.log(target);
+			});			
+
+			// EVENT: CLICK 'SIGN IN' BUTTON ON INTRO PAGE
+			$("#sign_in_btn").on("vclick", function(event, ui) {
+				// wtf is these?! :D
+				console.log(event);
+				console.log(ui);
+
+				console.log("You CLICKED:'Sign In' on PAGE:'intro'!");
+				$.mobile.changePage("#sign_in", {transition: "flip"});
+			});
+
+			// EVENT: CLICK 'SIGN UP' BUTTON ON INTRO PAGE 				
+			$("#sign_up_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED:'Sign Up' on PAGE:'intro'!");
+				$.mobile.changePage("#sign_up", {transition: "flip"});
+			});			
+		</script>
 	</div>
 
 	<div data-role="page" id="sign_in">
@@ -268,6 +201,22 @@ TO DO:
 				Forgot Password?
 			</a>
 		</div>
+
+		<script type="text/javascript">
+			$("#sign_in").on( 'pageinit', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});	
+
+			// EVENT: CLICK 'SIGN IN' BUTTON ON SIGN_IN PAGE
+			$("#confirm_sign_in_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED:'Sign In' on PAGE:'sign_in'!");
+				$.mobile.changePage("#all_streams", {transition: "flip"});
+			});
+
+		</script>
+
 	</div>
 
 	<div data-role="page" id="bummer">
@@ -308,6 +257,22 @@ TO DO:
 			</div>
 
 		</div>
+
+		<script type="text/javascript">
+			$("#sign_up").on( 'pageinit', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});	
+
+			// EVENT: CLICK 'SIGN UP' BUTTON ON SIGN_UP PAGE
+			$("#confirm_sign_up_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED:'Sign Up' on PAGE:'sign_up'!");
+				$.mobile.changePage("#all_streams", {transition: "flip"});
+			});
+
+		</script>
+
 	</div>
 
 	<div data-role="page" id="all_streams">
@@ -398,6 +363,31 @@ TO DO:
 				</li>
 			</ul>
 		</div>
+
+	<!-- all_streams-specific javascript -->	
+		<script type="text/javascript">
+			$("#all_streams").on( 'pageinit', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});	
+
+			// EVENT: CLICK SIGN OUT/SETTINGS BUTTON ON ALL_STREAMS PAGE
+
+			// EVENT: CLICK CREATE STREAM BUTTON ON ALL_STREAMS PAGE
+			$("#create_stream_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED: '+' on PAGE:'all_streams'!");
+				$.mobile.changePage("#new_stream", {transition: "flip"});
+			});
+
+			// EVENT: CLICK A STREAM ON ALL_STREAMS PAGE
+			$("#all_streams li").on("vclick", function(event, ui) {
+				console.log("You CLICKED: A Stream on PAGE:'all_streams'!");
+				$.mobile.changePage("#the_stream", {transition: "flip"});
+			});			
+
+		</script>
+
 	</div>
 
 	<div data-role="page" id="the_stream">
@@ -450,7 +440,39 @@ TO DO:
 			    	</a>
 			    </div>			    		    
 			</div>	
-		</div>		
+		</div>	
+
+	<!-- the_stream-specific javascript -->	
+		<script type="text/javascript">
+			$("#the_stream").on( 'pageinit', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});	
+
+			// EVENT: CLICK BACK BUTTON ON THE_STREAM PAGE
+
+
+			// EVENT: CLICK CAMERA BUTTON ON THE_STREAM PAGE
+			$(".camera_button").on("vclick", function(event, ui) {
+				console.log("You CLICKED: Camera Button on PAGE:'the_stream'!");
+				$.mobile.changePage("#take_photo", {transition: "flip"});
+			});
+
+			// EVENT: CLICK PARTICIPANTS BUTTON ON THE_STREAM PAGE
+			$(".participants_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED: Participants Button on PAGE:'the_stream'!");
+				$.mobile.changePage("#participant_list", {transition: "flip"});
+			});
+
+			// EVENT: CLICK A PICTURE ON THE_STREAM PAGE			
+			$(".a_photo").on("vclick", function(event, ui) {
+				console.log("You CLICKED: A Photo on PAGE:'the_stream'!");
+				$.mobile.changePage("#photo_view", {transition: "flip"});
+			});
+
+		</script>
+
 	</div>
 
 	<div data-role="page" id="new_stream">
@@ -477,6 +499,28 @@ TO DO:
 				Recipients will be able to add photos to your stream via the app and through MMS. Standard text and data rates apply.
 			</p>
 		</div>	
+
+		<script type="text/javascript">
+			$("#new_stream").on( 'pageinit', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});	
+
+			// EVENT: CLICK CANCEL ON NEW_STREAM PAGE
+
+
+			// EVENT: CLICK CREATE ON NEW_STREAM PAGE	
+			$("#confirm_create_stream_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED: Create Stream on PAGE:'new_stream'!");
+				$.mobile.changePage("#all_streams", {transition: "flip"});
+			});
+
+			// EVENT: CLICK '+' ICON ON NEW_STREAM PAGE	
+
+
+		</script>
+
 	</div>
 
 	<div data-role="page" id="photo_view">
@@ -489,6 +533,33 @@ TO DO:
 
 		<div data-role="footer">
 		</div>
+
+		<script type="text/javascript">
+			$("#photo_view").on( 'pageinit', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});	
+
+
+/////////// EVENT: CLICK X ON PHOTO_VIEW PAGE
+
+
+/////////// EVENT: CLICK LIKE ON PHOTO_VIEW PAGE
+
+
+/////////// EVENT: CLICK COMMENT ON PHOTO_VIEW PAGE
+
+
+/////////// EVENT: CLICK NUM COMMENTS ON PHOTO_VIEW PAGE
+
+
+/////////// EVENT: CLICK NUM LIKES ON PHOTO_VIEW PAGE
+
+
+
+		</script>
+
 	</div>
 
 	<div data-role="page" id="participant_list">
@@ -545,10 +616,55 @@ TO DO:
 					</a>
 				</li>
 			</ul>
-		</div>	
+		</div>
+
+		<script type="text/javascript">
+			$("#participant_list").on( 'pageinit', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});	
+
+
+/////////// EVENT: CLICK X ON PHOTO_VIEW PAGE
+
+
+/////////// EVENT: CLICK LIKE ON PHOTO_VIEW PAGE
+
+
+/////////// EVENT: CLICK COMMENT ON PHOTO_VIEW PAGE
+
+
+/////////// EVENT: CLICK NUM COMMENTS ON PHOTO_VIEW PAGE
+
+
+/////////// EVENT: CLICK NUM LIKES ON PHOTO_VIEW PAGE
+
+
+
+		</script>
+
 	</div>
 
 	<div data-role="page" id="like_list">
+
+		<div data-role="header">
+			<a href="" data-icon="delete" class="ui-btn-right"></a>
+		</div>
+
+		<div data-role="content">
+		</div>
+
+		<div data-role="footer">
+		</div>
+
+		<script type="text/javascript">
+			$("#like_list").on( 'pageinit', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});
+
 	</div>
 
 
