@@ -390,90 +390,90 @@ CHANNING
 
 	</div>
 
-	<div data-role="page" id="the_stream">
-		<div data-role="header" data-theme="a">
-			<a href="#all_streams" data-theme="blk">back</a>
-			<h1>First Hack of 2013!</h1>
-			<a href="" class="camera_button" data-role="button" data-theme="oj" data-icon="camera-icon"></a>
-		</div>	
-		<div data-role="content">
-			<a href="" data-role="button" data-theme="gry" id="participants_btn">
-				<img src="test/participants_button_icon@2x.png">
-				<h3>9 Participants</h3>
-			</a>
-
-			<div class="ui-grid-a">
-			    <div class="ui-block-a">
-			    	<a href="" class="a_photo" id="pic_id_1">
-			    		<img src="test/2013firsthack.jpg">
-			    	</a>
-			    </div>
-			   
-			    <div class="ui-block-b">
-			    	<a href="" class="a_photo" id="pic_id_2">
-			    		<img src="test/2013firsthack.jpg">
-			    	</a>
-			    </div>
-
-			    <div class="ui-block-a">
-			    	<a href="" class="a_photo" id="pic_id_3">
-			    		<img src="test/2013firsthack.jpg">
-			    	</a>
-			    </div>
-			   
-			    <div class="ui-block-b">
-			    	<a href="" class="a_photo" id="pic_id_4">
-			    		<img src="test/2013firsthack.jpg">
-			    	</a>
-			    </div>	
-
-			    <div class="ui-block-a">
-			    	<a href="" class="a_photo" id="pic_id_5">
-			    		<img src="test/2013firsthack.jpg">
-			    	</a>
-
-			    </div>
-			   
-			    <div class="ui-block-b">
-			    	<a href="" class="a_photo" id="pic_id_6">
-			    		<img src="test/2013firsthack.jpg">
-			    	</a>
-			    </div>			    		    
+		<div data-role="page" id="the_stream">
+			<div data-role="header" data-theme="a">
+				<a href="#all_streams" data-theme="blk">back</a>
+				<h1>First Hack of 2013!</h1>
+				<a href="" class="camera_button" data-role="button" data-theme="oj" data-icon="camera-icon" id="camera_button"></a>
 			</div>	
-		</div>	
+			<div data-role="content">
+				<a href="" data-role="button" data-theme="gry" id="participants_btn">
+					<img src="test/participants_button_icon@2x.png">
+					<h3>9 Participants</h3>
+				</a>
 
-	<!-- the_stream-specific javascript -->	
-		<script type="text/javascript">
-			$("#the_stream").on( 'pageinit', function(){
-				
-				// call stuff that needs to run/inject into this page before it loads here
+				<div class="ui-grid-a">
+				    <div class="ui-block-a">
+				    	<a href="" class="a_photo" id="pic_id_1">
+				    		<img src="test/2013firsthack.jpg">
+				    	</a>
+				    </div>
+				   
+				    <div class="ui-block-b">
+				    	<a href="" class="a_photo" id="pic_id_2">
+				    		<img src="test/2013firsthack.jpg">
+				    	</a>
+				    </div>
 
-			});	
+				    <div class="ui-block-a">
+				    	<a href="" class="a_photo" id="pic_id_3">
+				    		<img src="test/2013firsthack.jpg">
+				    	</a>
+				    </div>
+				   
+				    <div class="ui-block-b">
+				    	<a href="" class="a_photo" id="pic_id_4">
+				    		<img src="test/2013firsthack.jpg">
+				    	</a>
+				    </div>	
 
-			// EVENT: CLICK BACK BUTTON ON THE_STREAM PAGE
+				    <div class="ui-block-a">
+				    	<a href="" class="a_photo" id="pic_id_5">
+				    		<img src="test/2013firsthack.jpg">
+				    	</a>
+
+				    </div>
+				   
+				    <div class="ui-block-b">
+				    	<a href="" class="a_photo" id="pic_id_6">
+				    		<img src="test/2013firsthack.jpg">
+				    	</a>
+				    </div>			    		    
+				</div>	
+			</div>	
+
+		<!-- the_stream-specific javascript -->	
+			<script type="text/javascript">
+				$("#the_stream").on( 'pageinit', function(){
+					
+					// call stuff that needs to run/inject into this page before it loads here
+
+				});	
+
+				// EVENT: CLICK BACK BUTTON ON THE_STREAM PAGE
 
 
-			// EVENT: CLICK CAMERA BUTTON ON THE_STREAM PAGE
-			$(".camera_button").on("vclick", function(event, ui) {
-				console.log("You CLICKED: Camera Button on PAGE:'the_stream'!");
-				$.mobile.changePage("#take_photo", {transition: "flip"});
-			});
+				// EVENT: CLICK CAMERA BUTTON ON THE_STREAM PAGE
+				$("#camera_button").on("vclick", function(event, ui) {
+					console.log("You CLICKED: Camera Button on PAGE:'the_stream'!");
+					$.mobile.changePage("#take_photo", {transition: "flip"});
+				});
 
-			// EVENT: CLICK PARTICIPANTS BUTTON ON THE_STREAM PAGE
-			$(".participants_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED: Participants Button on PAGE:'the_stream'!");
-				$.mobile.changePage("#participant_list", {transition: "flip"});
-			});
+				// EVENT: CLICK PARTICIPANTS BUTTON ON THE_STREAM PAGE
+				$("#participants_btn").on("vclick", function(event, ui) {
+					console.log("You CLICKED: Participants Button on PAGE:'the_stream'!");
+					$.mobile.changePage("#participant_list", {transition: "flip"});
+				});
 
-			// EVENT: CLICK A PICTURE ON THE_STREAM PAGE			
-			$(".a_photo").on("vclick", function(event, ui) {
-				console.log("You CLICKED: A Photo on PAGE:'the_stream'!");
-				$.mobile.changePage("#photo_view", {transition: "flip"});
-			});
+				// EVENT: CLICK A PICTURE ON THE_STREAM PAGE			
+				$(".a_photo").on("vclick", function(event, ui) {
+					console.log("You CLICKED: A Photo on PAGE:'the_stream'!");
+					$.mobile.changePage("#photo_view", {transition: "flip"});
+				});
 
-		</script>
+			</script>
 
-	</div>
+		</div>
 
 	<div data-role="page" id="new_stream">
 		<div data-role="header" data-theme="a" id="sign_in_header">
@@ -523,15 +523,92 @@ CHANNING
 
 	</div>
 
+	<div data-role="page" id="participant_photos">
+		<div data-role="header" data-theme="a">
+			<a href="#participant_list" data-theme="blk">back</a>
+			<h1>First Hack of 2013!</h1>
+		</div>	
+
+		<div data-role="content">
+			<h3>Suman Venkataswamy's photos</h3>
+
+			<div class="ui-grid-a">
+			    <div class="ui-block-a">
+			    	<a href="" class="a_photo" id="pic_id_1">
+			    		<img src="test/2013firsthack.jpg">
+			    	</a>
+			    </div>
+			   
+			    <div class="ui-block-b">
+			    	<a href="" class="a_photo" id="pic_id_2">
+			    		<img src="test/2013firsthack.jpg">
+			    	</a>
+			    </div>
+
+			    <div class="ui-block-a">
+			    	<a href="" class="a_photo" id="pic_id_3">
+			    		<img src="test/2013firsthack.jpg">
+			    	</a>
+			    </div>
+			   
+			    <div class="ui-block-b">
+			    	<a href="" class="a_photo" id="pic_id_4">
+			    		<img src="test/2013firsthack.jpg">
+			    	</a>
+			    </div>	
+
+			    <div class="ui-block-a">
+			    	<a href="" class="a_photo" id="pic_id_5">
+			    		<img src="test/2013firsthack.jpg">
+			    	</a>
+
+			    </div>
+			   
+			    <div class="ui-block-b">
+			    	<a href="" class="a_photo" id="pic_id_6">
+			    		<img src="test/2013firsthack.jpg">
+			    	</a>
+			    </div>			    		    
+			</div>	
+		</div>	
+
+	<!-- the_stream-specific javascript -->	
+		<script type="text/javascript">
+			$("#participant_photos").on( 'pageinit', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});	
+
+			// EVENT: CLICK A PICTURE ON THE_STREAM PAGE			
+			$(".a_photo").on("vclick", function(event, ui) {
+				console.log("You CLICKED: A Photo on PAGE:'participant_list'!");
+				$.mobile.changePage("#photo_view", {transition: "flip"});
+			});
+
+		</script>
+
+	</div>
+
+
 	<div data-role="page" id="photo_view">
 		<div data-role="header">
-			<a href="" data-icon="delete" class="ui-btn-right"></a>
+			<a href="#the_stream" data-icon="delete" class="ui-btn-right" data-theme="c" data-iconpos="notext" id="photo_view_back_btn"></a>
+			<h1>Channing Allen</h1>
 		</div>
 
 		<div data-role="content">
+			<img style="width:100%" src="test/2013firsthack.jpg">
 		</div>
 
 		<div data-role="footer">
+			<a href="">Like</a>
+			<!-- lil dot -->
+			<a href="">Comment</a>
+			<!-- comment icon -->
+			<a href="">0</a>
+			<!-- heart icon -->
+			<a href="#like_list">2</a>
 		</div>
 
 		<script type="text/javascript">
@@ -543,7 +620,13 @@ CHANNING
 
 
 /////////// EVENT: CLICK X ON PHOTO_VIEW PAGE
+			$("#photo_view_back_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED: back btn on PAGE:'photo_view'!");
+				$.mobile.changePage("#the_stream", {transition: "flip"});
 
+				// will need logic to determine where user came from in order to send them back there
+
+			});
 
 /////////// EVENT: CLICK LIKE ON PHOTO_VIEW PAGE
 
@@ -563,10 +646,16 @@ CHANNING
 	</div>
 
 	<div data-role="page" id="participant_list">
+		<div data-role="header" data-theme="a" id="sign_up_header">
+			<a href="#the_stream" data-theme="blk">back</a>
+			<h1>PARTICIPANTS</h1>
+			<a href="#invite_participants" data-theme="oj" id="confirm_sign_up_btn">invite</a>
+		</div>
+
 		<div data-role="content">
 			<ul data-role="listview">
 				<li>					
-					<a href="#the_stream" class="list_button" id="participant_id">
+					<a href="#participant_photos" class="list_button" id="participant_id">
 						<div class="li_line_1">
 							<h1>Suman Venkataswamy</h1>
 						</div>
@@ -583,7 +672,7 @@ CHANNING
 				</li>
 
 				<li>					
-					<a href="#the_stream" class="list_button" id="participant_id">
+					<a href="#participant_photos" class="list_button" id="participant_id">
 						<div class="li_line_1">
 							<h1>Rousseau Kazi</h1>
 						</div>
@@ -600,7 +689,7 @@ CHANNING
 				</li>
 
 				<li>					
-					<a href="#the_stream" class="list_button" id="participant_id">
+					<a href="#participant_photos" class="list_button" id="participant_id">
 						<div class="li_line_1">
 							<h1>Channing Allen</h1>
 						</div>
@@ -649,13 +738,40 @@ CHANNING
 	<div data-role="page" id="like_list">
 
 		<div data-role="header">
-			<a href="" data-icon="delete" class="ui-btn-right"></a>
+			<a href="#photo_view">Back</a>
+			<h1>LIKES</h1>
 		</div>
 
 		<div data-role="content">
-		</div>
+			<ul data-role="listview">
+				<li>
+					<div class="li_line_1">
+						<h2>Rousseau Kazi</h2>
+					</div>
+				</li>
 
-		<div data-role="footer">
+				<li>					
+					<div class="li_line_1">
+						<h2>Suman</h2>
+					</div>
+				</li>
+
+				<li>
+					<h2> </h2>							
+				</li>
+
+				<li>
+					<h2> </h2>								
+				</li>
+
+				<li>
+					<h2> </h2>								
+				</li>
+
+				<li>	
+					<h2> </h2>									
+				</li>												
+			</ul>
 		</div>
 
 		<script type="text/javascript">
@@ -665,7 +781,57 @@ CHANNING
 
 			});
 
+		</script>
 	</div>
+
+	<div data-role="page" id="invite_participants">
+		<div data-role="header" data-theme="a" id="sign_in_header">
+			<a href="#all_streams" data-theme="blk">cancel</a>
+			<h1>INVITE</h1>
+			<a href="" data-theme="oj" id="update_stream_btn">update</a>
+		</div>
+
+		<div data-role="content">
+			<h3>Stream Details</h3>
+			<div data-role="fieldcontain">
+			    <label for="stream_name" class="ui-hidden-accessible">Name of Stream:</label>
+			    <input type="text" name="stream_name" id="stream_name" value="First Hack of 2013" placeholder=""  />
+			</div>	
+
+			<h3>Participants</h3>
+			<div data-role="fieldcontain">
+			    <label for="participant" class="ui-hidden-accessible">Participant:</label>
+			    <input type="text" name="participant" id="participant" value="Rousseau" placeholder=""  />
+
+			    <label for="participant" class="ui-hidden-accessible">Participant:</label>
+			    <input type="text" name="participant" id="participant" value="Suman" placeholder=""  />
+
+			    <label for="participant" class="ui-hidden-accessible">Participant:</label>
+			    <input type="text" name="participant" id="participant" value="" placeholder="Add a participant"  />			    			    
+			</div>
+
+			<p>
+				Recipients will be able to add photos to your stream via the app and through MMS. Standard text and data rates apply.
+			</p>
+		</div>	
+
+		<script type="text/javascript">
+			$("#invite_participants").on( 'pageinit', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});	
+
+			$("#update_stream_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED: update on PAGE:'participant_list'!");
+				$.mobile.changePage("#participant_list", {transition: "flip"});
+			});
+
+
+		</script>
+
+	</div>
+
 
 
 </body>
