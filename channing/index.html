@@ -212,11 +212,33 @@ CHANNING
 			// EVENT: CLICK 'SIGN IN' BUTTON ON SIGN_IN PAGE
 			$("#confirm_sign_in_btn").on("vclick", function(event, ui) {
 				console.log("You CLICKED:'Sign In' on PAGE:'sign_in'!");
+
+
 				// pull the phone number
 				// pull the password 
 				// call the signin api
 				// if status is "ok", transition. Else, show error report in the form of an alert. 
-				$.mobile.changePage("#all_streams", {transition: "flip"});
+				var username = $('#username').val();
+				var password = $('#password').val();
+				var API_URL = 'http://75.101.134.112/stream/1.0/api/sign_in.php?viewer_phone=' + username + '&password=' + password;
+				$.ajax({
+				type: 'GET',
+				url: API_URL,
+				dataType: "json",
+				success: function(data)
+				{
+					if(data['status'] == 'ok')
+					{
+						$.mobile.changePage("#all_streams", {transition: "flip"});
+						console.log('sign_in successful');
+					}
+					else
+					{
+						alert("Wrong username or password.");
+					}
+	           	},
+           		async: false
+	       		});
 			});
 
 		</script>

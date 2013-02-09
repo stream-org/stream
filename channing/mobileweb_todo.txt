@@ -30,7 +30,7 @@ all_streams
 		- {all}
 		
 new_stream
-	aesthetic:
+		aesthetic:
 		- need orange plus button in "Add a participant" field
 		- white shadow detail on all body text
 	functional:
