@@ -128,7 +128,7 @@ else{
 
 
 	// Sends out iPhone push notification
-	uploadPicturePushNotification($uploader_phone, $stream_id);
+	uploadPicturePushNotification($uploader_phone, $stream_id, $picture_id);
 
 	// // MixPanel tracking
 	// $metrics->track('upload_photo', array('medium'=>'iPhone','uploader'=>$uploader_phone,'stream'=>$stream_id,'picture_url'=>$picture_url,'distinct_id'=>$uploader_phone));

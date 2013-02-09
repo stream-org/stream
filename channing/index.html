@@ -212,6 +212,10 @@ CHANNING
 			// EVENT: CLICK 'SIGN IN' BUTTON ON SIGN_IN PAGE
 			$("#confirm_sign_in_btn").on("vclick", function(event, ui) {
 				console.log("You CLICKED:'Sign In' on PAGE:'sign_in'!");
+				// pull the phone number
+				// pull the password 
+				// call the signin api
+				// if status is "ok", transition. Else, show error report in the form of an alert. 
 				$.mobile.changePage("#all_streams", {transition: "flip"});
 			});
 
