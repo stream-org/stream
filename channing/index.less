@@ -7,10 +7,10 @@
 
 // LESS
 @font: sans-serif;
+@gray-light: #D9DADE;
+@gray-dark: #595959;
 @orange-gradient: -webkit-linear-gradient(top, #fa6c3c, #ea583f, #d94342);
-@gray-gradient: -webkit-linear-gradient(top, #D9DADE, #BABABA);
-@light-gray: #D9DADE;
-@dark-gray: #595959;
+@gray-gradient: -webkit-linear-gradient(top, white, #D9DADE);
 
 .border-radius (@radius) {
   border-radius: @radius;
@@ -180,12 +180,13 @@
             box-shadow: none !important; -webkit-box-shadow: none !important; -moz-box-shadow: none !important;
             text-decoration: none;
             }
-            .ui-btn-up-gry .ui-btn-inner,
+
+            .ui-btn-down-gry .ui-btn-inner,
             .ui-btn-hover-gry .ui-btn-inner,
-            .ui-btn-down-gry .ui-btn-inner {
+            .ui-btn-up-gry .ui-btn-inner {
                 color: white;
                 overflow: visible;
-                border: 1px solid black;
+                border: 1px solid @gray-dark;
                 .border-radius(5px);
                 background: @gray-gradient;
                 /*box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 1px rgba(0,0,0, 0.2);
@@ -195,23 +196,12 @@
 
             /* hover state color */
             .ui-btn-hover-gry .ui-btn-inner {
-                color: white;
-                overflow: visible;
-                border: 2px solid black;
-                .border-radius(5px);
-                background: @gray-gradient;
                 opacity: 0.9;
                 }
 
             /* down state color */
             .ui-btn-down-gry .ui-btn-inner {
-                color: white;
-                overflow: visible;
-                border: 2px solid black;
-                border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px;
-                background: @gray-gradient;
-                opacity: 0.9;
-                box-shadow: 0 0 2px 2px @dark-gray;
+                background: lighten(@gray-dark, 10%);
                 }
 
 /*global css*/
@@ -269,11 +259,11 @@
             padding: 10px 15px;
         
             h2 {
-                color: @dark-gray;
+                color: @gray-dark;
             }
 
             h3 {
-                color: @dark-gray;
+                color: @gray-dark;
                 text-align: left;
                 font-size: 1.17em;
                 -webkit-margin-before: .5em;
@@ -365,7 +355,7 @@
 
 /*sign_in page*/
     #sign_in {
-        background-color: @light-gray;
+        background-color: @gray-light;
     }
 
     #username {
@@ -386,13 +376,13 @@
 
 /*bummer page*/
     #BUMMER {
-        background-color: @light-gray;
+        background-color: @gray-light;
         font-size: 60px;
     }
 
 /*sign_up page*/
     #sign_up {
-        background-color: @light-gray;
+        background-color: @gray-light;
     }
     /*form headers*/
 
@@ -428,12 +418,12 @@
 
 /*all_streams page*/
 
-.ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
-    padding: 0em;
+    .ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
+    padding: 0px 0px 0px 100px;
 }
 
     #all_streams {
-        background-color: @light-gray;
+        background-color: @gray-light;
     }
 
     .stream_button {
@@ -452,7 +442,7 @@
     /*list item contents*/
         /*line 1*/
             .stream_button h1 {
-                margin: .3em 0;
+                margin: .8em 0;
             }
 
         /*line 2*/
@@ -474,7 +464,7 @@
 
 // the_stream page
     #the_stream {
-        background-color: @light-gray;
+        background-color: @gray-light;
     }
     // header
         #the_stream {
@@ -540,7 +530,7 @@
 
 //create_stream page
     #create_stream {
-        background-color: @light-gray;
+        background-color: @gray-light;
 
     }
     // content
