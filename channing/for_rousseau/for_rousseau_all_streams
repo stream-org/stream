@@ -1,0 +1,32 @@
+<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-li-last ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text">					
+					<a href="" class="stream_button ui-link-inherit">
+						<img src="test/2013firsthack.jpg" class="ui-li-thumb">
+
+						<div class="li_line_1">
+							<h1 class="ui-li-heading">First Hack of 2013</h1>
+						</div>
+
+						<div class="li_line_2">	
+							<div class="section_a">
+								<img class="tiny_icon" src="test/participants@2x.png">
+								<p class="ui-li-desc">
+									9 Participants
+								</p>
+							</div>
+
+							<div class="section_b">
+								<img class="tiny_icon" src="test/photos@2x.png">
+								<p class="ui-li-desc">
+									13 photos
+								</p>
+							</div>
+						</div>
+					</a>
+				</div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>
+
+<script type="text/javascript">
+			
+	$('#user_streams').append('<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-li-last ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"> <a href="" class="stream_button ui-link-inherit"> <img src="'+ data['streams'][0]['picture_latest']['picture_tinyurl'] +'" class="ui-li-thumb"> <div class="li_line_1"> <h1 class="ui-li-heading">'+ data['streams'][0]['stream_name'] +'</h1> </div> <div class="li_line_2"> <div class="section_a"> <img class="tiny_icon" src="test/participants@2x.png"> <p class="ui-li-desc"> ' + data['streams'][0]['stream_usercount'] + ' Participants </p> </div> <div class="section_b"> <img class="tiny_icon" src="test/photos@2x.png"> <p class="ui-li-desc"> ' + data['streams'][0]['picture_count'] + ' photos </p> </div> </div> </a> </div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>');
+
+</script>
+							
