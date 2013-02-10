@@ -13,23 +13,19 @@
  
     // Step 1: Download the Twilio-PHP library from twilio.com/docs/libraries, 
     // and move it into the folder containing this file.
-    require "twilio/Services/Twilio.php";
+ //    require "twilio/Services/Twilio.php";
+ //    require_once('format_phone_numbers.php');
  
-    // Step 2: set our AccountSid and AuthToken from www.twilio.com/user/account
-    $AccountSid = "AC653ba8f8a77edd9cf497389acdd205dc";
-    $AuthToken = "f1e29322f22124b6e8357613d99ee05a";
+ //    // Step 2: set our AccountSid and AuthToken from www.twilio.com/user/account
+ //    $AccountSid = "AC653ba8f8a77edd9cf497389acdd205dc";
+ //    $AuthToken = "f1e29322f22124b6e8357613d99ee05a";
 
-    function twilio_text($user_phone,$textString)
-	{
+ //    function twilio_text($user_phone,$textString)
+    // {
 
-		$phone = standardizePhone($user_phone);
- 
-	    // instantiate a new Twilio Rest Client
-	    $client = new Services_Twilio($AccountSid, $AuthToken);
-	 	 
-        $sms = $client->account->sms_messages->create("415-799-4276", $phone, $textString);
-	    
-	}
-
-
+    //  $phone = standardizePhone($user_phone);
+    //     // instantiate a new Twilio Rest Client
+    //     $client = new Services_Twilio($AccountSid, $AuthToken);
+ //        $sms = $client->account->sms_messages->create("415-799-4276", $phone, $textString);      
+    // }
 ?>
