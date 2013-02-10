@@ -34,8 +34,6 @@
         $AccountSid = "AC653ba8f8a77edd9cf497389acdd205dc";
         $AuthToken = "f1e29322f22124b6e8357613d99ee05a";
 
-        echo standardizePhone($user_phone);
-
         $phone = standardizePhone($user_phone);
         $client = new Services_Twilio($AccountSid, $AuthToken);
         $sms = $client->account->sms_messages->create("415-799-4276", $phone, $textString);   

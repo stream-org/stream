@@ -8,8 +8,6 @@ require_once('twil.php');
 //commentPushNotification('16508420492', 'd8143166a6e3d0f1abc20ab452c6becd7f56564c2320c8389fa45cc358e25eaa37c4e0199f31fbd6595eaeca68fe23590f0dd87a42660b4ab279c27dc6a0fb47' , 'hey20');
 //likePushNotification('16508420492', 'd8143166a6e3d0f1abc20ab452c6becd7f56564c2320c8389fa45cc358e25eaa37c4e0199f31fbd6595eaeca68fe23590f0dd87a42660b4ab279c27dc6a0fb47');
 
-twilio_text('6508420492', 'test');
-
 //comment push notifications [DONE]
 function commentPushNotification($commenter_phone, $picture_id, $comment)
 {
