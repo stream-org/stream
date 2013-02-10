@@ -706,11 +706,8 @@ CHANNING
 
 
 	<div data-role="page" id="photo_view">
-		<div data-role="header">
-			<a href="#the_stream" data-icon="delete" class="ui-btn-right" data-theme="c" data-iconpos="notext" id="photo_view_back_btn"></a>
-			<h1>Channing Allen</h1>
-		</div>
 
+<<<<<<< HEAD
 		<div data-role="content">
 			<img style="width:100%" src="test/2013firsthack.jpg">
 		</div>
@@ -751,6 +748,15 @@ CHANNING
 	  //      		});
 
 			// });	
+=======
+
+		<script type="text/javascript">
+			$("#photo_view").on( 'pageinit', function(){
+				
+				$('#photo_view').append('<div data-role="header" class="ui-header ui-bar-a" role="banner"> <a href="#the_stream" class="s-s-100 inline x-btn">x</a> <h1 class="ui-title s-s-100 inline" role="heading" aria-level="1">channing</h1> </div> <div data-role="content" class="ui-content" role="main"> <img style="width:100%" src="test/2013firsthack.jpg"> </div> <div data-role="footer" class="ui-footer ui-bar-a" role="contentinfo"> <a href="" class="inline">Like</a> <!-- lil dot --> <a href="" class="inline">Comment</a> <!-- comment icon --> <a href="" class="inline" id="comments_btn"> <span class="ui-icon ui-icon-comments-icon">&nbsp; </span> <span class="ui-btn-text">5</span></a> <!-- heart icon --> <a href="" class="inline" id="comments_btn"> <span class="ui-icon ui-icon-heart-icon">&nbsp; </span> <span class="ui-btn-text">6</span></a></div>').trigger('create');
+
+			});	
+>>>>>>> 244afeb54f19f925be3cc7c2c5cf143b4cd3918f
 
 
 /////////// EVENT: CLICK X ON PHOTO_VIEW PAGE
