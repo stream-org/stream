@@ -1,0 +1,67 @@
+/*fonts*/
+.s-s {
+	font-family: sans-serif !important;
+}
+
+.s-s-100 {
+	font-family: sans-serif !important;
+	font-weight: 100;
+}
+
+.s-s-300 {
+	font-family: sans-serif !important;
+	font-weight: 300;	
+}
+
+.s-s-500 {
+	font-family: sans-serif !important;
+	font-weight: 500;	
+}
+
+/*colors*/
+.white {
+	color:	white;
+}
+
+.oj-light {
+	color: #fa6c3c;
+}
+
+.oj-med {
+	color: #ea583f;
+}
+
+.oj-dark {
+	color: #d94342;
+}
+
+.oj-gradient-h {
+	background: -webkit-linear-gradient(right, #fa6c3c, #ea583f, #d94342);
+}
+
+/*element positioning*/
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.bg-black {
+	background-color: black;
+}
+
+.fixed-top {
+	position: fixed;
+	top:100px;
+}
+
+.fixed-bottom {
+	position: fixed;
+	bottom:100px;
+}
