@@ -1,7 +1,17 @@
 <div class="ui-grid-a">
     <div class="ui-block-a"> <a href="photo_view" class="a_photo ui-link column-left"> <img src="test/2013firsthack.jpg"> </a> </div>
     <div class="ui-block-b"> <a href="photo_view" class="a_photo ui-link column-right"> <img src="test/2013firsthack.jpg"> </a> </div>
-     </div>
+</div>
+
+<a href="participant_list" data-role="button" data-theme="gry" id="participants_btn">
+	<img src="test/participants_button_icon@2x.png">
+	<h3>'+ number participants' Participants</h3>
+</a>
+
+<a href="participant_list" data-role="button" data-theme="gry" id="participants_btn" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-gry"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">
+					<img src="test/participants_button_icon@2x.png">
+					<h3 id="participants">'+ num_participants +' Participants</h3>
+				</span></span></a>
 
 <script type="text/javascript">
 
@@ -10,5 +20,12 @@
 
 	// right column
 	$('.ui-grid-a').append('<div class="ui-block-b"> <a href="photo_view" class="a_photo ui-link column-right"> <img src="' + image url here + '"> </a> </div>').trigger('create');
+
+	// participants button
+	$('#the_stream ui-content').append('<a href="participant_list" data-role="button" data-theme="gry" id="participants_btn" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-gry"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text"> <img src="test/participants_button_icon@2x.png"> <h3 id="participants">'+ num_participants +' Participants</h3> </span></span></a>').trigger('create');
+
+	// the_stream header
+	$('#the_stream h1').html(stream name).trigger('create');
+
 
 </script>

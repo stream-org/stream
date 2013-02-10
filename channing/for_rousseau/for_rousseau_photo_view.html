@@ -1,0 +1,34 @@
+	<div data-role="page" id="photo_view">
+
+
+
+		<div data-role="header" class="ui-header ui-bar-a" role="banner">
+			<a href="#the_stream" class="s-s-100 inline x-btn">x</a>
+			<h1 class="ui-title s-s-100 inline" role="heading" aria-level="1">'+ photo owner's name +'</h1>
+		</div>
+
+		<div data-role="content" class="ui-content" role="main">
+			<img style="width:100%" src="'+ photo URL here +'">
+		</div>
+
+		<div data-role="footer" class="ui-footer ui-bar-a" role="contentinfo">
+			<a href="" class="inline">Like</a>
+			<!-- lil dot -->
+			<a href="" class="inline">Comment</a>
+			<!-- comment icon -->
+			<a href="" class="inline" id="comments_btn"> <span class="ui-icon ui-icon-comments-icon">&nbsp; </span> <span class="ui-btn-text"> '+ # comments'</span></a>
+			<!-- heart icon -->
+			<a href="" class="inline" id="comments_btn"> <span class="ui-icon ui-icon-heart-icon">&nbsp; </span> <span class="ui-btn-text"> '+ # likes'</span></a>
+		</div>	
+
+		
+
+.ui-icon-comments-icon
+
+
+		<script type="text/javascript">
+			$('#photo_view').append('<div data-role="header" class="ui-header ui-bar-a" role="banner"> <a href="#the_stream" class="s-s-100 inline x-btn">x</a> <h1 class="ui-title s-s-100 inline" role="heading" aria-level="1">channing</h1> </div> <div data-role="content" class="ui-content" role="main"> <img style="width:100%" src="test/2013firsthack.jpg"> </div> <div data-role="footer" class="ui-footer ui-bar-a" role="contentinfo"> <a href="" class="inline">Like</a> <!-- lil dot --> <a href="" class="inline">Comment</a> <!-- comment icon --> <a href="" class="inline" id="comments_btn"> <span class="ui-icon ui-icon-comments-icon">&nbsp; </span> <span class="ui-btn-text">5</span></a> <!-- heart icon --> <a href="" class="inline" id="comments_btn"> <span class="ui-icon ui-icon-heart-icon">&nbsp; </span> <span class="ui-btn-text">6</span></a></div>').trigger('create');
+
+		</script>
+
+	</div>
