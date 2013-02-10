@@ -33,70 +33,97 @@ CHANNING
 	<!-- regular jQ functions - must be before jQ-M loads, after jQ loads -->
 	<script type="text/javascript">
 
+	function populate_stream_profile(stream_id)
+	{
+		setCookie("latestStreamID",stream_id,365);
+		$.mobile.changePage("#the_stream", {transition: "flip"});
+	}
+
 	///////////
 	//getCookie
 	///////////
 
-	function getCookie(c_name)
-	{
-
-	console.log('getCookie(c_name) initialized...');
-
-	var i,x,y,ARRcookies=document.cookie.split(";");
-
-		for (i=0;i<ARRcookies.length;i++)
+		function getCookie(c_name)
 		{
-	  		x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-	  		y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-	  		x=x.replace(/^\s+|\s+$/g,"");
 
-	  		if (x==c_name)
-	  		{
-	    		return unescape(y);
-	  		}
+		console.log('getCookie(c_name) initialized...');
+
+		var i,x,y,ARRcookies=document.cookie.split(";");
+
+			for (i=0;i<ARRcookies.length;i++)
+			{
+		  		x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+		  		y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+		  		x=x.replace(/^\s+|\s+$/g,"");
+
+		  		if (x==c_name)
+		  		{
+		    		return unescape(y);
+		  		}
+			}
+		};
+
+		///////////
+		//setCookie
+		///////////
+
+		function setCookie(c_name,value,exdays)
+		{
+
+		console.log('setCookie(c_name, exdays) initialized...');
+
+		var exdate=new Date();
+		exdate.setDate(exdate.getDate() + exdays);
+		var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+		document.cookie=c_name + "=" + c_value;
+
 		}
-	};
 
-	///////////
-	//setCookie
-	///////////
+		////////////////
+		//getPhoneCookie
+		////////////////
 
-	function setCookie(c_name,value,exdays)
-	{
+		function checkPhoneCookie()
+		{
 
-	console.log('setCookie(c_name, exdays) initialized...');
+		console.log('checkPhoneCookie() initialized...');
 
-	var exdate=new Date();
-	exdate.setDate(exdate.getDate() + exdays);
-	var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-	document.cookie=c_name + "=" + c_value;
+		var phoneNumber=getCookie("phoneNumber");
 
-	}
+			if (phoneNumber!=null && phoneNumber!="")
+		  	{
+		  		return phoneNumber;
+		  	}
 
-	////////////////
-	//getPhoneCookie
-	////////////////
+			else 
+		  	{
+		  		$.mobile.changePage( "#sign_in", {
+						    transition: "pop",
+						    reverse: true
+				});
+		  	}
+		};
 
-	function checkPhoneCookie()
-	{
+		function checkStreamIDCookie()
+		{
 
-	console.log('checkPhoneCookie() initialized...');
+		console.log('checkStreamIDCookie() initialized...');
 
-	var phoneNumber=getCookie("phoneNumber");
+		var latestStreamID = getCookie("latestStreamID");
 
-		if (phoneNumber!=null && phoneNumber!="")
-	  	{
-	  		return phoneNumber;
-	  	}
+			if (latestStreamID!=null && latestStreamID!="")
+		  	{
+		  		return latestStreamID;
+		 	}
 
-		else 
-	  	{
-	  		$.mobile.changePage( "#introPage", {
-					    transition: "pop",
-					    reverse: true
-			});
-	  	}
-	};
+			else 
+		  	{
+		  		$.mobile.changePage( "#introPage", {
+						    transition: "pop",
+						    reverse: true
+				});
+		  	}
+		};
 
 
 
@@ -272,15 +299,12 @@ CHANNING
 		<script type="text/javascript">
 			$("#sign_in").on( 'pageinit', function(){
 
-				var phone_number = getCookie("phoneNumber");
+				var phone_number = checkPhoneCookie();
 				console.log(phone_number);
 
-				if ( phone_number != null && phone_number != '')
-				{
-					$("#username").val(phone_number);
-					$("#password").val('xxxxxxxxxxxx');
-					$.mobile.changePage("#all_streams", {transition: "flip"});	
-				}
+				$("#username").val(phone_number);
+				$("#password").val('xxxxxxxxxxxx');
+				$.mobile.changePage("#all_streams", {transition: "flip"});
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
@@ -381,120 +405,53 @@ CHANNING
 			<a href="" data-role="button" data-theme="oj" id="create_stream_btn">create</a>
 		</div>
 		<div data-role="content">
-			<div id="user_streams">
-			<ul data-role="listview">
-			<li>					
-					<a href="" class="stream_button" id="a_stream_id">
-						<img src="test/2013firsthack.jpg">
-
-						<div class="li_line_1">
-							<h1>First Hack of 2013</h1>
-						</div>
-
-						<div class="li_line_2">	
-							<div class="section_a">
-								<img class="tiny_icon" src="test/participants@2x.png">
-								<p>
-									9 Participants
-								</p>
-							</div>
-
-							<div class="section_b">
-								<img class="tiny_icon" src="test/photos@2x.png">
-								<p>
-									13 photos
-								</p>
-							</div>
-						</div>
-					</a>
-				</li>
-
-<!--				<li>					
-					<a href="" class="stream_button" id="a_stream_id">
-						<img src="test/2013firsthack.jpg">
-
-						<div class="li_line_1">
-							<h1>First Hack of 2013</h1>
-						</div>
-
-						<div class="li_line_2">	
-							<div class="section_a">
-								<img class="tiny_icon" src="test/participants@2x.png">
-								<p>
-									9 Participants
-								</p>
-							</div>
-
-							<div class="section_b">
-								<img class="tiny_icon" src="test/photos@2x.png">
-								<p>
-									13 photos
-								</p>
-							</div>
-						</div>
-					</a>
-				</li>
-
-				<li>					
-					<a href="" class="stream_button" id="a_stream_id">
-						<img src="test/2013firsthack.jpg">
-
-						<div class="li_line_1">
-							<h1>First Hack of 2013</h1>
-						</div>
-
-						<div class="li_line_2">	
-							<div class="section_a">
-								<img class="tiny_icon" src="test/participants@2x.png">
-								<p>
-									9 Participants
-								</p>
-							</div>
-
-							<div class="section_b">
-								<img class="tiny_icon" src="test/photos@2x.png">
-								<p>
-									13 photos
-								</p>
-							</div>
-						</div>
-					</a>
-				</li> -->
+			<ul data-role="listview" id="user_streams">
 			</ul>
-			</div>
 		</div>
 
 	<!-- all_streams-specific javascript -->	
 		<script type="text/javascript">
-			$("#all_streams").on( 'pageinit', function(){
+			$("#all_streams").on('pageinit', function(){
 				
-				var phone_number = getCookie('phoneNumber');
+				var phone_number = checkPhoneCookie();
 				console.log('the phone_number cookie ' + phone_number);
-				if (phone_number != null && phone_number != '')
+				API_URL = 'http://75.101.134.112/stream/1.0/api/populate_user_streams.php?viewer_phone=' + phone_number;
+				$.ajax({
+				type: 'GET',
+				url: API_URL,
+				dataType: "json",
+				success: function(data)
 				{
-					API_URL = 'http://75.101.134.112/stream/1.0/api/populate_user_streams.php?viewer_phone=' + phone_number;
-					$.ajax({
-					type: 'GET',
-					url: API_URL,
-					dataType: "json",
-					success: function(data)
+					if(data['status'] == 'ok')
 					{
-						if(data['status'] == 'ok')
+						var number_of_streams = data['streams'].length;
+						for(var i = 0; i < number_of_streams; i++)
 						{
-							console.log(data['streams'][0]);
-							$('#user_streams').append('<li><a href="" class="stream_button" id="a_stream_id"><img src="' + data['streams'][0]['picture_latest']['picture_tinyurl'] + '"><div class="li_line_1"><h1>' + data['streams'][0]['stream_name'] + '</h1></div><div class="li_line_2">	<div class="section_a"><img class="tiny_icon" src="test/participants@2x.png"><p>' + data['streams'][0]['stream_usercount'] + '</p></div><div class="section_b"><img class="tiny_icon" src="test/photos@2x.png"><p>' + data['streams'][0]['picture_count'] + '</p></div></div></a></li>').trigger('create');
-						}
-						else
-						{
-							alert("wrong phone_number");
-						}
-		           	},
-	           		async: false
-		       		});
-				}
+							var stream_id = data['streams'][i]['stream_id'];
+							var stream_name = data['streams'][i]['stream_name'];
+							var stream_usercount = data['streams'][i]['stream_usercount'];
+							var picture_count = data['streams'][i]['picture_count'];
+							var latest_picture;
 
-				// call stuff that needs to run/inject into this page before it loads here
+							if(data['streams'][i]['picture_latest'] == null)
+							{
+								latest_picture = "https://s3.amazonaws.com/stream_tiny_pictures/tiny25ecb484c3f7167c719960fc3c78e0325b4a90c53d8f4afb4235d6dfb70443b581883f3e8a640cb1d4937e2081c62008c554a84c4cc4f6de229e77a06314ffbe.jpg";
+							}
+							else 
+							{
+								latest_picture = data['streams'][i]['picture_latest']['picture_tinyurl'];
+							}
 
+								$('#user_streams').append('<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-li-last ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"> <a onClick="populate_stream_profile(this.id)" id='+ stream_id +' class="stream_button ui-link-inherit"> <img src="'+ latest_picture +'" class="ui-li-thumb"> <div class="li_line_1"> <h1 class="ui-li-heading">'+ stream_name +'</h1> </div> <div class="li_line_2"> <div class="section_a"> <img class="tiny_icon" src="test/participants@2x.png"> <p class="ui-li-desc"> '+ stream_usercount +' Participants </p> </div> <div class="section_b"> <img class="tiny_icon" src="test/photos@2x.png"> <p class="ui-li-desc"> '+ picture_count +' photos </p></div> </div> </a> </div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>').trigger('create');
+							}
+						} 
+					else
+					{
+						alert("SERVER_ERROR");
+					}
+	           	},
+           		async: false
+	       		});
 			});	
 
 			// EVENT: CLICK SIGN OUT/SETTINGS BUTTON ON ALL_STREAMS PAGE
@@ -528,7 +485,7 @@ CHANNING
 				</a>
 
 				<div class="ui-grid-a">
-				    <div class="ui-block-a">
+				    <!-- <div class="ui-block-a">
 				    	<a href="" class="a_photo" id="pic_id_1">
 				    		<img src="test/2013firsthack.jpg">
 				    	</a>
@@ -564,14 +521,39 @@ CHANNING
 				    		<img src="test/2013firsthack.jpg">
 				    	</a>
 				    </div>			    		    
-				</div>	
+				</div>	 -->
 			</div>	
 
 		<!-- the_stream-specific javascript -->	
 			<script type="text/javascript">
 				$("#the_stream").on( 'pageinit', function(){
 					
-					// call stuff that needs to run/inject into this page before it loads here
+					var stream_id = checkStreamIDCookie();
+					var phone_number = checkPhoneCookie();
+
+					var API_URL = 'http://75.101.134.112/stream/1.0/api/populate_stream_profile.php?viewer_phone=' + phone_number + '&stream_id=' + stream_id;
+					$.ajax({
+					type: 'GET',
+					url: API_URL,
+					dataType: "json",
+					success: function(data)
+					{
+						if(data['status'] == 'ok')
+						{
+							console.log(data);
+							var stream_name = data['stream_name'];
+							var stream_usercount = data['stream_usercount'];
+							var pictures = data['pictures'];
+							console.log(pictures.length);
+						}
+						else
+						{
+							alert("SERVER_ERROR");
+						}
+		           	},
+	           		async: false
+		       		});
+
 
 				});	
 
@@ -956,8 +938,6 @@ CHANNING
 		</script>
 
 	</div>
-
-
 
 </body>
 
