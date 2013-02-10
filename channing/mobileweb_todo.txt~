@@ -1,0 +1,84 @@
+Problems
+	template:
+		[page name]
+			aesthetic:
+			functional:
+
+intro
+	aesthetic:
+	functional:
+
+sign_up
+	aesthetic:
+	functional:
+
+sign_in
+	aesthetic:
+	functional:
+	
+	
+	aesthetic:
+	functional:
+			
+all_streams
+	aesthetic:
+		- weird space at bottom of list items
+		- photo flush to top-bottom-left
+		- right arrow in list items
+		- add "Send Feedback" at bottom
+	functional:
+		- {all}
+		
+new_stream
+	aesthetic:
+		- need orange plus button in "Add a participant" field
+		- white shadow detail on all body text
+	functional:
+		- {all}
+		
+the_stream
+	aesthetic:
+		- inset photos / remove borders
+		- participant button
+			- border lighter
+			- alter position of icon to text
+			- button lighter
+		- fix all padding
+	functional:	
+		- clicking camera button cues "take photo"/"choose existing" prompt
+		- photos load in correct order
+		- pic sizing logic / executes
+		
+participants_list
+	aesthetic:
+		- remove padding problem - needs to be vertically compressed
+		- icon / text need to be spaced further apart
+		- list items need white background
+	functional:
+	
+participant_photos
+	aesthetic:
+		- 
+	functional:
+		
+photo_view
+	aesthetic:
+		- make top "x" a standalone, white icon
+		- liberate footer links from their ugly, constraining button borders
+		- align footer links
+		- insert icons for comments, heart
+		- vertically center photos
+		- cut padding so photos extend to screen edges
+	functional:	
+		- build/implement modals
+			- like
+			- comment
+			- comment list
+
+like_list
+	aesthetic:
+		- list item heights uniform
+	functional:
+
+invite_participants	
+		

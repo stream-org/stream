@@ -33,6 +33,73 @@ CHANNING
 	<!-- regular jQ functions - must be before jQ-M loads, after jQ loads -->
 	<script type="text/javascript">
 
+	///////////
+	//getCookie
+	///////////
+
+	function getCookie(c_name)
+	{
+
+	console.log('getCookie(c_name) initialized...');
+
+	var i,x,y,ARRcookies=document.cookie.split(";");
+
+		for (i=0;i<ARRcookies.length;i++)
+		{
+	  		x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+	  		y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+	  		x=x.replace(/^\s+|\s+$/g,"");
+
+	  		if (x==c_name)
+	  		{
+	    		return unescape(y);
+	  		}
+		}
+	};
+
+	///////////
+	//setCookie
+	///////////
+
+	function setCookie(c_name,value,exdays)
+	{
+
+	console.log('setCookie(c_name, exdays) initialized...');
+
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate() + exdays);
+	var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+	document.cookie=c_name + "=" + c_value;
+
+	}
+
+	////////////////
+	//getPhoneCookie
+	////////////////
+
+	function checkPhoneCookie()
+	{
+
+	console.log('checkPhoneCookie() initialized...');
+
+	var phoneNumber=getCookie("phoneNumber");
+
+		if (phoneNumber!=null && phoneNumber!="")
+	  	{
+	  		return phoneNumber;
+	  	}
+
+		else 
+	  	{
+	  		$.mobile.changePage( "#introPage", {
+					    transition: "pop",
+					    reverse: true
+			});
+	  	}
+	};
+
+
+
 		// function for transition/pageload testing - gets the latest pic for a Stream 
 		function get_latest_pic() {
 			var api_base = "http://75.101.134.112/stream/1.0/api/populate_user_streams.php?viewer_phone=";
@@ -204,6 +271,16 @@ CHANNING
 
 		<script type="text/javascript">
 			$("#sign_in").on( 'pageinit', function(){
+
+				var phone_number = getCookie("phoneNumber");
+				console.log(phone_number);
+
+				if ( phone_number != null && phone_number != '')
+				{
+					$("#username").val(phone_number);
+					$("#password").val('xxxxxxxxxxxx');
+					$.mobile.changePage("#all_streams", {transition: "flip"});	
+				}
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
@@ -213,11 +290,6 @@ CHANNING
 			$("#confirm_sign_in_btn").on("vclick", function(event, ui) {
 				console.log("You CLICKED:'Sign In' on PAGE:'sign_in'!");
 
-
-				// pull the phone number
-				// pull the password 
-				// call the signin api
-				// if status is "ok", transition. Else, show error report in the form of an alert. 
 				var username = $('#username').val();
 				var password = $('#password').val();
 				var API_URL = 'http://75.101.134.112/stream/1.0/api/sign_in.php?viewer_phone=' + username + '&password=' + password;
@@ -229,6 +301,7 @@ CHANNING
 				{
 					if(data['status'] == 'ok')
 					{
+						setCookie("phoneNumber",username,365);
 						$.mobile.changePage("#all_streams", {transition: "flip"});
 						console.log('sign_in successful');
 					}
@@ -308,9 +381,35 @@ CHANNING
 			<a href="" data-role="button" data-theme="oj" id="create_stream_btn">create</a>
 		</div>
 		<div data-role="content">
-
+			<div id="user_streams">
 			<ul data-role="listview">
-				<li>					
+			<li>					
+					<a href="" class="stream_button" id="a_stream_id">
+						<img src="test/2013firsthack.jpg">
+
+						<div class="li_line_1">
+							<h1>First Hack of 2013</h1>
+						</div>
+
+						<div class="li_line_2">	
+							<div class="section_a">
+								<img class="tiny_icon" src="test/participants@2x.png">
+								<p>
+									9 Participants
+								</p>
+							</div>
+
+							<div class="section_b">
+								<img class="tiny_icon" src="test/photos@2x.png">
+								<p>
+									13 photos
+								</p>
+							</div>
+						</div>
+					</a>
+				</li>
+
+<!--				<li>					
 					<a href="" class="stream_button" id="a_stream_id">
 						<img src="test/2013firsthack.jpg">
 
@@ -360,40 +459,40 @@ CHANNING
 							</div>
 						</div>
 					</a>
-				</li>
-
-				<li>					
-					<a href="" class="stream_button" id="a_stream_id">
-						<img src="test/2013firsthack.jpg">
-
-						<div class="li_line_1">
-							<h1>First Hack of 2013</h1>
-						</div>
-
-						<div class="li_line_2">	
-							<div class="section_a">
-								<img class="tiny_icon" src="test/participants@2x.png">
-								<p>
-									9 Participants
-								</p>
-							</div>
-
-							<div class="section_b">
-								<img class="tiny_icon" src="test/photos@2x.png">
-								<p>
-									13 photos
-								</p>
-							</div>
-						</div>
-					</a>
-				</li>
+				</li> -->
 			</ul>
+			</div>
 		</div>
 
 	<!-- all_streams-specific javascript -->	
 		<script type="text/javascript">
 			$("#all_streams").on( 'pageinit', function(){
 				
+				var phone_number = getCookie('phoneNumber');
+				console.log('the phone_number cookie ' + phone_number);
+				if (phone_number != null && phone_number != '')
+				{
+					API_URL = 'http://75.101.134.112/stream/1.0/api/populate_user_streams.php?viewer_phone=' + phone_number;
+					$.ajax({
+					type: 'GET',
+					url: API_URL,
+					dataType: "json",
+					success: function(data)
+					{
+						if(data['status'] == 'ok')
+						{
+							console.log(data['streams'][0]);
+							$('#user_streams').append('<li><a href="" class="stream_button" id="a_stream_id"><img src="' + data['streams'][0]['picture_latest']['picture_tinyurl'] + '"><div class="li_line_1"><h1>' + data['streams'][0]['stream_name'] + '</h1></div><div class="li_line_2">	<div class="section_a"><img class="tiny_icon" src="test/participants@2x.png"><p>' + data['streams'][0]['stream_usercount'] + '</p></div><div class="section_b"><img class="tiny_icon" src="test/photos@2x.png"><p>' + data['streams'][0]['picture_count'] + '</p></div></div></a></li>').trigger('create');
+						}
+						else
+						{
+							alert("wrong phone_number");
+						}
+		           	},
+	           		async: false
+		       		});
+				}
+
 				// call stuff that needs to run/inject into this page before it loads here
 
 			});	
