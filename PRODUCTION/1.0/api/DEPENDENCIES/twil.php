@@ -32,7 +32,7 @@
     function twilio_text($user_phone, $textString)
     {
         $AccountSid = "AC653ba8f8a77edd9cf497389acdd205dc";
-        $AuthToken = "f1e29322f22124b6e8357613d99ee05a";
+        $AuthToken = "f1e29322f22124b6e8357613d99ee05a";  
 
         $phone = standardizePhone($user_phone);
         $client = new Services_Twilio($AccountSid, $AuthToken);
