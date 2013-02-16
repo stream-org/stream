@@ -38,7 +38,7 @@ if(empty($_GET))
 	$picture_id = $_POST['picture_id'];
 	$commenter_phone = $_POST['commenter_phone'];
 	$commenter_phone = standardizePhone($commenter_phone);
-	$comment = $_POST['comment'];
+	$comment = mysql_real_escape_string($_POST['comment']);
 }
 
 //grabbing the arguments 
@@ -80,7 +80,7 @@ else
 	else
 	{
 		$output ["status"] = "error";
-		$output['error_description'] = "Picture not liked! ";
+		$output['error_description'] = "Picture not Commented!";
 	}
 }
 

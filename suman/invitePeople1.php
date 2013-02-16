@@ -1,47 +1,40 @@
 <?PHP
 
-// Invites a user to a stream
-
 //input::
-//	stream_id
-//	invitees_phone which is either an array of invitees phone numbers or a comma-seperated list of invitee phone number
-//  inviter_phone
+//	streamID
+//	invitees phone
+//  inviter phone
 
 //output::
-//	api_name
-//	Status message
-// 	stream_id
-//	invitees_phone which is an array of invitees phone numbers
-//  inviter_phone
+//	Boolean (T/F)
 
-//example::
-//	this gets called in create_stream.php
+include "dependencies.php";
 
-include('dependencies.php');
 
 //grabbing the arguments 
+$streamID = $_GET['streamID'];
+$inviteesPhone = $_GET['inviteesPhone'];
+$inviterPhone = $_GET['inviterPhone'];
 
 if(empty($_POST))
 {
-	$stream_id = $_GET['stream_id'];
-	$invitees_phone = $_GET['invitees_phone'];
-	$invitees_first = $_GET['invitees_first'];
-	$invitees_last = $_GET['invitees_last'];
-	$inviter_phone = $_GET['inviter_phone'];
+	$stream_id = $_GET['streamID'];
+	$invitees_phone = $_GET['inviteesPhone'];
+	$inviter_phone = $_GET['inviterPhone'];
 }
 
 if(empty($_GET))
 {
-	$stream_id = $_POST['stream_id'];
-	$invitees_phone = $_POST['invitees_phone'];
-	$invitees_first = $_POST['invitees_first'];
-	$invitees_last = $_POST['invitees_last'];
-	$inviter_phone = $_POST['inviter_phone'];
+	$stream_id = $_POST['streamID'];
+	$invitees_phone = $_POST['inviteesPhone'];
+	$inviter_phone = $_POST['inviterPhone'];
 }
 
 $phone_array = explode(',', $invitees_phone);
 $output = array();
 $should_push_array = array();
+
+
 
 for ($i=0; $i < count($phone_array); $i++) 
 { 
