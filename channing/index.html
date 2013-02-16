@@ -39,10 +39,11 @@ CHANNING
 		$.mobile.changePage("#the_stream", {transition: "flip"});
 	}
 
-	function photo_view(picture_id)
+	function view_photo(picture_id)
 	{
 		console.log(picture_id);
 		setCookie("latestPicture", picture_id, 365);
+		console.log(checkPictureCookie());
 		$.mobile.changePage("#photo_view", {transition: "flip"});
 	}
 
@@ -549,11 +550,11 @@ CHANNING
 
 								if(remainder == 0)
 								{
-									$('.stream_pics').append('<div class="ui-block-a"> <a onClick="photo_view(this.id)" id=' + pictures[i]['picture_id'] + ' class="a_photo ui-link column-left"> <img src="'+ pictures[i]['picture_tinyurl'] +'"> </a> </div>').trigger('create');
+									$('.stream_pics').append('<div class="ui-block-a"> <a onClick="view_photo(this.id)" id=' + pictures[i]['picture_id'] + ' class="a_photo ui-link column-left"> <img src="'+ pictures[i]['picture_tinyurl'] +'"> </a> </div>').trigger('create');
 								}
 								else
 								{
-									$('.stream_pics').append('<div class="ui-block-b"> <a onClick="photo_view(this.id)" id=' + pictures[i] + ' class="a_photo ui-link column-right"> <img src="' + pictures[i]['picture_tinyurl'] + '"> </a> </div>').trigger('create');
+									$('.stream_pics').append('<div class="ui-block-b"> <a onClick="view_photo(this.id)" id=' + pictures[i] + ' class="a_photo ui-link column-right"> <img src="' + pictures[i]['picture_tinyurl'] + '"> </a> </div>').trigger('create');
 								}
 							}
 						}
@@ -709,84 +710,7 @@ CHANNING
 	</div>
 
 
-	<div data-role="page" id="photo_view">
 
-<<<<<<< HEAD
-		<div data-role="content">
-			<img style="width:100%" src="test/2013firsthack.jpg">
-		</div>
-
-		<div data-role="footer">
-			<a href="">Like</a>
-			<!-- lil dot
-			<a href="">Comment</a>
-			<!-- comment icon
-			<a href="">0</a>
-			<!-- heart icon -->
-			<a href="#like_list">2</a>
-		</div>
-
-		<script type="text/javascript">
-			// $("#photo_view").on('pageinit', function(){
-					
-			// 	var picture_id = checkPictureCookie();
-
-			// 	var API_URL = 'http://75.101.134.112/stream/1.0/api/get_picture_metadata.php?viewer_phone=' + phone_number + '&picture_id=' + picture_id;
-
-			// 	$.ajax({
-			// 	type: 'GET',
-			// 	url: API_URL,
-			// 	dataType: "json",
-			// 	success: function(data)
-			// 	{
-			// 		if(data['status'] == 'ok')
-			// 		{
-			// 			console.log(data);
-			// 		}
-			// 		else
-			// 		{
-			// 			alert("SERVER_ERROR");
-			// 		}
-	  //          	},
-	  //      		async: false
-	  //      		});
-
-			// });	
-=======
-
-		<script type="text/javascript">
-			$("#photo_view").on( 'pageinit', function(){
-				
-				$('#photo_view').append('<div data-role="header" class="ui-header ui-bar-a" role="banner"> <a href="#the_stream" class="s-s-100 inline x-btn">x</a> <h1 class="ui-title s-s-100 inline" role="heading" aria-level="1">channing</h1> </div> <div data-role="content" class="ui-content" role="main"> <img style="width:100%" src="test/2013firsthack.jpg"> </div> <div data-role="footer" class="ui-footer ui-bar-a" role="contentinfo"> <a href="" class="inline">Like</a> <!-- lil dot --> <a href="" class="inline">Comment</a> <!-- comment icon --> <a href="" class="inline" id="comments_btn"> <span class="ui-icon ui-icon-comments-icon">&nbsp; </span> <span class="ui-btn-text">5</span></a> <!-- heart icon --> <a href="" class="inline" id="comments_btn"> <span class="ui-icon ui-icon-heart-icon">&nbsp; </span> <span class="ui-btn-text">6</span></a></div>').trigger('create');
-
-			});	
-
-
-/////////// EVENT: CLICK X ON PHOTO_VIEW PAGE
-			$("#photo_view_back_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED: back btn on PAGE:'photo_view'!");
-				$.mobile.changePage("#the_stream", {transition: "flip"});
-
-				// will need logic to determine where user came from in order to send them back there
-
-			});
-
-/////////// EVENT: CLICK LIKE ON PHOTO_VIEW PAGE
-
-
-/////////// EVENT: CLICK COMMENT ON PHOTO_VIEW PAGE
-
-
-/////////// EVENT: CLICK NUM COMMENTS ON PHOTO_VIEW PAGE
-
-
-/////////// EVENT: CLICK NUM LIKES ON PHOTO_VIEW PAGE
-
-
-
-		</script>
-
-	</div>
 
 	<div data-role="page" id="participant_list">
 		<div data-role="header" data-theme="a" id="sign_up_header">
