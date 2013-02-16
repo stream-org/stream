@@ -598,13 +598,17 @@ CHANNING
 
 <!-- photo view page -->
 <div data-role="page" id="photo_view">
-	<div data-role="header" data-theme="a">
+	<div data-role="header" data-theme="a" data-position="fixed">
 		<a href="#the_stream" data-theme="blk">back</a>
 		<h1>Photo Owner Name</h1>
 	</div>
 
-	<div data-role="content">
-		<img src="https://s3.amazonaws.com/stream_tiny_pictures/tiny25ecb484c3f7167c719960fc3c78e0325b4a90c53d8f4afb4235d6dfb70443b581883f3e8a640cb1d4937e2081c62008c554a84c4cc4f6de229e77a06314ffbe.jpg">
+	<div data-role="content" class="photo-full-holder">
+		<img class="photo-full-width" src="https://s3.amazonaws.com/stream_tiny_pictures/tiny25ecb484c3f7167c719960fc3c78e0325b4a90c53d8f4afb4235d6dfb70443b581883f3e8a640cb1d4937e2081c62008c554a84c4cc4f6de229e77a06314ffbe.jpg">
+	</div>
+
+	<div data-role="footer" data-position="fixed">
+
 	</div>
 </div>
 
