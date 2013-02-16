@@ -39,6 +39,13 @@ CHANNING
 		$.mobile.changePage("#the_stream", {transition: "flip"});
 	}
 
+	// function photo_view(picture_id)
+	// {
+	// 	console.log(picture_id);
+	// 	setCookie("latestPicture", picture_id, 365);
+	// 	$.mobile.changePage("#photo_view", {transition: "flip"});
+	// }
+
 	///////////
 	//getCookie
 	///////////
@@ -78,6 +85,31 @@ CHANNING
 		document.cookie=c_name + "=" + c_value;
 
 		}
+
+		//////////////////
+		//getPictureCookie
+		//////////////////
+
+		function checkPictureCookie()
+		{
+
+		console.log('checkPictureCookie() initialized...');
+
+		var latestPicture = getCookie("latestPicture");
+
+			if (latestPicture!=null && latestPicture!="")
+		  	{
+		  		return latestPicture;
+		 	}
+
+			else 
+		  	{
+		  		$.mobile.changePage( "#introPage", {
+						    transition: "pop",
+						    reverse: true
+				});
+		  	}
+		};
 
 		////////////////
 		//getPhoneCookie
@@ -475,54 +507,16 @@ CHANNING
 		<div data-role="page" id="the_stream">
 			<div data-role="header" data-theme="a">
 				<a href="#all_streams" data-theme="blk">back</a>
-				<h1>First Hack of 2013!</h1>
+				<h1>Stream Name</h1>
 				<a href="" class="camera_button" data-role="button" data-theme="oj" data-icon="camera-icon" id="camera_button"></a>
 			</div>	
 			<div data-role="content">
 				<a href="" data-role="button" data-theme="gry" id="participants_btn">
 					<img src="test/participants_button_icon@2x.png">
-					<h3>9 Participants</h3>
+					<h3 id='participants'> Number of Participants</h3>
 				</a>
 
-				<div class="ui-grid-a">
-				    <!-- <div class="ui-block-a">
-				    	<a href="" class="a_photo" id="pic_id_1">
-				    		<img src="test/2013firsthack.jpg">
-				    	</a>
-				    </div>
-				   
-				    <div class="ui-block-b">
-				    	<a href="" class="a_photo" id="pic_id_2">
-				    		<img src="test/2013firsthack.jpg">
-				    	</a>
-				    </div>
-
-				    <div class="ui-block-a">
-				    	<a href="" class="a_photo" id="pic_id_3">
-				    		<img src="test/2013firsthack.jpg">
-				    	</a>
-				    </div>
-				   
-				    <div class="ui-block-b">
-				    	<a href="" class="a_photo" id="pic_id_4">
-				    		<img src="test/2013firsthack.jpg">
-				    	</a>
-				    </div>	
-
-				    <div class="ui-block-a">
-				    	<a href="" class="a_photo" id="pic_id_5">
-				    		<img src="test/2013firsthack.jpg">
-				    	</a>
-
-				    </div>
-				   
-				    <div class="ui-block-b">
-				    	<a href="" class="a_photo" id="pic_id_6">
-				    		<img src="test/2013firsthack.jpg">
-				    	</a>
-				    </div>			    		    
-				</div>	 -->
-			</div>	
+				<div class="ui-grid-a"></div>	
 
 		<!-- the_stream-specific javascript -->	
 			<script type="text/javascript">
@@ -544,7 +538,20 @@ CHANNING
 							var stream_name = data['stream_name'];
 							var stream_usercount = data['stream_usercount'];
 							var pictures = data['pictures'];
-							console.log(pictures.length);
+
+							for(var i = 0; i < pictures.length; i++)
+							{
+								var remainder = i%2;
+
+								// if(remainder == 0)
+								// {
+								// 	$('.ui-grid-a').append('<div class="ui-block-a"> <a onClick="photo_view(this.id)" id=' + pictures[i]['picture_id'] + ' class="a_photo ui-link column-left"> <img src="'+ pictures[i]['picture_tinyurl'] +'"> </a> </div>').trigger('create');
+								// }
+								// else
+								// {
+								// 	$('.ui-grid-a').append('<div class="ui-block-b"> <a onClick="photo_view(this.id)" id=' + pictures[i] + ' class="a_photo ui-link column-right"> <img src="' + pictures[i]['picture_tinyurl'] + '"> </a> </div>').trigger('create');
+								// }
+							}
 						}
 						else
 						{
@@ -699,57 +706,14 @@ CHANNING
 
 
 	<div data-role="page" id="photo_view">
-		<div data-role="header">
-			<a href="#the_stream" data-icon="delete" class="ui-btn-right" data-theme="c" data-iconpos="notext" id="photo_view_back_btn"></a>
-			<h1>Channing Allen</h1>
+		<div data-role="header" data-theme="a">
+			<a href="#the_stream" data-theme="blk">back</a>
+			<h1>PARTICIPANTS</h1>
+			<a href="#invite_participants" data-theme="oj">invite</a>
 		</div>
-
 		<div data-role="content">
-			<img style="width:100%" src="test/2013firsthack.jpg">
-		</div>
-
-		<div data-role="footer">
-			<a href="">Like</a>
-			<!-- lil dot -->
-			<a href="">Comment</a>
-			<!-- comment icon -->
-			<a href="">0</a>
-			<!-- heart icon -->
-			<a href="#like_list">2</a>
-		</div>
-
-		<script type="text/javascript">
-			$("#photo_view").on( 'pageinit', function(){
-				
-				// call stuff that needs to run/inject into this page before it loads here
-
-			});	
-
-
-/////////// EVENT: CLICK X ON PHOTO_VIEW PAGE
-			$("#photo_view_back_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED: back btn on PAGE:'photo_view'!");
-				$.mobile.changePage("#the_stream", {transition: "flip"});
-
-				// will need logic to determine where user came from in order to send them back there
-
-			});
-
-/////////// EVENT: CLICK LIKE ON PHOTO_VIEW PAGE
-
-
-/////////// EVENT: CLICK COMMENT ON PHOTO_VIEW PAGE
-
-
-/////////// EVENT: CLICK NUM COMMENTS ON PHOTO_VIEW PAGE
-
-
-/////////// EVENT: CLICK NUM LIKES ON PHOTO_VIEW PAGE
-
-
-
-		</script>
-
+			debug
+		</div>	
 	</div>
 
 	<div data-role="page" id="participant_list">
