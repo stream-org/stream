@@ -599,7 +599,7 @@ CHANNING
 <!-- photo view page -->
 <div data-role="page" id="photo_view" class="black-bg">
 	<div data-role="header" data-theme="a" data-position="fixed" class="black-bg">
-		<a href="index.html" data-role="button" data-icon="delete" data-iconpos="notext" data-inline="true">Delete</a>
+		<a href="" data-role="button" data-icon="delete" data-iconpos="notext" data-inline="true" id="photo_view_back_btn">Delete</a>
 		<h1 id="photo_owner_name">Photo Owner Name</h1>
 	</div>
 
@@ -612,10 +612,13 @@ CHANNING
 	</div>
 	<script type="text/javascript">
 		$("#photo_view").on( 'pageinit', function(){
+
+			$('#photo_owner_name').html('');
+			$('#photo_view_holder').html('');
 			
 			var picture_id = checkPictureCookie();
 			var viewer_phone = checkPhoneCookie();
-			var API_URL = 'http://75.101.134.112/stream/1.0/api/get_picture_metadata.php?viewer_phone=' + viewer_phone + '&picture_id=' + picture_id + '';
+			var API_URL = 'http://75.101.134.112/stream/1.0/api/get_picture_metadata.php?viewer_phone=' + viewer_phone + '&picture_id=' + picture_id;
 			console.log(API_URL);
 
 			$.ajax({
@@ -632,7 +635,7 @@ CHANNING
 
 
 						$('#photo_owner_name').html(first_name + ' ' + last_name).trigger('create');
-						$('#photo_view_holder').html('<img class="photo-full-position" src="' + pic_url + '">').trigger('create');
+						$('#photo_view_holder').append('<img class="photo-full-position" src="' + pic_url + '">').trigger('create');
 					}
 					else
 					{
@@ -643,6 +646,11 @@ CHANNING
 	       		});
 
 		});	
+
+		$("#photo_view_back_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED: BACK on PAGE:'photo_view'!");
+				$.mobile.changePage("#the_stream", {transition: "flip"});
+			});
 	</script>
 </div>
 
