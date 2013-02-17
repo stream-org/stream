@@ -597,19 +597,53 @@ CHANNING
 </div>		
 
 <!-- photo view page -->
-<div data-role="page" id="photo_view">
-	<div data-role="header" data-theme="a" data-position="fixed">
-		<a href="#the_stream" data-theme="blk">back</a>
-		<h1>Photo Owner Name</h1>
+<div data-role="page" id="photo_view" class="black-bg">
+	<div data-role="header" data-theme="a" data-position="fixed" class="black-bg">
+		<a href="index.html" data-role="button" data-icon="delete" data-iconpos="notext" data-inline="true">Delete</a>
+		<h1 id="photo_owner_name">Photo Owner Name</h1>
 	</div>
 
-	<div data-role="content" class="photo-full-holder">
-		<img class="photo-full-width" src="https://s3.amazonaws.com/stream_tiny_pictures/tiny25ecb484c3f7167c719960fc3c78e0325b4a90c53d8f4afb4235d6dfb70443b581883f3e8a640cb1d4937e2081c62008c554a84c4cc4f6de229e77a06314ffbe.jpg">
+	<div data-role="content" class="photo-full-frame-style photo-full-frame-position black-bg" id="photo_view_holder">
+		
 	</div>
 
-	<div data-role="footer" data-position="fixed">
-
+	<div data-role="footer" data-position="fixed" class="black-bg">
+		<p>like comment</p>
 	</div>
+	<script type="text/javascript">
+		$("#photo_view").on( 'pageinit', function(){
+			
+			var picture_id = checkPictureCookie();
+			var viewer_phone = checkPhoneCookie();
+			var API_URL = 'http://75.101.134.112/stream/1.0/api/get_picture_metadata.php?viewer_phone=' + viewer_phone + '&picture_id=' + picture_id + '';
+			console.log(API_URL);
+
+			$.ajax({
+				type: 'GET',
+				url: API_URL,
+				dataType: "json",
+				success: function(data)
+				{
+					if(data['status'] == 'ok')
+					{
+						var first_name = data['uploader_first'];
+						var last_name = data['uploader_last'];
+						var pic_url = data['picture_url'];
+
+
+						$('#photo_owner_name').html(first_name + ' ' + last_name).trigger('create');
+						$('#photo_view_holder').html('<img class="photo-full-position" src="' + pic_url + '">').trigger('create');
+					}
+					else
+					{
+						alert("SERVER_ERROR");
+					};
+	           	},
+           		async: false
+	       		});
+
+		});	
+	</script>
 </div>
 
 <!-- create stream page -->
