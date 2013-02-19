@@ -534,7 +534,7 @@ CHANNING
 <!-- the all streams page -->
 <div data-role="page" id="all_streams">
 	<div data-role="header" data-theme="a">
-		<a href="#intro" data-theme="blk">log out</a>
+		<a data-theme="blk" class="logout-btn-js">log out</a>
 		<h1>STREAMS</h1>
 		<a href="" data-role="button" data-theme="oj" id="create_stream_btn">create</a>
 	</div>
@@ -590,6 +590,11 @@ CHANNING
 		});	
 
 		// EVENT: CLICK SIGN OUT/SETTINGS BUTTON ON ALL_STREAMS PAGE
+		$(".logout-btn-js").on("vclick", function(event, ui) {
+			console.log("You CLICKED: Logout");
+			clearCookies();
+			$.mobile.changePage("#index", {transition: "flip"});
+		});
 
 		// EVENT: CLICK CREATE STREAM BUTTON ON ALL_STREAMS PAGE
 		$("#create_stream_btn").on("vclick", function(event, ui) {
