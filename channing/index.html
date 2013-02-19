@@ -111,7 +111,7 @@ CHANNING
 		};
 
 		/////////////////////
-		//clearCookies (cca)
+		//clearCookies (cca) - NOT WORKING -_-
 		/////////////////////
 
 		function clearCookies()
@@ -129,10 +129,12 @@ CHANNING
 		    	
 		    	console.log('Cookie before clearCookies() was... ' + unescape(x) + ' : ' + unescape(y));
 
-		    	setCookie(x,'',0);
-
-		    	console.log('Cookie after clearCookies() is... ' + unescape(x) + ' : ' + unescape(y));
+		    	console.log(x);
+		    	setCookie(unescape(x),'',0);
 			}
+
+		console.log("Did it work?  Checking cookies...")
+		checkCookies();	
 		};
 
 		//////////////////
@@ -588,12 +590,12 @@ CHANNING
        		async: false
        		});
 		});	
-
+	
 		// EVENT: CLICK SIGN OUT/SETTINGS BUTTON ON ALL_STREAMS PAGE
 		$(".logout-btn-js").on("vclick", function(event, ui) {
 			console.log("You CLICKED: Logout");
 			clearCookies();
-			$.mobile.changePage("#index", {transition: "flip"});
+			$.mobile.changePage("#intro", {transition: "flip"});
 		});
 
 		// EVENT: CLICK CREATE STREAM BUTTON ON ALL_STREAMS PAGE
