@@ -35,16 +35,19 @@ CHANNING
 
 	function populate_stream_profile(stream_id)
 	{
+		// stream_id = this.attr('id');
+		console.log('The stream_id is ' + stream_id);
 		setCookie("latestStreamID",stream_id,365);
 		$.mobile.changePage("#the_stream", {transition: "flip"});
 	}
 
-	// function photo_view(picture_id)
-	// {
-	// 	console.log(picture_id);
-	// 	setCookie("latestPicture", picture_id, 365);
-	// 	$.mobile.changePage("#photo_view", {transition: "flip"});
-	// }
+	function view_photo(picture_id)
+	{
+		console.log(picture_id);
+		setCookie("latestPicture", picture_id, 365);
+		console.log(checkPictureCookie());
+		$.mobile.changePage("#photo_view", {transition: "flip"});
+	}
 
 	///////////
 	//getCookie
@@ -244,7 +247,7 @@ CHANNING
 		
 	</script>
 	<script type="text/javascript">
-		$(document).on('pageinit', function () {
+		$(document).on('pagebeforeshow', function () {
 		    $.mobile.ajaxEnabled = false;
 
 		});		
@@ -272,7 +275,7 @@ CHANNING
 		</div>
 		<!-- <div data-role="footer"></div> -->
 		<script type="text/javascript">
-			$("#intro").on( 'pageinit', function(){
+			$("#intro").on( 'pagebeforeshow', function(){
 				arrival();
 			});	
 
@@ -329,7 +332,7 @@ CHANNING
 		</div>
 
 		<script type="text/javascript">
-			$("#sign_in").on( 'pageinit', function(){
+			$("#sign_in").on( 'pagebeforeshow', function(){
 
 				var phone_number = checkPhoneCookie();
 				console.log(phone_number);
@@ -389,7 +392,7 @@ CHANNING
 		<div data-role="header" data-theme="a" id="sign_up_header">
 			<a href="#intro" data-theme="blk">back</a>
 			<h1>SIGN UP</h1>
-			<a href="" data-theme="oj" id="confirm_sign_up_btn">sign up</a>
+			<a data-theme="oj" id="confirm_sign_up_btn">sign up</a>
 		</div>
 
 		<div data-role="content">
@@ -414,7 +417,7 @@ CHANNING
 		</div>
 
 		<script type="text/javascript">
-			$("#sign_up").on( 'pageinit', function(){
+			$("#sign_up").on( 'pagebeforeshow', function(){
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
@@ -423,31 +426,163 @@ CHANNING
 			// EVENT: CLICK 'SIGN UP' BUTTON ON SIGN_UP PAGE
 			$("#confirm_sign_up_btn").on("vclick", function(event, ui) {
 				console.log("You CLICKED:'Sign Up' on PAGE:'sign_up'!");
-				$.mobile.changePage("#all_streams", {transition: "flip"});
+
+				if ($("#first_name").val() != ''){
+					if ($("#last_name").val() != ''){
+						if (($("#phone_number").val() != '') && ($.isNumeric($("#phone_number").val())) && ($("#phone_number").val().length == 10 || $("#phone_number").val().length == 11)) {
+							if ($("#password1").val() != '') {
+								if ($("#password1").val() != $("#password2").val()){
+									alert("Whoops!  It looks like your passwords don't match.");
+								}else{
+									viewer_first = $("#first_name").val();
+									viewer_last = $("#last_name").val();
+									viewer_phone = $("#phone_number").val();
+									password = $("#password1").val();
+
+									var API_URL = 'http://75.101.134.112/stream/1.0/api/sign_up.php?viewer_first=' + viewer_first + '&viewer_last=' + viewer_last + '&viewer_phone=' + viewer_phone + '&password=' + password;
+									$.ajax({
+									type: 'GET',
+									url: API_URL,
+									dataType: "json",
+									success: function(data)
+									{
+										console.log(data['status']);
+
+										if(data['status'] == 'ok')
+										{
+											setCookie("phoneNumber",viewer_phone,365);
+											$.mobile.changePage("#all_streams", {transition: "flip"});
+											console.log('sign_up successful');
+										}
+										else
+										{
+											alert(data['error_description']);
+										}
+						           	},
+					           		async: false
+						       		});	
+								};
+							}else{
+								alert('Please enter a password.');
+								console.log("Sign Up Failed.");
+							};
+						}else{
+							alert('Please enter a valid 10-digit phone number without spaces or any punctuation (example: 1234567891 ).');
+							console.log("Sign Up Failed.");
+						};	
+					}else{
+						alert('Please enter your last name.');
+						console.log("Sign Up Failed.");
+					};			
+				}else{
+					alert('Please enter your first name.');
+					console.log("Sign Up Failed.");
+				};
+
 			});
 
 		</script>
 
 	</div>
 
-	<div data-role="page" id="all_streams">
-		<div data-role="header" data-theme="a">
-			<a href="#intro" data-theme="blk">log out</a>
-			<h1>STREAMS</h1>
-			<a href="" data-role="button" data-theme="oj" id="create_stream_btn">create</a>
-		</div>
-		<div data-role="content">
-			<ul data-role="listview" id="user_streams">
-			</ul>
-		</div>
+<!-- the all streams page -->
+<div data-role="page" id="all_streams">
+	<div data-role="header" data-theme="a">
+		<a href="#intro" data-theme="blk">log out</a>
+		<h1>STREAMS</h1>
+		<a href="" data-role="button" data-theme="oj" id="create_stream_btn">create</a>
+	</div>
+
+	<div data-role="content">
+		<ul data-role="listview" id="user_streams">
+		</ul>
+	</div>
 
 	<!-- all_streams-specific javascript -->	
+	<script type="text/javascript">
+		$("#all_streams").on('pagebeforeshow', function(){
+			
+			var phone_number = checkPhoneCookie();
+			console.log('the phone_number cookie is' + phone_number);
+			API_URL = 'http://75.101.134.112/stream/1.0/api/populate_user_streams.php?viewer_phone=' + phone_number;
+			$.ajax({
+			type: 'GET',
+			url: API_URL,
+			dataType: "json",
+			success: function(data)
+			{
+				if(data['status'] == 'ok')
+				{
+					var number_of_streams = data['streams'].length;
+					for(var i = 0; i < number_of_streams; i++)
+					{
+						var stream_id = data['streams'][i]['stream_id'];
+						var stream_name = data['streams'][i]['stream_name'];
+						var stream_usercount = data['streams'][i]['stream_usercount'];
+						var picture_count = data['streams'][i]['picture_count'];
+						var latest_picture;
+
+						if(data['streams'][i]['picture_latest'] == null)
+						{
+							latest_picture = "https://s3.amazonaws.com/stream_tiny_pictures/tiny25ecb484c3f7167c719960fc3c78e0325b4a90c53d8f4afb4235d6dfb70443b581883f3e8a640cb1d4937e2081c62008c554a84c4cc4f6de229e77a06314ffbe.jpg";
+						}
+						else 
+						{
+							latest_picture = data['streams'][i]['picture_latest']['picture_tinyurl'];
+						}
+
+							$('#user_streams').append('<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-li-last ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"> <a onClick="populate_stream_profile(this.id)" id='+ stream_id +' class="stream_button ui-link-inherit"> <img src="'+ latest_picture +'" class="ui-li-thumb"> <div class="li_line_1"> <h1 class="ui-li-heading">'+ stream_name +'</h1> </div> <div class="li_line_2"> <div class="section_a"> <img class="tiny_icon" src="test/participants@2x.png"> <p class="ui-li-desc"> '+ stream_usercount +' Participants </p> </div> <div class="section_b"> <img class="tiny_icon" src="test/photos@2x.png"> <p class="ui-li-desc"> '+ picture_count +' photos </p></div> </div> </a> </div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>').trigger('create');
+						}
+					} 
+				else
+				{
+					alert("SERVER_ERROR");
+				}
+           	},
+       		async: false
+       		});
+		});	
+
+		// EVENT: CLICK SIGN OUT/SETTINGS BUTTON ON ALL_STREAMS PAGE
+
+		// EVENT: CLICK CREATE STREAM BUTTON ON ALL_STREAMS PAGE
+		$("#create_stream_btn").on("vclick", function(event, ui) {
+			console.log("You CLICKED: '+' on PAGE:'all_streams'!");
+			$.mobile.changePage("#new_stream", {transition: "flip"});
+		});
+
+		// EVENT: CLICK A STREAM ON ALL_STREAMS PAGE
+		$(".stream_button").on("vclick", function(event, ui) {
+			console.log("You CLICKED: A Stream on PAGE:'all_streams'!");
+			$.mobile.changePage("#the_stream", {transition: "flip"});
+		});			
+
+	</script>
+</div>
+
+<!-- the stream page (w all d photos) -->
+<div data-role="page" id="the_stream">
+	<div data-role="header" data-theme="a">
+		<a href="#all_streams" data-theme="blk">back</a>
+		<h1>Stream Name</h1>
+		<a href="" class="camera_button" data-role="button" data-theme="oj" data-icon="camera-icon" id="camera_button"></a>
+	</div>	
+	<div data-role="content">
+		<a href="" data-role="button" data-theme="gry" id="participants_btn">
+			<img src="test/participants_button_icon@2x.png">
+			<h3 id='participants'> Number of Participants</h3>
+		</a>
+
+		<div class="ui-grid-a stream_pics"></div>	
+
+		<!-- the_stream-specific javascript -->	
 		<script type="text/javascript">
-			$("#all_streams").on('pageinit', function(){
+			$("#the_stream").on( 'pagebeforeshow', function(){
 				
+				var stream_id = checkStreamIDCookie();
 				var phone_number = checkPhoneCookie();
-				console.log('the phone_number cookie ' + phone_number);
-				API_URL = 'http://75.101.134.112/stream/1.0/api/populate_user_streams.php?viewer_phone=' + phone_number;
+
+				var API_URL = 'http://75.101.134.112/stream/1.0/api/populate_stream_profile.php?viewer_phone=' + phone_number + '&stream_id=' + stream_id;
 				$.ajax({
 				type: 'GET',
 				url: API_URL,
@@ -456,27 +591,31 @@ CHANNING
 				{
 					if(data['status'] == 'ok')
 					{
-						var number_of_streams = data['streams'].length;
-						for(var i = 0; i < number_of_streams; i++)
-						{
-							var stream_id = data['streams'][i]['stream_id'];
-							var stream_name = data['streams'][i]['stream_name'];
-							var stream_usercount = data['streams'][i]['stream_usercount'];
-							var picture_count = data['streams'][i]['picture_count'];
-							var latest_picture;
+						console.log(data);
+						var stream_name = data['stream_name'];
+						console.log(stream_name);
+						var stream_usercount = data['stream_usercount'];
+						console.log(stream_usercount);
+						var pictures = data['pictures'];
+						console.log(pictures);
 
-							if(data['streams'][i]['picture_latest'] == null)
-							{
-								latest_picture = "https://s3.amazonaws.com/stream_tiny_pictures/tiny25ecb484c3f7167c719960fc3c78e0325b4a90c53d8f4afb4235d6dfb70443b581883f3e8a640cb1d4937e2081c62008c554a84c4cc4f6de229e77a06314ffbe.jpg";
-							}
-							else 
-							{
-								latest_picture = data['streams'][i]['picture_latest']['picture_tinyurl'];
-							}
+						$('.stream_pics').html('');
 
-								$('#user_streams').append('<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-li-last ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"> <a onClick="populate_stream_profile(this.id)" id='+ stream_id +' class="stream_button ui-link-inherit"> <img src="'+ latest_picture +'" class="ui-li-thumb"> <div class="li_line_1"> <h1 class="ui-li-heading">'+ stream_name +'</h1> </div> <div class="li_line_2"> <div class="section_a"> <img class="tiny_icon" src="test/participants@2x.png"> <p class="ui-li-desc"> '+ stream_usercount +' Participants </p> </div> <div class="section_b"> <img class="tiny_icon" src="test/photos@2x.png"> <p class="ui-li-desc"> '+ picture_count +' photos </p></div> </div> </a> </div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>').trigger('create');
+						for(var i = 0; i < pictures.length; i++)
+						{	
+							console.log(i);
+							var remainder = i%2;
+
+							if(remainder == 0)
+							{
+								$('.stream_pics').append('<div class="ui-block-a"> <a onClick="view_photo(this.id)" id=' + pictures[i]['picture_id'] + ' class="ui-link column-left"> <img class="a_photo" src="'+ pictures[i]['picture_tinyurl'] +'"> </a> </div>').trigger('create');
 							}
-						} 
+							else
+							{
+								$('.stream_pics').append('<div class="ui-block-b"> <a onClick="view_photo(this.id)" id=' + pictures[i]['picture_id'] + ' class="ui-link column-right"> <img class="a_photo" src="' + pictures[i]['picture_tinyurl'] + '"> </a> </div>').trigger('create');
+							}
+						}
+					}
 					else
 					{
 						alert("SERVER_ERROR");
@@ -486,156 +625,146 @@ CHANNING
 	       		});
 			});	
 
-			// EVENT: CLICK SIGN OUT/SETTINGS BUTTON ON ALL_STREAMS PAGE
-
-			// EVENT: CLICK CREATE STREAM BUTTON ON ALL_STREAMS PAGE
-			$("#create_stream_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED: '+' on PAGE:'all_streams'!");
-				$.mobile.changePage("#new_stream", {transition: "flip"});
-			});
-
-			// EVENT: CLICK A STREAM ON ALL_STREAMS PAGE
-			$("#all_streams li").on("vclick", function(event, ui) {
-				console.log("You CLICKED: A Stream on PAGE:'all_streams'!");
-				$.mobile.changePage("#the_stream", {transition: "flip"});
-			});			
-
-		</script>
-
-	</div>
-
-		<div data-role="page" id="the_stream">
-			<div data-role="header" data-theme="a">
-				<a href="#all_streams" data-theme="blk">back</a>
-				<h1>Stream Name</h1>
-				<a href="" class="camera_button" data-role="button" data-theme="oj" data-icon="camera-icon" id="camera_button"></a>
-			</div>	
-			<div data-role="content">
-				<a href="" data-role="button" data-theme="gry" id="participants_btn">
-					<img src="test/participants_button_icon@2x.png">
-					<h3 id='participants'> Number of Participants</h3>
-				</a>
-
-				<div class="ui-grid-a"></div>	
-
-		<!-- the_stream-specific javascript -->	
-			<script type="text/javascript">
-				$("#the_stream").on( 'pageinit', function(){
-					
-					var stream_id = checkStreamIDCookie();
-					var phone_number = checkPhoneCookie();
-
-					var API_URL = 'http://75.101.134.112/stream/1.0/api/populate_stream_profile.php?viewer_phone=' + phone_number + '&stream_id=' + stream_id;
-					$.ajax({
-					type: 'GET',
-					url: API_URL,
-					dataType: "json",
-					success: function(data)
-					{
-						if(data['status'] == 'ok')
-						{
-							console.log(data);
-							var stream_name = data['stream_name'];
-							var stream_usercount = data['stream_usercount'];
-							var pictures = data['pictures'];
-
-							for(var i = 0; i < pictures.length; i++)
-							{
-								var remainder = i%2;
-
-								// if(remainder == 0)
-								// {
-								// 	$('.ui-grid-a').append('<div class="ui-block-a"> <a onClick="photo_view(this.id)" id=' + pictures[i]['picture_id'] + ' class="a_photo ui-link column-left"> <img src="'+ pictures[i]['picture_tinyurl'] +'"> </a> </div>').trigger('create');
-								// }
-								// else
-								// {
-								// 	$('.ui-grid-a').append('<div class="ui-block-b"> <a onClick="photo_view(this.id)" id=' + pictures[i] + ' class="a_photo ui-link column-right"> <img src="' + pictures[i]['picture_tinyurl'] + '"> </a> </div>').trigger('create');
-								// }
-							}
-						}
-						else
-						{
-							alert("SERVER_ERROR");
-						}
-		           	},
-	           		async: false
-		       		});
-
-
-				});	
-
-				// EVENT: CLICK BACK BUTTON ON THE_STREAM PAGE
-
-
-				// EVENT: CLICK CAMERA BUTTON ON THE_STREAM PAGE
-				$("#camera_button").on("vclick", function(event, ui) {
-					console.log("You CLICKED: Camera Button on PAGE:'the_stream'!");
-					$.mobile.changePage("#take_photo", {transition: "flip"});
+			$("#the_stream").on( 'pageshow', function(){
+				$('.a_photo').each(function(){
+					$(this).width('95%');
+					width = $(this).width();
+					$(this).height(width);
 				});
 
-				// EVENT: CLICK PARTICIPANTS BUTTON ON THE_STREAM PAGE
-				$("#participants_btn").on("vclick", function(event, ui) {
-					console.log("You CLICKED: Participants Button on PAGE:'the_stream'!");
-					$.mobile.changePage("#participant_list", {transition: "flip"});
-				});
-
-				// EVENT: CLICK A PICTURE ON THE_STREAM PAGE			
-				$(".a_photo").on("vclick", function(event, ui) {
-					console.log("You CLICKED: A Photo on PAGE:'the_stream'!");
-					$.mobile.changePage("#photo_view", {transition: "flip"});
-				});
-
-			</script>
-
-		</div>
-
-	<div data-role="page" id="new_stream">
-		<div data-role="header" data-theme="a" id="sign_in_header">
-			<a href="#all_streams" data-theme="blk">cancel</a>
-			<h1>NEW STREAM</h1>
-			<a href="" data-theme="oj" id="confirm_create_stream_btn">create</a>
-		</div>
-
-		<div data-role="content">
-			<h3>Stream Details</h3>
-			<div data-role="fieldcontain">
-			    <label for="stream_name" class="ui-hidden-accessible">Name of Stream:</label>
-			    <input type="text" name="stream_name" id="stream_name" value="" placeholder="Name of stream"  />
-			</div>	
-
-			<h3>Participants</h3>
-			<div data-role="fieldcontain">
-			    <label for="participant" class="ui-hidden-accessible">Participant:</label>
-			    <input type="text" name="participant" id="participant" value="" placeholder="Add a participant"  />
-			</div>
-
-			<p>
-				Recipients will be able to add photos to your stream via the app and through MMS. Standard text and data rates apply.
-			</p>
-		</div>	
-
-		<script type="text/javascript">
-			$("#new_stream").on( 'pageinit', function(){
-				
-				// call stuff that needs to run/inject into this page before it loads here
-
+				$('.stream_pics').trigger('create');
 			});	
 
-			// EVENT: CLICK CANCEL ON NEW_STREAM PAGE
+			// EVENT: CLICK BACK BUTTON ON THE_STREAM PAGE
 
 
-			// EVENT: CLICK CREATE ON NEW_STREAM PAGE	
-			$("#confirm_create_stream_btn").on("vclick", function(event, ui) {
-				console.log("You CLICKED: Create Stream on PAGE:'new_stream'!");
-				$.mobile.changePage("#all_streams", {transition: "flip"});
+			// EVENT: CLICK CAMERA BUTTON ON THE_STREAM PAGE
+			$("#camera_button").on("vclick", function(event, ui) {
+				console.log("You CLICKED: Camera Button on PAGE:'the_stream'!");
+				$.mobile.changePage("#take_photo", {transition: "flip"});
 			});
 
-			// EVENT: CLICK '+' ICON ON NEW_STREAM PAGE	
+			// EVENT: CLICK PARTICIPANTS BUTTON ON THE_STREAM PAGE
+			$("#participants_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED: Participants Button on PAGE:'the_stream'!");
+				$.mobile.changePage("#participant_list", {transition: "flip"});
+			});
 
+			// EVENT: CLICK A PICTURE ON THE_STREAM PAGE			
+			$(".a_photo").on("vclick", function(event, ui) {
+				console.log("You CLICKED: A Photo on PAGE:'the_stream'!");
+				// view_photo(picture_id);
+			});
 
 		</script>
-
 	</div>
+</div>		
+
+<!-- photo view page -->
+<div data-role="page" id="photo_view" class="black-bg">
+	<div data-role="header" data-theme="a" data-position="fixed" class="black-bg">
+		<a href="" data-role="button" data-icon="delete" data-iconpos="notext" data-inline="true" id="photo_view_back_btn">Delete</a>
+		<h1 id="photo_owner_name">Photo Owner Name</h1>
+	</div>
+
+	<div data-role="content" class="photo-full-frame-style photo-full-frame-position black-bg" id="photo_view_holder">
+		
+	</div>
+
+	<div data-role="footer" data-position="fixed" class="black-bg">
+		<p>like comment</p>
+	</div>
+	<script type="text/javascript">
+		$("#photo_view").on( 'pagebeforeshow', function(){
+
+			$('#photo_owner_name').html('');
+			$('#photo_view_holder').html('');
+			
+			var picture_id = checkPictureCookie();
+			var viewer_phone = checkPhoneCookie();
+			var API_URL = 'http://75.101.134.112/stream/1.0/api/get_picture_metadata.php?viewer_phone=' + viewer_phone + '&picture_id=' + picture_id;
+			console.log(API_URL);
+
+			$.ajax({
+				type: 'GET',
+				url: API_URL,
+				dataType: "json",
+				success: function(data)
+				{
+					if(data['status'] == 'ok')
+					{
+						var first_name = data['uploader_first'];
+						var last_name = data['uploader_last'];
+						var pic_url = data['picture_url'];
+
+
+						$('#photo_owner_name').html(first_name + ' ' + last_name).trigger('create');
+						$('#photo_view_holder').append('<img class="photo-full-position" src="' + pic_url + '">').trigger('create');
+					}
+					else
+					{
+						alert("SERVER_ERROR");
+					};
+	           	},
+           		async: false
+	       		});
+
+		});	
+
+		$("#photo_view_back_btn").on("vclick", function(event, ui) {
+				console.log("You CLICKED: BACK on PAGE:'photo_view'!");
+				$.mobile.changePage("#the_stream", {transition: "flip"});
+			});
+	</script>
+</div>
+
+<!-- create stream page -->
+<div data-role="page" id="new_stream">
+	<div data-role="header" data-theme="a" id="sign_in_header">
+		<a href="#all_streams" data-theme="blk">cancel</a>
+		<h1>NEW STREAM</h1>
+		<a data-theme="oj" id="confirm_create_stream_btn">create</a>
+	</div>
+
+	<div data-role="content">
+		<h3>Stream Details</h3>
+		<div data-role="fieldcontain">
+		    <label for="stream_name" class="ui-hidden-accessible">Name of Stream:</label>
+		    <input type="text" name="stream_name" id="stream_name" value="" placeholder="Name of stream"  />
+		</div>	
+
+		<h3>Participants</h3>
+		<div data-role="fieldcontain" id="add_participants_field">
+		    <label for="participant" class="ui-hidden-accessible">Participant:</label>
+		    <input type="text" name="participant" class="participant-input" value="" placeholder="Add a participant"  />
+		</div>
+
+		<p>
+			Recipients will be able to add photos to your stream via the app and through MMS. Standard text and data rates apply.
+		</p>
+	</div>	
+
+	<script type="text/javascript">
+		$("#new_stream").on( 'pagebeforeshow', function(){
+			
+			// call stuff that needs to run/inject into this page before it loads here
+			// $('add_participants_field').append('<div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c ui-input-has-clear"><input type="color" data-clear-btn="true" name="color-2" id="color-2" value="" class="ui-input-text ui-body-c"><a href="#" class="ui-input-clear ui-btn ui-shadow ui-btn-corner-all ui-fullsize ui-btn-icon-notext ui-btn-up-c" title="clear text" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="delete" data-iconpos="notext" data-theme="c" data-mini="false"><span class="ui-btn-inner"><span class="ui-btn-text">clear text</span><span class="ui-icon ui-icon-delete ui-icon-shadow">&nbsp;</span></span></a></div>'
+			// 	)
+
+		});	
+
+		// EVENT: CLICK CANCEL ON NEW_STREAM PAGE
+
+
+		// EVENT: CLICK CREATE ON NEW_STREAM PAGE	
+		$("#confirm_create_stream_btn").on("vclick", function(event, ui) {
+			console.log("You CLICKED: Create Stream on PAGE:'new_stream'!");
+			$.mobile.changePage("#all_streams", {transition: "flip"});
+		});
+
+		// EVENT: CLICK '+' ICON ON NEW_STREAM PAGE	
+	</script>
+</div>
 
 	<div data-role="page" id="participant_photos">
 		<div data-role="header" data-theme="a">
@@ -688,7 +817,7 @@ CHANNING
 
 	<!-- the_stream-specific javascript -->	
 		<script type="text/javascript">
-			$("#participant_photos").on( 'pageinit', function(){
+			$("#participant_photos").on( 'pagebeforeshow', function(){
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
@@ -705,16 +834,7 @@ CHANNING
 	</div>
 
 
-	<div data-role="page" id="photo_view">
-		<div data-role="header" data-theme="a">
-			<a href="#the_stream" data-theme="blk">back</a>
-			<h1>PARTICIPANTS</h1>
-			<a href="#invite_participants" data-theme="oj">invite</a>
-		</div>
-		<div data-role="content">
-			debug
-		</div>	
-	</div>
+
 
 	<div data-role="page" id="participant_list">
 		<div data-role="header" data-theme="a" id="sign_up_header">
@@ -779,7 +899,7 @@ CHANNING
 		</div>
 
 		<script type="text/javascript">
-			$("#participant_list").on( 'pageinit', function(){
+			$("#participant_list").on( 'pagebeforeshow', function(){
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
@@ -846,7 +966,7 @@ CHANNING
 		</div>
 
 		<script type="text/javascript">
-			$("#like_list").on( 'pageinit', function(){
+			$("#like_list").on( 'pagebeforeshow', function(){
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
@@ -887,7 +1007,7 @@ CHANNING
 		</div>	
 
 		<script type="text/javascript">
-			$("#invite_participants").on( 'pageinit', function(){
+			$("#invite_participants").on( 'pagebeforeshow', function(){
 				
 				// call stuff that needs to run/inject into this page before it loads here
 

@@ -35,6 +35,8 @@ CHANNING
 
 	function populate_stream_profile(stream_id)
 	{
+		// stream_id = this.attr('id');
+		console.log('The stream_id is ' + stream_id);
 		setCookie("latestStreamID",stream_id,365);
 		$.mobile.changePage("#the_stream", {transition: "flip"});
 	}
@@ -86,6 +88,52 @@ CHANNING
 		document.cookie=c_name + "=" + c_value;
 
 		}
+
+		/////////////////////
+		//checkCookies (cca)
+		/////////////////////
+
+		function checkCookies()
+		{
+
+		console.log('checkCookies() initialized...');
+
+		var i,x,y,ARRcookies=document.cookie.split(";");
+
+			for (i=0;i<ARRcookies.length;i++)
+			{
+		  		x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+		  		y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+		  		x=x.replace(/^\s+|\s+$/g,"");
+
+		    	console.log(unescape(x) + ' : ' + unescape(y));
+			}
+		};
+
+		/////////////////////
+		//clearCookies (cca)
+		/////////////////////
+
+		function clearCookies()
+		{
+
+		console.log('clearCookies() initialized...');
+
+		var i,x,y,ARRcookies=document.cookie.split(";");
+
+			for (i=0;i<ARRcookies.length;i++)
+			{
+		  		x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+		  		y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+		  		x=x.replace(/^\s+|\s+$/g,"");
+		    	
+		    	console.log('Cookie before clearCookies() was... ' + unescape(x) + ' : ' + unescape(y));
+
+		    	y = null;	
+
+		    	console.log('Cookie after clearCookies() is... ' + unescape(x) + ' : ' + unescape(y));
+			}
+		};
 
 		//////////////////
 		//getPictureCookie
@@ -245,7 +293,7 @@ CHANNING
 		
 	</script>
 	<script type="text/javascript">
-		$(document).on('pageinit', function () {
+		$(document).on('pagebeforeshow', function () {
 		    $.mobile.ajaxEnabled = false;
 
 		});		
@@ -273,7 +321,7 @@ CHANNING
 		</div>
 		<!-- <div data-role="footer"></div> -->
 		<script type="text/javascript">
-			$("#intro").on( 'pageinit', function(){
+			$("#intro").on( 'pagebeforeshow', function(){
 				arrival();
 			});	
 
@@ -317,9 +365,9 @@ CHANNING
 
 			<div data-role="fieldcontain">
 			    <label for="username" class="ui-hidden-accessible">Username:</label>
-			    <input type="text" name="username" id="username" value="" placeholder="Username"  />
+			    <input type="text" name="username" class="stream-input" id="username" value="" placeholder="Username"  />
 			    <label for="password" class="ui-hidden-accessible">Password:</label>
-			    <input type="password" name="password" id="password" value="" placeholder="Password"  />
+			    <input type="password" name="password" class="stream-input" id="password" value="" placeholder="Password"  />
 			</div>	
 
 			<br>
@@ -330,7 +378,7 @@ CHANNING
 		</div>
 
 		<script type="text/javascript">
-			$("#sign_in").on( 'pageinit', function(){
+			$("#sign_in").on( 'pagebeforeshow', function(){
 
 				var phone_number = checkPhoneCookie();
 				console.log(phone_number);
@@ -390,32 +438,32 @@ CHANNING
 		<div data-role="header" data-theme="a" id="sign_up_header">
 			<a href="#intro" data-theme="blk">back</a>
 			<h1>SIGN UP</h1>
-			<a href="" data-theme="oj" id="confirm_sign_up_btn">sign up</a>
+			<a data-theme="oj" id="confirm_sign_up_btn">sign up</a>
 		</div>
 
 		<div data-role="content">
 			<h3>Profile</h3>
 			<div data-role="fieldcontain">
 			    <label for="first_name" class="ui-hidden-accessible">First Name:</label>
-			    <input type="text" name="first_name" id="first_name" value="" placeholder="First Name"  />
+			    <input type="text" name="first_name" class="stream-input" id="first_name" value="" placeholder="First Name"  />
 			    <label for="last_name" class="ui-hidden-accessible">Last Name:</label>
-			    <input type="text" name="last_name" id="last_name" value="" placeholder="Last Name"  />
+			    <input type="text" name="last_name" class="stream-input" id="last_name" value="" placeholder="Last Name"  />
 			    <label for="phone_number" class="ui-hidden-accessible">Phone Number:</label>
-			    <input type="text" name="phone_number" id="phone_number" value="" placeholder="Phone Number"  />
+			    <input type="text" name="phone_number" class="stream-input" id="phone_number" value="" placeholder="Phone Number"  />
 			</div>	
 
 			<h3>Account</h3>
 			<div data-role="fieldcontain">
 			    <label for="password1" class="ui-hidden-accessible">Password:</label>
-			    <input type="password" name="password1" id="password1" value="" placeholder="Password"  />
+			    <input type="password" name="password1" class="stream-input" id="password1" value="" placeholder="Password"  />
 			    <label for="password2" class="ui-hidden-accessible">Retype Password:</label>
-			    <input type="password" name="password2" id="password2" value="" placeholder="Retype Password"  />
+			    <input type="password" name="password2" class="stream-input" id="password2" value="" placeholder="Retype Password"  />
 			</div>
 
 		</div>
 
 		<script type="text/javascript">
-			$("#sign_up").on( 'pageinit', function(){
+			$("#sign_up").on( 'pagebeforeshow', function(){
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
@@ -424,7 +472,59 @@ CHANNING
 			// EVENT: CLICK 'SIGN UP' BUTTON ON SIGN_UP PAGE
 			$("#confirm_sign_up_btn").on("vclick", function(event, ui) {
 				console.log("You CLICKED:'Sign Up' on PAGE:'sign_up'!");
-				$.mobile.changePage("#all_streams", {transition: "flip"});
+
+				if ($("#first_name").val() != ''){
+					if ($("#last_name").val() != ''){
+						if (($("#phone_number").val() != '') && ($.isNumeric($("#phone_number").val())) && ($("#phone_number").val().length == 10 || $("#phone_number").val().length == 11)) {
+							if ($("#password1").val() != '') {
+								if ($("#password1").val() != $("#password2").val()){
+									alert("Whoops!  It looks like your passwords don't match.");
+								}else{
+									viewer_first = $("#first_name").val();
+									viewer_last = $("#last_name").val();
+									viewer_phone = $("#phone_number").val();
+									password = $("#password1").val();
+
+									var API_URL = 'http://75.101.134.112/stream/1.0/api/sign_up.php?viewer_first=' + viewer_first + '&viewer_last=' + viewer_last + '&viewer_phone=' + viewer_phone + '&password=' + password;
+									$.ajax({
+									type: 'GET',
+									url: API_URL,
+									dataType: "json",
+									success: function(data)
+									{
+										console.log(data['status']);
+
+										if(data['status'] == 'ok')
+										{
+											setCookie("phoneNumber",viewer_phone,365);
+											$.mobile.changePage("#all_streams", {transition: "flip"});
+											console.log('sign_up successful');
+										}
+										else
+										{
+											alert(data['error_description']);
+										}
+						           	},
+					           		async: false
+						       		});	
+								};
+							}else{
+								alert('Please enter a password.');
+								console.log("Sign Up Failed.");
+							};
+						}else{
+							alert('Please enter a valid 10-digit phone number without spaces or any punctuation (example: 1234567891 ).');
+							console.log("Sign Up Failed.");
+						};	
+					}else{
+						alert('Please enter your last name.');
+						console.log("Sign Up Failed.");
+					};			
+				}else{
+					alert('Please enter your first name.');
+					console.log("Sign Up Failed.");
+				};
+
 			});
 
 		</script>
@@ -446,10 +546,10 @@ CHANNING
 
 	<!-- all_streams-specific javascript -->	
 	<script type="text/javascript">
-		$("#all_streams").on('pageinit', function(){
+		$("#all_streams").on('pagebeforeshow', function(){
 			
 			var phone_number = checkPhoneCookie();
-			console.log('the phone_number cookie ' + phone_number);
+			console.log('the phone_number cookie is' + phone_number);
 			API_URL = 'http://75.101.134.112/stream/1.0/api/populate_user_streams.php?viewer_phone=' + phone_number;
 			$.ajax({
 			type: 'GET',
@@ -498,7 +598,7 @@ CHANNING
 		});
 
 		// EVENT: CLICK A STREAM ON ALL_STREAMS PAGE
-		$("#all_streams li").on("vclick", function(event, ui) {
+		$(".stream_button").on("vclick", function(event, ui) {
 			console.log("You CLICKED: A Stream on PAGE:'all_streams'!");
 			$.mobile.changePage("#the_stream", {transition: "flip"});
 		});			
@@ -523,7 +623,7 @@ CHANNING
 
 		<!-- the_stream-specific javascript -->	
 		<script type="text/javascript">
-			$("#the_stream").on( 'pageinit', function(){
+			$("#the_stream").on( 'pagebeforeshow', function(){
 				
 				var stream_id = checkStreamIDCookie();
 				var phone_number = checkPhoneCookie();
@@ -545,6 +645,8 @@ CHANNING
 						var pictures = data['pictures'];
 						console.log(pictures);
 
+						$('.stream_pics').html('');
+
 						for(var i = 0; i < pictures.length; i++)
 						{	
 							console.log(i);
@@ -552,11 +654,11 @@ CHANNING
 
 							if(remainder == 0)
 							{
-								$('.stream_pics').append('<div class="ui-block-a"> <a onClick="view_photo(this.id)" id=' + pictures[i]['picture_id'] + ' class="a_photo ui-link column-left"> <img src="'+ pictures[i]['picture_tinyurl'] +'"> </a> </div>').trigger('create');
+								$('.stream_pics').append('<div class="ui-block-a"> <a onClick="view_photo(this.id)" id=' + pictures[i]['picture_id'] + ' class="ui-link column-left"> <img class="a_photo" src="'+ pictures[i]['picture_tinyurl'] +'"> </a> </div>').trigger('create');
 							}
 							else
 							{
-								$('.stream_pics').append('<div class="ui-block-b"> <a onClick="view_photo(this.id)" id=' + pictures[i] + ' class="a_photo ui-link column-right"> <img src="' + pictures[i]['picture_tinyurl'] + '"> </a> </div>').trigger('create');
+								$('.stream_pics').append('<div class="ui-block-b"> <a onClick="view_photo(this.id)" id=' + pictures[i]['picture_id'] + ' class="ui-link column-right"> <img class="a_photo" src="' + pictures[i]['picture_tinyurl'] + '"> </a> </div>').trigger('create');
 							}
 						}
 					}
@@ -567,8 +669,16 @@ CHANNING
 	           	},
            		async: false
 	       		});
+			});	
 
+			$("#the_stream").on( 'pageshow', function(){
+				$('.a_photo').each(function(){
+					$(this).width('95%');
+					width = $(this).width();
+					$(this).height(width);
+				});
 
+				$('.stream_pics').trigger('create');
 			});	
 
 			// EVENT: CLICK BACK BUTTON ON THE_STREAM PAGE
@@ -589,7 +699,7 @@ CHANNING
 			// EVENT: CLICK A PICTURE ON THE_STREAM PAGE			
 			$(".a_photo").on("vclick", function(event, ui) {
 				console.log("You CLICKED: A Photo on PAGE:'the_stream'!");
-				$.mobile.changePage("#photo_view", {transition: "flip"});
+				// view_photo(picture_id);
 			});
 
 		</script>
@@ -611,7 +721,7 @@ CHANNING
 		<p>like comment</p>
 	</div>
 	<script type="text/javascript">
-		$("#photo_view").on( 'pageinit', function(){
+		$("#photo_view").on( 'pagebeforeshow', function(){
 
 			$('#photo_owner_name').html('');
 			$('#photo_view_holder').html('');
@@ -659,20 +769,20 @@ CHANNING
 	<div data-role="header" data-theme="a" id="sign_in_header">
 		<a href="#all_streams" data-theme="blk">cancel</a>
 		<h1>NEW STREAM</h1>
-		<a href="" data-theme="oj" id="confirm_create_stream_btn">create</a>
+		<a data-theme="oj" id="confirm_create_stream_btn">create</a>
 	</div>
 
 	<div data-role="content">
 		<h3>Stream Details</h3>
 		<div data-role="fieldcontain">
 		    <label for="stream_name" class="ui-hidden-accessible">Name of Stream:</label>
-		    <input type="text" name="stream_name" id="stream_name" value="" placeholder="Name of stream"  />
+		    <input type="text" class="stream-input" name="stream_name" id="stream_name" value="" placeholder="Name of stream"  />
 		</div>	
 
 		<h3>Participants</h3>
-		<div data-role="fieldcontain">
-		    <label for="participant" class="ui-hidden-accessible">Participant:</label>
-		    <input type="text" name="participant" id="participant" value="" placeholder="Add a participant"  />
+		<div data-role="fieldcontain" id="add_participants_field">
+		    <label for="participant1" class="ui-hidden-accessible">Participant:</label>
+		    <input type="text" name="participant1" data-clear-btn="true" class="stream-input" id="participant1" value="" placeholder="Add a participant"  />
 		</div>
 
 		<p>
@@ -681,9 +791,10 @@ CHANNING
 	</div>	
 
 	<script type="text/javascript">
-		$("#new_stream").on( 'pageinit', function(){
+		$("#new_stream").on( 'pagebeforeshow', function(){
 			
 			// call stuff that needs to run/inject into this page before it loads here
+			// $("#add_participants_field").append('<label for="participant" class="ui-hidden-accessible">Participant:</label> <div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c"> <input type="text" data-clear-btn="true" name="participant" class="stream-input" id="participant_input_primary" value="" placeholder="Add a participant"  /> <a href="#" class="add_new_participant_field ui-btn ui-shadow ui-btn-corner-all ui-fullsize ui-btn-icon-notext ui-btn-up-c" id="add_new_participant_field_js" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="plus" data-iconpos="notext" data-theme="c" data-mini="false"> <span class="ui-btn-inner"> <span class="ui-btn-text">clear text</span> <span class="ui-icon ui-icon-plus ui-icon-shadow">&nbsp;</span> </span> </a> </div>').trigger("create");
 
 		});	
 
@@ -694,6 +805,10 @@ CHANNING
 		$("#confirm_create_stream_btn").on("vclick", function(event, ui) {
 			console.log("You CLICKED: Create Stream on PAGE:'new_stream'!");
 			$.mobile.changePage("#all_streams", {transition: "flip"});
+		});
+
+		$("#add_new_participant_field_js").on("vclick", function(event, ui) {
+			
 		});
 
 		// EVENT: CLICK '+' ICON ON NEW_STREAM PAGE	
@@ -751,7 +866,7 @@ CHANNING
 
 	<!-- the_stream-specific javascript -->	
 		<script type="text/javascript">
-			$("#participant_photos").on( 'pageinit', function(){
+			$("#participant_photos").on( 'pagebeforeshow', function(){
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
@@ -833,7 +948,7 @@ CHANNING
 		</div>
 
 		<script type="text/javascript">
-			$("#participant_list").on( 'pageinit', function(){
+			$("#participant_list").on( 'pagebeforeshow', function(){
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
@@ -900,7 +1015,7 @@ CHANNING
 		</div>
 
 		<script type="text/javascript">
-			$("#like_list").on( 'pageinit', function(){
+			$("#like_list").on( 'pagebeforeshow', function(){
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
@@ -941,7 +1056,7 @@ CHANNING
 		</div>	
 
 		<script type="text/javascript">
-			$("#invite_participants").on( 'pageinit', function(){
+			$("#invite_participants").on( 'pagebeforeshow', function(){
 				
 				// call stuff that needs to run/inject into this page before it loads here
 
