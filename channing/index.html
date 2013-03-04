@@ -256,6 +256,11 @@ CHANNING
 			);
 		};		        
 
+
+	////////////////////////////////////////////////////////////////
+	// routes user on initial navigation - CURRENTLY OFF FOR TESTING
+	////////////////////////////////////////////////////////////////
+
 		function arrival() {
 
 			var query = getQueryParams(document.location.search);
@@ -288,6 +293,29 @@ CHANNING
 				// $('#intro').trigger('create');
 			};
 
+		};
+
+		// removes corresponding input field/value on new_stream page; triggered by minus icon
+		function remove_participant(trigger_id){
+			$("#" + trigger_id + "-js_hook").html('');
+		};
+
+		// adds new participant on new_stream page & changes existing icon to minus; triggered by plus icon
+		function add_participant(trigger_id){
+
+			// change the plus icon to minus & provide removal functionality trigger
+			$("#" + trigger_id + "-js_hook .icon-js_hook").html('<a onclick="remove_participant(this.id)" data-role="button" data-icon="minus" data-iconpos="notext" id="' + trigger_id + '">Kill</a>').trigger('create');
+
+			// create next add participant field with appropriate icon and adding functionality trigger
+
+			// create the new id number, incrementing by 1
+			var trigger_id_array = trigger_id.split('_');
+			var new_trigger_id_num = String(parseInt(trigger_id_array[1]) + 1);	
+			
+			// inject the new field
+			$("#" + trigger_id + "-js_hook").after('<div id="participant_'+ new_trigger_id_num +'_trigger-js_hook"> <label for="participant'+ new_trigger_id_num +'" class="ui-hidden-accessible">Participant:</label> <div class="a_participant_field"> <input type="text" name="participant'+ new_trigger_id_num +'" data-clear-btn="true" class="a_participant_field-input a_participant_field-input-hook_js" id="participant'+ new_trigger_id_num +'" value="" placeholder="Add a participant"  /> <div class="add_participant-button_inline-container icon-js_hook"> <a onclick="add_participant(this.id)" data-role="button" data-icon="add_participant-button_inline" data-iconpos="notext" id="participant_'+ new_trigger_id_num +'_trigger">Add</a> </div> </div> </div>');
+
+			$("#participant_" + new_trigger_id_num + "_trigger-js_hook").trigger('create');
 		};
 
 		// call everything that needs to run as soon as the page is initiated
@@ -323,9 +351,11 @@ CHANNING
 		</div>
 		<!-- <div data-role="footer"></div> -->
 		<script type="text/javascript">
-			$("#intro").on( 'pagebeforeshow', function(){
-				arrival();
-			});	
+
+			// TURN ME ON FOR ROUTING FUNCTIONALITY
+			// $("#intro").on( 'pagebeforeshow', function(){
+			// 	arrival();
+			// });	
 
 			// setup for grabbing the URL from page that sends user here;
 			// use with 'getQueryParams(qs)' above - I haven't figured this 
@@ -783,13 +813,31 @@ CHANNING
 		<h3>Stream Details</h3>
 		<div data-role="fieldcontain">
 		    <label for="stream_name" class="ui-hidden-accessible">Name of Stream:</label>
-		    <input type="text" class="stream-input" name="stream_name" id="stream_name" value="" placeholder="Name of stream"  />
+		    <input type="text" class="stream-input" name="stream_name" id="new_stream_name" value="" placeholder="Name of stream"  />
 		</div>	
 
 		<h3>Participants</h3>
-		<div data-role="fieldcontain" id="add_participants_field">
-		    <label for="participant1" class="ui-hidden-accessible">Participant:</label>
-		    <input type="text" name="participant1" data-clear-btn="true" class="stream-input" id="participant1" value="" placeholder="Add a participant"  />
+
+		<div data-role="fieldcontain" class="input_with_button-container_div" id="add_participants_field" >
+			<div id="participant_1_trigger-js_hook">
+			    <label for="participant1" class="ui-hidden-accessible">Participant:</label>
+			    <div class="a_participant_field">
+			    	<input type="text" name="participant1" data-clear-btn="true" class="a_participant_field-input a_participant_field-input-hook_js" id="participant1" value="" placeholder="Add a participant"  />
+			    	<div class="add_participant-button_inline-container icon-js_hook">
+			    		<a onclick="add_participant(this.id)" data-role="button" data-icon="add_participant-button_inline" data-iconpos="notext" id="participant_1_trigger">Add</a>
+			    	</div>
+			    </div>
+			</div>
+
+<!-- 		    <div id="participant_2_trigger-js_hook">
+			    <label for="participant2" class="ui-hidden-accessible">Participant:</label>
+			    <div class="a_participant_field">
+			    	<input type="text" name="participant2" data-clear-btn="true" class="a_participant_field-input a_participant_field-input-hook_js" id="participant2" value="" placeholder="Add a participant"  />
+			    	<div class="add_participant-button_inline-container icon-js_hook">
+			    		<a onclick="add_participant(this.id)" data-role="button" data-icon="add_participant-button_inline" data-iconpos="notext" id="participant_2_trigger">Add</a>
+			    	</div>
+			    </div>
+			</div> -->
 		</div>
 
 		<p>
@@ -799,9 +847,8 @@ CHANNING
 
 	<script type="text/javascript">
 		$("#new_stream").on( 'pagebeforeshow', function(){
-			
+
 			// call stuff that needs to run/inject into this page before it loads here
-			// $("#add_participants_field").append('<label for="participant" class="ui-hidden-accessible">Participant:</label> <div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-c"> <input type="text" data-clear-btn="true" name="participant" class="stream-input" id="participant_input_primary" value="" placeholder="Add a participant"  /> <a href="#" class="add_new_participant_field ui-btn ui-shadow ui-btn-corner-all ui-fullsize ui-btn-icon-notext ui-btn-up-c" id="add_new_participant_field_js" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-icon="plus" data-iconpos="notext" data-theme="c" data-mini="false"> <span class="ui-btn-inner"> <span class="ui-btn-text">clear text</span> <span class="ui-icon ui-icon-plus ui-icon-shadow">&nbsp;</span> </span> </a> </div>').trigger("create");
 
 		});	
 
@@ -811,14 +858,36 @@ CHANNING
 		// EVENT: CLICK CREATE ON NEW_STREAM PAGE	
 		$("#confirm_create_stream_btn").on("vclick", function(event, ui) {
 			console.log("You CLICKED: Create Stream on PAGE:'new_stream'!");
-			$.mobile.changePage("#all_streams", {transition: "flip"});
-		});
 
-		$("#add_new_participant_field_js").on("vclick", function(event, ui) {
+			// grab stream name and validate
+			if (($('#new_stream_name').val() != "") && ($('#new_stream_name').val() != null)){
+				new_stream_name = $('#new_stream_name').val();
+				console.log(new_stream_name);
+				
+				// grab and drop all input values into an array
+				var invitee_nums = new Array();
+				$('.a_participant_field-input-hook_js').each(function(){
+					input_value = $(this).val();
+					invitee_nums.push(input_value);
+				});
+
+				// join nums into a comma-seperated list
+				var invitee_nums_urld = invitee_nums.join();
+
+				// construct url and call API
+				var phone_number = getCookie("phoneNumber");	
+
+				var curl_me = 'http://75.101.134.112/stream/1.0/api/create_stream.php?inviter_phone=' + phone_number + '&invitees_phone=' + invitee_nums_urld + '&stream_name=' + new_stream_name;
+
+				// $.mobile.changePage("#all_streams", {transition: "flip"});
+			}
+			else
+			{
+				alert("Please enter a name for your Stream.");
+			};
 			
 		});
 
-		// EVENT: CLICK '+' ICON ON NEW_STREAM PAGE	
 	</script>
 </div>
 
@@ -1027,6 +1096,10 @@ CHANNING
 				// call stuff that needs to run/inject into this page before it loads here
 
 			});
+
+
+
+
 
 		</script>
 	</div>
