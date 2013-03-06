@@ -11,6 +11,9 @@
 //  status
 //	stream_id
 //	api_name
+//  stream_name
+//  uploader_first
+//  uploader_last
 //	uploader_phone
 //  viewer_phone
 //  Pictures which is an array of all pictures a particular uploader has uploaded ordered reverse chronologically tht includes
@@ -49,6 +52,7 @@ $picture_array = array();
 
 $picture_result = mysql_query("SELECT * FROM StreamActivity WHERE Phone='$uploader_phone' AND StreamID='$stream_id' AND IsActive = 1 ORDER BY Created DESC");
 
+
 while($picture_row = mysql_fetch_array($picture_result))
 {
 	$temp_array = array();
@@ -57,7 +61,27 @@ while($picture_row = mysql_fetch_array($picture_result))
 	array_push($picture_array, $temp_array);
 }
 
+// Gets the stream's name
+$stream_name_result = mysql_query("SELECT * FROM Streams WHERE StreamID='$stream_id'");
+while($stream_name_row=mysql_fetch_array($stream_name_result))
+{
+	$stream_name = $stream_name_row['StreamName'];
+
+}
+
+
+// Gets the name for each uploader
+$name_result = mysql_query("SELECT * FROM Users WHERE Phone='$uploader_phone'");
+while($name_row = mysql_fetch_array($name_result))
+{
+	$uploader_first = $name_row['First'];
+	$uploader_last = $name_row['Last'];
+}
+
 $output['stream_id'] = $stream_id;
+$output['stream_name'] = $stream_name;
+$output['uploader_first'] = $uploader_first;
+$output['uploader_last'] = $uploader_last;
 $output['uploader_phone'] = $uploader_phone;
 $output['viewer_phone'] = $viewer_phone;
 $output['pictures'] = $picture_array;
