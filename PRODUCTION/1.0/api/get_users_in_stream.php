@@ -9,6 +9,7 @@
 //  status
 //  stream_id
 //	api_name
+//  stream_name
 //	Users which is an array of users that are part of the stream ordered chronoligically by join date that includes
 //		- uploader_first
 // 		- uploader_last
@@ -63,9 +64,18 @@ while($picture_id_row = mysql_fetch_array($picture_id_result))
 
 }
 
+// Gets the stream's name
+$stream_name_result = mysql_query("SELECT * FROM Streams WHERE StreamID='$stream_id'");
+while($stream_name_row=mysql_fetch_array($stream_name_result))
+{
+	$stream_name = $stream_name_row['StreamName'];
+
+}
+
 $output['users'] = $Users;
 $output['status'] = "ok";
 $output['stream_id'] = $stream_id;
+$output['stream_name'] = $stream_name;
 $output['api_name'] = "get_users_in_stream";
 
 
