@@ -187,6 +187,10 @@ CHANNING
 		  	}
 		};
 
+		////////////////
+		//getStreamIDCookie
+		////////////////
+
 		function checkStreamIDCookie()
 		{
 
@@ -207,6 +211,31 @@ CHANNING
 				});
 		  	}
 		};
+
+		////////////////
+		//getUploaderPhoneCookie
+		////////////////
+
+		function checkUploaderPhoneCookie()
+		{
+
+		console.log('checkUploaderPhoneCookie() initialized...');
+
+		var uploader_phone=getCookie("uploader_phone");
+
+			if (uploader_phone!=null && uploader_phone!="")
+		  	{
+		  		return uploader_phone;
+		  	}
+
+			else 
+		  	{
+		  		$.mobile.changePage( "#participant_list", {
+						    transition: "pop",
+						    reverse: true
+				});
+		  	}
+		};		
 
 
 
@@ -579,6 +608,9 @@ CHANNING
 	<!-- all_streams-specific javascript -->	
 	<script type="text/javascript">
 		$("#all_streams").on('pagebeforeshow', function(){
+
+			//clear out anything inside
+			$('#user_streams').html('');
 			
 			var phone_number = checkPhoneCookie();
 			console.log('the phone_number cookie is' + phone_number);
@@ -648,12 +680,12 @@ CHANNING
 	<div data-role="header" data-theme="a">
 		<a href="#all_streams" data-theme="blk">back</a>
 		<h1>Stream Name</h1>
-		<a href="" class="camera_button" data-role="button" data-theme="oj" data-icon="camera-icon" id="camera_button"></a>
+		<a href="" class="camera_button" data-role="button" data-theme="oj" data-icon="camera-icon" id="camera_button"> </a>
 	</div>	
 	<div data-role="content">
 		<a href="" data-role="button" data-theme="gry" id="participants_btn">
 			<img src="test/participants_button_icon@2x.png">
-			<h3 id='participants'> Number of Participants</h3>
+			<h3 id='the_participants_button'> Number of Participants</h3>
 		</a>
 
 		<div class="ui-grid-a stream_pics"></div>	
@@ -678,7 +710,8 @@ CHANNING
 						var stream_name = data['stream_name'];
 						console.log(stream_name);
 						var stream_usercount = data['stream_usercount'];
-						console.log(stream_usercount);
+						console.log("This stream has " + stream_usercount + " users");
+						$('#the_participants_button').text(stream_usercount + " Participants").trigger('create');
 						var pictures = data['pictures'];
 						console.log(pictures);
 
@@ -911,11 +944,11 @@ CHANNING
 	<div data-role="page" id="participant_photos">
 		<div data-role="header" data-theme="a">
 			<a href="#participant_list" data-theme="blk">back</a>
-			<h1>First Hack of 2013!</h1>
+			<h1 id="participant_photos-title-js_hook">First Hack of 2013!</h1>
 		</div>	
 
 		<div data-role="content">
-			<h3>Suman Venkataswamy's photos</h3>
+			<h3 id="participant_photos-participant_name-js_hook">Suman Venkataswamy's photos</h3>
 
 			<div class="ui-grid-a">
 			    <div class="ui-block-a">
@@ -961,9 +994,32 @@ CHANNING
 		<script type="text/javascript">
 			$("#participant_photos").on( 'pagebeforeshow', function(){
 				
-				// call stuff that needs to run/inject into this page before it loads here
+				var stream_id = checkStreamIDCookie();
+				var phone_number = checkPhoneCookie();
+				var uploader_phone = checkUploaderPhoneCookie();
 
-			});	
+				var API_URL = 'http://75.101.134.112/stream/1.0/api/get_pictures_uploaded_by_user.php?viewer_phone=' + phone_number + '&uploader_phone=' + uploader_phone + '&stream_id=' + stream_id;
+
+				$.ajax({
+				type: 'GET',
+				url: API_URL,
+				dataType: "json",
+				success: function(data)
+				{
+					if(data['status'] == 'ok')
+					{
+						console.log(data);
+						
+					}
+					else
+					{
+						alert("SERVER_ERROR");
+					}
+	           	},
+           		async: false
+	       		});
+			});
+
 
 			// EVENT: CLICK A PICTURE ON THE_STREAM PAGE			
 			$(".a_photo").on("vclick", function(event, ui) {
@@ -986,7 +1042,7 @@ CHANNING
 		</div>
 
 		<div data-role="content">
-			<ul data-role="listview">
+			<ul data-role="listview" id="participant_list-js_hook">
 				<li>					
 					<a href="#participant_photos" class="list_button" id="participant_id">
 						<div class="li_line_1">
@@ -1043,12 +1099,60 @@ CHANNING
 		<script type="text/javascript">
 			$("#participant_list").on( 'pagebeforeshow', function(){
 				
-				// call stuff that needs to run/inject into this page before it loads here
+				$('#participant_list-js_hook').html('');
 
-			});	
+				var stream_id = checkStreamIDCookie();
 
+				var API_URL = 'http://75.101.134.112/stream/1.0/api/get_users_in_stream.php?stream_id=' + stream_id;
 
-/////////// EVENT: CLICK X ON PHOTO_VIEW PAGE
+				$.ajax({
+				type: 'GET',
+				url: API_URL,
+				dataType: "json",
+				success: function(data)
+				{
+					if(data['status'] == 'ok')
+					{
+						console.log(data);
+						var users = data['users'];
+						console.log(users);
+
+						for(var i = 0; i < users.length; i++)
+						{
+							console.log(users[i]);
+							var uploader_phone = users[i]["uploader_phone"];
+							var uploader_first = users[i]["uploader_first"];
+							var uploader_last = users[i]["uploader_last"];
+							var uploader_name = uploader_first + " " + uploader_last;
+							var uploader_picturecount = users[i]["uploader_picturecount"];
+
+							$('#participant_list-js_hook').append('<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-btn-up-c"><div class="ui-btn-inner ui-li"><div class="ui-btn-text"> <a href="" onclick="participant_photos(this.id)" class="participant_list-list_item-js_trigger list_button ui-link-inherit" id="'+ uploader_phone + '"> <div class="li_line_1"> <h1 class="ui-li-heading">' + uploader_name + '</h1> </div> <div class="li_line_2"> <div class="section_a"> <img class="tiny_icon" src="test/photos@2x.png"> <p class="ui-li-desc"> ' + uploader_picturecount + ' photos </p> </div> </div> </a> </div><span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>').trigger('create');
+						}
+					}
+					else
+					{
+						alert("SERVER_ERROR");
+					}
+	           	},
+           		async: false
+	       		});
+			});					
+
+/////////// EVENT: CLICK PARTICIPANT LIST ITEM
+	
+			function participant_photos(trigger_id)
+			{
+
+				setCookie("uploader_phone",trigger_id,365);
+				console.log(checkUploaderPhoneCookie());
+
+				$.mobile.changePage("#participant_photos", {transition: "flip"});
+			};
+
+			// $(".participant_list-list_item-js_trigger").on("vclick", function(event, ui) {
+			// 	console.log("You CLICKED: A Participant List Item PAGE:'participant_list'!");
+			// });
+
 
 
 /////////// EVENT: CLICK LIKE ON PHOTO_VIEW PAGE

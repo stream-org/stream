@@ -1,0 +1,326 @@
+SIGN_IN.PHP
+	input::
+		viewer_phone
+		password 
+
+	output::
+		status
+		viewer_phone
+	 api_name
+	 if successful login (correct phone number and password):
+	 	-viewer_first
+		    -viewer_last
+			-viewer_profilepic
+
+	example:
+	http://75.101.134.112/stream/1.0/api/sign_in.php?viewer_phone=11111111116&password=test
+
+SIGN_UP.PHP
+	input::
+		viewer_first 
+		viewer_last 
+		viewer_phone
+		password 
+
+	output::
+		status
+		api_name
+		viewer_first 
+		viewer_last 
+		viewer_phone
+
+	example: (WARNING!! CHANGE THE PHONE NUMBER IN ORDER FOR THIS TO WORK)
+	http://75.101.134.112/stream/1.0/api/sign_up.php?viewer_first=johnny&viewer_last=test&viewer_phone=11111111116&password=test
+
+ADD_COMMENT.PHP
+	input::
+		picture_id
+		commenter_phone
+		comment
+
+	output::
+		picture_id
+	 status
+	 commenter_phone
+		api_name
+	 Comments which is an array ordered chronologically that includes
+	 	-commenter_first
+	 	-commenter_last
+	 	-commenter_phone
+	 	-commenter_created
+	 	-comment
+
+	Example: 
+	http://75.101.134.112/stream/1.0/api/add_comment.php?commenter_phone=8477226071&comment=eyyyy&picture_id=1532d2aefcb206383390e28214a9a326933626b6bb33ad4864b810f20299e3b6a9e99c63de11c960756479456f422f6fad695e4ee618cc64c20af15c0ad2c1ff
+
+CREATE_STREAM.PHP
+	input:: 
+		inviter_phone
+		stream_name
+	 invitees_phone
+
+	output::
+	 api_name
+		status
+		stream_id
+		invitees_phone which is an array of invitees phone numbers
+	 inviter_phone
+
+	example::
+		http://75.101.134.112/stream/1.0/api/create_stream.php?inviter_phone=18477226071&invitees_phone=16508420492&stream_name=testThisOut
+
+REGISTER_PUSH_TOKEN.PHP
+	input::
+		viewer_phone
+		token
+
+	ouput::
+		status
+		api_name
+
+	example::
+		http://75.101.134.112/stream/1.0/api/register_push_token.php?viewer_phone=18585238764&token=6e27be3b0190dd6ec5893febc5e92a915e5b7f8aa7d2c5c25f0ae8fa867209a1
+
+DELETE_FROM_STREAM.PHP
+	input:: 
+		viewer_phone
+		stream_id
+
+	output::
+		status
+		api_name
+		viewer phone
+		stream_id
+
+DELETE_PICTURE.PHP
+	input:: 
+		viewer_phone
+		picture_id
+
+	output::
+		api_name		
+		viewer_phone
+		picture_id
+
+GET_PICTURE_METADATA.PHP
+	input::
+		picture_id
+		viewer_phone
+
+	output:: 
+		picture_url
+	 picture_id
+		picture_likecount
+	 viewer_hasliked
+		uploader_first
+	 uploader_last
+	 uploader_phone
+		api_name
+	 Comments which is an array ordered chronologically that includes
+	 	-commenter_first
+	 	-commenter_last
+	 	-commenter_phone
+	 	-commenter_created
+	 	-comment
+
+	example:
+	http://75.101.134.112/stream/1.0/api/get_picture_metadata.php?viewer_phone=8477226071&picture_id=1984c05a7f989fdf53c6ea96b86f6bfd8784ff22b3272793a6339716f936ff285977d699b69111a6655abde9ed19c6d2d53a6f588c85a7c26e8473f8680053e8
+
+GET_PICTURE_UPLOADED_BY_USER.PHP
+	input::
+		stream_id
+		uploader_phone
+	 viewer_phone
+
+	output::
+	 status
+		stream_id
+		api_name
+		uploader_phone
+	 viewer_phone
+	 Pictures which is an array of all pictures a particular uploader has uploaded ordered reverse chronologically tht includes
+			-picture_tinyurl
+			-picture_id
+
+	example:
+	http://75.101.134.112/stream/1.0/api/get_pictures_uploaded_by_user.php?viewer_phone=8477226071&uploader_phone=6508420492&stream_id=6933fb99f4867cb94b1e0e32287bb12df8636de1386bebf73b54442011bd15a1775eef990f9595cfd052a2f2da8f185145f2931a0bf0fa4a947d0e9a59eb52a5
+
+GET_USER_IN_STREAM.PHP
+	input::
+		stream_id
+
+	output::
+	 status
+	 stream_id
+		api_name
+		Users which is an array of users that are part of the stream ordered chronoligically by join date that includes
+			- uploader_first
+			- uploader_last
+			- uploader_picturecount
+
+	example:
+	http://75.101.134.112/stream/1.0/api/get_users_in_stream.php?stream_id=6933fb99f4867cb94b1e0e32287bb12df8636de1386bebf73b54442011bd15a1775eef990f9595cfd052a2f2da8f185145f2931a0bf0fa4a947d0e9a59eb52a5
+
+GET_USERS_WHO_LIKE.PHP
+	input::
+		picture_id
+
+	output::
+	 api_name
+	 Likers which is an array of people who liked it that includes
+			-liker_first
+			-liker_last
+			-liker_phone
+
+	example:
+	http://75.101.134.112/stream/1.0/api/get_users_who_like.php?picture_id=1984c05a7f989fdf53c6ea96b86f6bfd8784ff22b3272793a6339716f936ff285977d699b69111a6655abde9ed19c6d2d53a6f588c85a7c26e8473f8680053e8
+
+INVITE_USERS.PHP
+	input::
+		stream_id
+		invitees_phone which is either an array of invitees phone numbers or a comma-seperated list of invitee phone number
+	 inviter_phone
+
+	output::
+		api_name
+		Status message
+		stream_id
+		invitees_phone which is an array of invitees phone numbers
+	 inviter_phone
+
+	example::
+		this gets called in create_stream.php
+
+LIKE_PICTURE.PHP
+	input::
+		picture_id
+		liker_phone
+
+	output::
+		api_name
+		picture_id
+		liker_phone
+		picture_likecount 
+		status: ok || status: error & error_description: Picture not liked!
+
+	example::
+		http://75.101.134.112/stream/1.0/api/like_picture.php?liker_phone=18477226071&picture_id=1532d2aefcb206383390e28214a9a326933626b6bb33ad4864b810f20299e3b6a9e99c63de11c960756479456f422f6fad695e4ee618cc64c20af15c0ad2c1ff
+
+POPULATE_STREAM_PROFILE.PHP
+	input:: 
+		stream_id
+	 viewer_phone
+
+	output::
+	 status
+	 stream_id
+	 stream_name
+	 stream_usercount
+	 viewer_phone
+	 api_name
+		Pictures which is an array of pictures ranked reverse chronologically that includes
+			-picture_id
+			-picture_likecount
+			-picture_tinyurl
+			-picture_commentcount
+
+	example:
+	http://75.101.134.112/stream/1.0/api/populate_stream_profile.php?viewer_phone=8477226071&stream_id=6a31acf92db81a21c1300221058166df22820821d361962bfc41cbf1619767de392b40694dd49e50c7feb1e9aaa670aebc34bc3ed4e29273f8fbe64ffee1a153
+
+POPULATE_USER_STREAMS.PHP
+	input: 
+		viewer_phone 
+
+	output:: 
+		viewer_phone 
+	 status
+	 api_name
+		Streams which is an array ordered reverse chronologically by StreamJoinDate that includes:
+			-stream_id
+			-stream_name
+			-stream_usercount 
+			-picture_count
+			-picture_latest which is an array which contains metadata on the latest picture that includes
+				-picture_tinyurl
+				-picture_id
+
+	example:
+	http://75.101.134.112/stream/1.0/api/populate_user_streams.php?viewer_phone=8477226071
+
+PUSH_NOTIFICATION.PHP
+	input::
+		token
+		message
+
+	output::
+		a string denoting that the message was unsuccessful, or nothing is the message was successful
+	 api_name
+
+	example::
+	http://75.101.134.112/stream/1.0/api/push_notification.php?token=6e27be3b0190dd6ec5893febc5e92a915e5b7f8aa7d2c5c25f0ae8fa867209a1&message=push_notification_test
+
+UNLIKE_PICTURE.PHP
+	input::
+		picture_id
+		liker_phone
+
+	output::
+		status
+		api_name
+		picture_likecount
+	 picture_id
+	 liker_phone 
+
+UPLOAD_FILE.PHP
+	input::
+		stream_id
+		uploader_phone
+	output::
+	api_name
+	If successful upload form and calls upload_picture.php which outputs:
+			-status
+	 	-picture_id
+			-picture
+	Else:
+			-status (error)
+
+	example:
+	http://75.101.134.112/stream/1.0/api/upload.html
+
+UPLOAD_PICTURE.PHP
+	input::
+		uploader_phone
+		picture_url 
+		stream_id
+	 tinyPicture url
+		caption
+
+	output::
+	 api_name
+		status
+		uploader_phone
+		picture_url
+		picture_tinyurl
+		stream_id
+		caption
+
+	example:
+	http://75.101.134.112/stream/1.0/api/upload.html
+
+VIEW_COMMENTS.PHP
+	input::
+		picture_id
+
+	output::
+		picture_id
+		status
+		api_name
+		Comments, which is array of comments ordered chronologically that includes for each comment:
+			commenter_first
+			commenter_last
+			commenter_phone
+			comment
+			comment_created
+
+	example:
+	http://75.101.134.112/stream/1.0/api/view_comments.php?commenter_phone=8477226071&comment=eyyyy&picture_id=1532d2aefcb206383390e28214a9a326933626b6bb33ad4864b810f20299e3b6a9e99c63de11c960756479456f422f6fad695e4ee618cc64c20af15c0ad2c1ff
