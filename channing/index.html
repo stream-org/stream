@@ -879,6 +879,23 @@ CHANNING
 
 				var curl_me = 'http://75.101.134.112/stream/1.0/api/create_stream.php?inviter_phone=' + phone_number + '&invitees_phone=' + invitee_nums_urld + '&stream_name=' + new_stream_name;
 
+				console.log(curl_me);
+
+				$.ajax({
+					type: 'GET',
+					url: curl_me,
+					dataType: "json",
+					success: function(data){
+						console.log(data);
+					},
+					error: function(jqXHR,extStatus,errorThrown){
+						console.log(jqXHR);
+						console.log(extStatus);
+						console.log(errorThrown);
+					},
+					async: false,
+				});
+
 				// $.mobile.changePage("#all_streams", {transition: "flip"});
 			}
 			else
