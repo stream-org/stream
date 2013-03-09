@@ -47,7 +47,7 @@ $output = array();
 $deviceToken = $theToken;
 
 // Put your private key's passphrase here:
-$passphrase = 'stream';
+$passphrase = 'spa!ruqUrUr#br-frupr2cu5u33yuV?S_EQe7U47';
 
 // Put your alert message here:
 $message = $theMessage;
@@ -55,7 +55,7 @@ $message = $theMessage;
 ////////////////////////////////////////////////////////////////////////////////
 
 $ctx = stream_context_create();
-stream_context_set_option($ctx, 'ssl', 'local_cert', 'ck.pem');
+stream_context_set_option($ctx, 'ssl', 'local_cert', 'StreamProdPush.pem');
 stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
 // Open a connection to the APNS server
