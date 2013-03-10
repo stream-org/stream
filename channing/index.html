@@ -679,7 +679,7 @@ CHANNING
 <div data-role="page" id="the_stream">
 	<div data-role="header" data-theme="a">
 		<a href="#all_streams" data-theme="blk">back</a>
-		<h1>Stream Name</h1>
+		<h1 id="stream_name">Your Stream</h1>
 		<a href="" class="camera_button" data-role="button" data-theme="oj" data-icon="camera-icon" id="camera_button"> </a>
 	</div>	
 	<div data-role="content">
@@ -689,6 +689,20 @@ CHANNING
 		</a>
 
 		<div class="ui-grid-a stream_pics"></div>	
+
+		<!-- FORM FOR UPLOADING FILES -->
+        <form action="http://75.101.134.112/stream/1.0/api/upload_file_html.php" method="post" enctype="multipart/form-data" class="ghost_mode" id="form">
+	        <label for="file">
+	        	Filename:
+	        </label>
+	        <input type="file" name="file" id="file">
+	        <br>
+	        <input type="text" name="uploader_phone" id="uploader_phone" value=''>
+	        <br>
+	        <input type="text" name="stream_id" id="stream_id" value=''>
+	        <br>
+	        <input type="submit" name="submit" id='submit_now' value="Submit">
+        </form>	
 
 		<!-- the_stream-specific javascript -->	
 		<script type="text/javascript">
@@ -708,7 +722,9 @@ CHANNING
 					{
 						console.log(data);
 						var stream_name = data['stream_name'];
-						console.log(stream_name);
+                        console.log(stream_name);
+                        $('#stream_name').html('');
+                        $('#stream_name').text(stream_name).trigger('create');
 						var stream_usercount = data['stream_usercount'];
 						console.log("This stream has " + stream_usercount + " users");
 						$('#the_participants_button').text(stream_usercount + " Participants").trigger('create');
@@ -757,8 +773,18 @@ CHANNING
 			// EVENT: CLICK CAMERA BUTTON ON THE_STREAM PAGE
 			$("#camera_button").on("vclick", function(event, ui) {
 				console.log("You CLICKED: Camera Button on PAGE:'the_stream'!");
-				$.mobile.changePage("#take_photo", {transition: "flip"});
+				$('#file').click();
+				// $.mobile.changePage("#take_photo", {transition: "flip"});
 			});
+
+			$('#file').change(function()
+			{
+                var stream_id = checkStreamIDCookie();
+                var phone_number = checkPhoneCookie();
+                $('#uploader_phone').val(phone_number);
+                $('#stream_id').val(stream_id);
+                $('#submit_now').click();
+            });
 
 			// EVENT: CLICK PARTICIPANTS BUTTON ON THE_STREAM PAGE
 			$("#participants_btn").on("vclick", function(event, ui) {
@@ -779,8 +805,9 @@ CHANNING
 <!-- photo view page -->
 <div data-role="page" id="photo_view" class="black-bg">
 	<div data-role="header" data-theme="a" data-position="fixed" class="black-bg">
-		<a href="" data-role="button" data-icon="delete" data-iconpos="notext" data-inline="true" id="photo_view_back_btn">Delete</a>
+		<a href="#the_stream" data-theme="blk" class="header_btn-left-pos">flag</a>
 		<h1 id="photo_owner_name">Photo Owner Name</h1>
+		<a href="" data-role="button" data-icon="delete" data-iconpos="notext" data-inline="true" id="photo_view_back_btn" class="header_btn-right-pos">Delete</a>
 	</div>
 
 	<div data-role="content" class="photo-full-frame-style photo-full-frame-position black-bg" id="photo_view_holder">
@@ -788,7 +815,33 @@ CHANNING
 	</div>
 
 	<div data-role="footer" data-position="fixed" class="black-bg">
-		<p>like comment</p>
+		<div class="like_comment_div-container">
+			<div class="like_comment_div">
+				<a href="" class="link-no_decoration text-100 font-small" id="like_button-js_trigger">Like</a>
+			</div>
+			<!--  &bull; 
+			<div class="like_comment_div">
+				<a href="#comments_modal" data-transition="slidedown" data-close-btn-text="back" data-rel="dialog" class="link-no_decoration text-100 font-small">Comment</a>
+			</div>	 -->
+		</div>
+
+		<div class="likes_comments_div-container">
+			<div class="likes_div">
+				<a href="" class="link-no_decoration text-100 font-small">
+					<div class="likes_icon_div footer_div">
+						<img class="likes_icon" src="heart_white_small@2x.png">
+					</div>
+					<div class="footer_div likecount-js_hook">
+						1
+					</div>
+				</a>
+			</div>
+			<!-- <div class="comments_div">
+				<a href="" class="link-no_decoration text-100 font-small">
+					<span class="comments_icon"></span>1
+				</a>
+			</div> -->	
+		</div>
 	</div>
 	<script type="text/javascript">
 		$("#photo_view").on( 'pagebeforeshow', function(){
@@ -812,10 +865,19 @@ CHANNING
 						var first_name = data['uploader_first'];
 						var last_name = data['uploader_last'];
 						var pic_url = data['picture_url'];
-
+						var viewer_hasLiked = data['viewer_hasLiked'];
+						var picture_likecount = data['picture_likecount'];
 
 						$('#photo_owner_name').html(first_name + ' ' + last_name).trigger('create');
+
 						$('#photo_view_holder').append('<img class="photo-full-position" src="' + pic_url + '">').trigger('create');
+
+						if(viewer_hasLiked == "True")
+						{
+							$("#like_button-js_trigger").text("Unlike");
+						}
+
+						$('.likecount-js_hook').text(picture_likecount);
 					}
 					else
 					{
@@ -831,8 +893,109 @@ CHANNING
 				console.log("You CLICKED: BACK on PAGE:'photo_view'!");
 				$.mobile.changePage("#the_stream", {transition: "flip"});
 			});
+
+		$("#like_button-js_trigger").on("vclick", function(event, ui) 
+		{
+			if ($(this).text() == "Like")
+			{
+				// call like_picture.php
+				var picture_id = checkPictureCookie();
+				console.log(picture_id);
+				var liker_phone = checkPhoneCookie();
+				console.log(liker_phone);
+
+				var API_URL = 'http://75.101.134.112/stream/1.0/api/like_picture.php?liker_phone=' + liker_phone + '&picture_id=' + picture_id;
+				console.log(API_URL);
+
+				$.ajax({
+					type: 'GET',
+					url: API_URL,
+					dataType: "json",
+					success: function(data)
+					{
+						if(data['status'] == 'ok')
+						{
+							var picture_likecount = data['picture_likecount'];
+
+							$('.likecount-js_hook').text(picture_likecount);
+
+							$("#like_button-js_trigger").text("Unlike");
+						}
+						else
+						{
+							alert(data['error_description']);
+						};
+		           	},
+	           		async: false
+		       	});
+			}
+			else if($(this).text() == "Unlike")
+			{
+				// call unlike_picture.php
+				var picture_id = checkPictureCookie();
+				var liker_phone = checkPhoneCookie();
+
+				var API_URL = 'http://75.101.134.112/stream/1.0/api/unlike_picture.php?liker_phone=' + liker_phone + '&picture_id=' + picture_id;
+				console.log(API_URL);
+
+				$.ajax({
+					type: 'GET',
+					url: API_URL,
+					dataType: "json",
+					success: function(data)
+					{
+						if(data['status'] == 'ok')
+						{
+							var picture_likecount = data['picture_likecount'];
+
+							$('.likecount-js_hook').text(picture_likecount);
+
+							$("#like_button-js_trigger").text("Like");
+						}
+						else
+						{
+							alert(data['error_description']);
+						};
+		           	},
+	           		async: false
+		       	});
+			}
+			else
+			{
+				alert("Browser isn't reading 'Like' OR 'Unlike'");
+			}
+		});
 	</script>
 </div>
+
+	<div data-role="page" id="comments_modal">
+		<div data-role="header" data-theme="a" id="sign_in_header">
+			<h1>COMMENTS</h1>
+		</div>
+
+		<div data-role="content">
+			<div class="comment_input-container">
+				<label for="comment_input" class="ui-hidden-accessible">Comment:</label>
+    			<input type="text" name="name" class="container_input-input" id="comment_input" value=""  />
+    			<a data-role="button" href="" data-mini="true" data-theme="blk" class="container_input-send">Send</a>
+			</div>
+		</div>	
+
+		<div data-role="footer">
+
+
+		</div>			
+
+		<script type="text/javascript">
+			$("#comments_modal").on( 'pagebeforeshow', function(){
+				
+				// call stuff that needs to run/inject into this page before it loads here
+
+			});	
+
+		</script>
+
+	</div>
 
 <!-- create stream page -->
 <div data-role="page" id="new_stream">
@@ -899,10 +1062,13 @@ CHANNING
 				
 				// grab and drop all input values into an array
 				var invitee_nums = new Array();
-				$('.a_participant_field-input-hook_js').each(function(){
+				$('.a_participant_field-input-hook_js').each(
+					function()
+					{
 					input_value = $(this).val();
 					invitee_nums.push(input_value);
-				});
+					}
+				);
 
 				// join nums into a comma-seperated list
 				var invitee_nums_urld = invitee_nums.join();
@@ -914,6 +1080,7 @@ CHANNING
 
 				console.log(curl_me);
 
+				// WHY ISN'T YOU WERKEEINGG?!?!?!
 				$.ajax({
 					type: 'GET',
 					url: curl_me,
@@ -929,6 +1096,7 @@ CHANNING
 					async: false,
 				});
 
+				// commented for testing
 				// $.mobile.changePage("#all_streams", {transition: "flip"});
 			}
 			else
@@ -950,7 +1118,7 @@ CHANNING
 		<div data-role="content">
 			<h3 id="participant_photos-participant_name-js_hook">Suman Venkataswamy's photos</h3>
 
-			<div class="ui-grid-a">
+			<div class="ui-grid-a" id="participant_photos-photo_grid-js_hook">
 			    <div class="ui-block-a">
 			    	<a href="" class="a_photo" id="pic_id_1">
 			    		<img src="test/2013firsthack.jpg">
@@ -998,6 +1166,7 @@ CHANNING
 				var phone_number = checkPhoneCookie();
 				var uploader_phone = checkUploaderPhoneCookie();
 
+
 				var API_URL = 'http://75.101.134.112/stream/1.0/api/get_pictures_uploaded_by_user.php?viewer_phone=' + phone_number + '&uploader_phone=' + uploader_phone + '&stream_id=' + stream_id;
 
 				$.ajax({
@@ -1009,7 +1178,32 @@ CHANNING
 					if(data['status'] == 'ok')
 					{
 						console.log(data);
-						
+						var pictures = data['pictures'];
+						var uploader_first = data['uploader_first'];
+						var uploader_last = data['uploader_last'];
+						var uploader_name = uploader_first + " " + uploader_last;
+						var stream_name = data['stream_name'];
+
+						$('#participant_photos-title-js_hook').text(stream_name);
+
+						$('#participant_photos-participant_name-js_hook').text(uploader_name);
+
+						$('#participant_photos-photo_grid-js_hook').html('');
+
+						for(var i = 0; i < pictures.length; i++)
+						{	
+							console.log(i);
+							var remainder = i%2;
+
+							if(remainder == 0)
+							{
+								$('#participant_photos-photo_grid-js_hook').append('<div class="ui-block-a"> <a onClick="view_photo(this.id)" id=' + pictures[i]['picture_id'] + ' class="ui-link column-left"> <img class="a_photo" src="'+ pictures[i]['picture_tinyurl'] +'"> </a> </div>').trigger('create');
+							}
+							else
+							{
+								$('#participant_photos-photo_grid-js_hook').append('<div class="ui-block-b"> <a onClick="view_photo(this.id)" id=' + pictures[i]['picture_id'] + ' class="ui-link column-right"> <img class="a_photo" src="' + pictures[i]['picture_tinyurl'] + '"> </a> </div>').trigger('create');
+							}
+						}
 					}
 					else
 					{
@@ -1018,6 +1212,16 @@ CHANNING
 	           	},
            		async: false
 	       		});
+			});
+
+			$("#participant_photos").on( 'pageshow', function(){
+				$('.a_photo').each(function(){
+					$(this).width('95%');
+					width = $(this).width();
+					$(this).height(width);
+				});
+
+				$('#participant_photos-photo_grid-js_hook').trigger('create');
 			});
 
 
