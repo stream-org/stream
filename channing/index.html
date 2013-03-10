@@ -81,7 +81,6 @@ CHANNING
 		{
 
 		console.log('setCookie(c_name, exdays) initialized...');
-
 		var exdate=new Date();
 		exdate.setDate(exdate.getDate() + exdays);
 		var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
@@ -679,8 +678,14 @@ CHANNING
 <div data-role="page" id="the_stream">
 	<div data-role="header" data-theme="a">
 		<a href="#all_streams" data-theme="blk">back</a>
+<<<<<<< HEAD
 		<h1 id="stream_name">Your Stream</h1>
 		<a href="" class="camera_button" data-role="button" data-theme="oj" data-icon="camera-icon" id="camera_button"> </a>
+=======
+		<input type='file' id='file' style='opacity:0'> </input>
+		<h1>Stream Name</h1>
+		<a href="" class="camera_button" data-role="button" data-theme="oj" data-icon="camera-icon" id="camera_button"></a>  
+>>>>>>> f01b864caca74194ac117bd5e87197589d76e13a
 	</div>	
 	<div data-role="content">
 		<a href="" data-role="button" data-theme="gry" id="participants_btn">
@@ -773,7 +778,13 @@ CHANNING
 			// EVENT: CLICK CAMERA BUTTON ON THE_STREAM PAGE
 			$("#camera_button").on("vclick", function(event, ui) {
 				console.log("You CLICKED: Camera Button on PAGE:'the_stream'!");
+<<<<<<< HEAD
 				$('#file').click();
+=======
+				console.log('it made it here');
+				$('#file').click();
+				// alert('camera functionality coming soon');
+>>>>>>> f01b864caca74194ac117bd5e87197589d76e13a
 				// $.mobile.changePage("#take_photo", {transition: "flip"});
 			});
 
@@ -789,6 +800,8 @@ CHANNING
 			// EVENT: CLICK PARTICIPANTS BUTTON ON THE_STREAM PAGE
 			$("#participants_btn").on("vclick", function(event, ui) {
 				console.log("You CLICKED: Participants Button on PAGE:'the_stream'!");
+				// alert('invite functionality coming soon');
+				//UNCOMMENT WHEN YOU WANT TO IMPLEMENT
 				$.mobile.changePage("#participant_list", {transition: "flip"});
 			});
 
@@ -1462,16 +1475,20 @@ CHANNING
 
 		<script type="text/javascript">
 			$("#invite_participants").on( 'pagebeforeshow', function(){
-				
 				// call stuff that needs to run/inject into this page before it loads here
-
 			});	
 
 			$("#update_stream_btn").on("vclick", function(event, ui) {
 				console.log("You CLICKED: update on PAGE:'participant_list'!");
-				$.mobile.changePage("#participant_list", {transition: "flip"});
+				alert('invite functionality coming soon');
+				//DISABLED INVITE FOR NOW
+				// $.mobile.changePage("#participant_list", {transition: "flip"});
 			});
 
+			// function file_chooser()
+			// {
+			// 	$('#file').click();
+			// }
 
 		</script>
 
