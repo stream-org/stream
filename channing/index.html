@@ -1,18 +1,8 @@
 <!-- 
-ROUSSEAU:
- - figure out how to get/hold the phone # or w/e we need from the query params of the link that sends users to the #intro page
- - getting cracking on calling the APIs in the buckets I have provided + saving the necessary extracted data from the response object into variables for injection
-
-CHANNING
- - finish building pages:
- 	 - photo-view page
- 	 	 - photo resizing
- 	 	 - comments
- 	 	 - likes
- 	 - stream: [participant's name]'s Photos
- 	 - send feedback 
- 	 	 - button to all_streams
- 	 	 - create page
+For 3/13
+- like :: all
+- comment :: all
+- invite participants :: get header to change by stream
 
  -->
 
@@ -346,6 +336,31 @@ CHANNING
 
 			$("#participant_" + new_trigger_id_num + "_trigger-js_hook").trigger('create');
 		};
+
+
+		// removes corresponding input field/value on invite_participants page; triggered by minus icon
+		function remove_invitee(trigger_id){
+			$("#" + trigger_id + "-js_hook").html('');
+		};
+
+		// adds new invitee on invite_invitees page & changes existing icon to minus; triggered by plus icon
+		function add_invitee(trigger_id){
+
+			// change the plus icon to minus & provide removal functionality trigger
+			$("#" + trigger_id + "-js_hook .icon-js_hook").html('<a onclick="remove_invitee(this.id)" data-role="button" data-icon="minus" data-iconpos="notext" id="' + trigger_id + '">Kill</a>').trigger('create');
+
+			// create next add invitee field with appropriate icon and adding functionality trigger
+
+			// create the new id number, incrementing by 1
+			var trigger_id_array = trigger_id.split('_');
+			var new_trigger_id_num = String(parseInt(trigger_id_array[1]) + 1);	
+			
+			// inject the new field
+			$("#" + trigger_id + "-js_hook").after('<div id="invitee_'+ new_trigger_id_num +'_trigger-js_hook"> <label for="invitee'+ new_trigger_id_num +'" class="ui-hidden-accessible">Participant:</label> <div class="an_invitee_field"> <input type="text" name="invitee'+ new_trigger_id_num +'" data-clear-btn="true" class="an_invitee_field-input an_invitee_field-input-hook_js" id="invitee'+ new_trigger_id_num +'" value="" placeholder="Add a invitee"  /> <div class="add_invitee-button_inline-container icon-js_hook"> <a onclick="add_invitee(this.id)" data-role="button" data-icon="add_invitee-button_inline" data-iconpos="notext" id="invitee_'+ new_trigger_id_num +'_trigger">Add</a> </div> </div> </div>');
+
+			$("#invitee_" + new_trigger_id_num + "_trigger-js_hook").trigger('create');
+		};
+
 
 		// call everything that needs to run as soon as the page is initiated
 	
@@ -1087,6 +1102,10 @@ CHANNING
 					dataType: "json",
 					success: function(data){
 						console.log(data);
+						stream_id = data["stream_id"];
+						console.log(stream_id);
+						setCookie("latestStreamID",stream_id,365);
+						$.mobile.changePage("#the_stream", {transition: "flip"});
 					},
 					error: function(jqXHR,extStatus,errorThrown){
 						console.log(jqXHR);
@@ -1429,7 +1448,105 @@ CHANNING
 		</script>
 	</div>
 
-	<div data-role="page" id="invite_participants">
+<div data-role="page" id="invite_participants">
+	<div data-role="header" data-theme="a" id="sign_in_header">
+		<a href="#all_streams" data-theme="blk">cancel</a>
+		<h1 id="update_stream-stream_name-header-js_hook">Your Stream</h1>
+		<a data-theme="oj" id="confirm_invite_participants-btn">invite</a>
+	</div>
+
+	<div data-role="content">
+
+		<h3>Add Participants</h3>
+
+		<div data-role="fieldcontain" class="input_with_button-container_div" id="add_invitees_field" >
+			<div id="invitee_1_trigger-js_hook">
+			    <label for="invitee1" class="ui-hidden-accessible">invitee:</label>
+			    <div class="an_invitee_field">
+			    	<input type="text" name="invitee1" data-clear-btn="true" class="an_invitee_field-input an_invitee_field-input-hook_js" id="invitee1" value="" placeholder="Add a participant"  />
+			    	<div class="add_invitee-button_inline-container icon-js_hook">
+			    		<a onclick="add_invitee(this.id)" data-role="button" data-icon="add_invitee-button_inline" data-iconpos="notext" id="invitee_1_trigger">Add</a>
+			    	</div>
+			    </div>
+			</div>
+
+<!-- 		    <div id="invitee_2_trigger-js_hook">
+			    <label for="invitee2" class="ui-hidden-accessible">invitee:</label>
+			    <div class="an_invitee_field">
+			    	<input type="text" name="invitee2" data-clear-btn="true" class="an_invitee_field-input an_invitee_field-input-hook_js" id="invitee2" value="" placeholder="Add a invitee"  />
+			    	<div class="add_invitee-button_inline-container icon-js_hook">
+			    		<a onclick="add_invitee(this.id)" data-role="button" data-icon="add_invitee-button_inline" data-iconpos="notext" id="invitee_2_trigger">Add</a>
+			    	</div>
+			    </div>
+			</div> -->
+		</div>
+
+		<p>
+			Recipients will be able to add photos to your stream via the app and through MMS. Standard text and data rates apply.
+		</p>
+	</div>	
+
+	<script type="text/javascript">
+		$("#new_stream").on( 'pagebeforeshow', function(){
+
+			// call stuff that needs to run/inject into this page before it loads here
+
+		});	
+
+		// EVENT: CLICK CANCEL ON NEW_STREAM PAGE
+
+
+		// EVENT: CLICK CREATE ON NEW_STREAM PAGE	
+		$("#confirm_invite_participants-btn").on("vclick", function(event, ui) 
+		{
+			console.log("You CLICKED: 'invite' on PAGE:'invite_users'!");
+
+			// grab and drop all input values into an array
+			var invitee_nums = new Array();
+			$('.an_invitee_field-input-hook_js').each(
+				function()
+				{
+				input_value = $(this).val();
+				invitee_nums.push(input_value);
+				}
+			);
+
+			// join nums into a comma-seperated list
+			var invitee_nums_urld = invitee_nums.join();
+
+			// construct url and call API
+			var phone_number = getCookie("phoneNumber");
+			var stream_id = getCookie("latestStreamID");	
+
+			var curl_me = 'http://75.101.134.112/stream/1.0/api/invite_users.php?invitees_phone=' + invitee_nums_urld + '&stream_id=' + stream_id + '&inviter_phone=' + phone_number;
+
+			console.log(curl_me);
+
+			// WHY ISN'T YOU WERKEEINGG?!?!?!
+			$.ajax({
+				type: 'GET',
+				url: curl_me,
+				dataType: "json",
+				success: function(data){
+					console.log(data);
+				},
+				error: function(jqXHR,extStatus,errorThrown){
+					console.log(jqXHR);
+					console.log(extStatus);
+					console.log(errorThrown);
+				},
+				async: false,
+			});
+
+			// commented for testing
+			// $.mobile.changePage("#all_streams", {transition: "flip"});
+			
+		});
+
+	</script>
+</div>
+
+<!-- 	<div data-role="page" id="invite_participants">
 		<div data-role="header" data-theme="a" id="sign_in_header">
 			<a href="#all_streams" data-theme="blk">cancel</a>
 			<h1>INVITE</h1>
@@ -1475,7 +1592,7 @@ CHANNING
 
 		</script>
 
-	</div>
+	</div> -->
 
 </body>
 

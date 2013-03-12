@@ -47,6 +47,11 @@
 
 }
 
+#add_invitee_input_primary {
+    width:95%;
+
+}
+
 // position: absolute;
 // display: inline-block;
 // margin: .5em .2em;
@@ -504,7 +509,8 @@
     }
     // content
         #stream_name,
-        #participant {
+        #participant,
+        #invitee {
             border-radius: 5px;
         }
 
@@ -577,6 +583,40 @@ body * {
 
 
 .ui-icon-add_participant-button_inline{
+    background-image: url("add_recipients\@2x.png");
+    background-size: 34px 34px !important;
+    margin: -5px -5px !important;
+    width: 34px !important;
+    height: 34px !important;
+}
+
+.an_invitee_field{
+    margin-bottom: 5px;
+}
+
+.an_invitee_field-input{
+    width: 87% !important;
+    height: 45px !important;
+    margin: 0px !important;
+    right: 5% !important;
+    padding-left: 3% !important;
+    font-size: 16px !important;
+    font-weight: 300 !important;
+    display: inline-block !important;
+}
+
+.add_invitee-button_inline-container{
+    display: inline-block;
+    height: 45px !important;
+    margin: -18px 0px 0px 5px!important;
+}
+
+.add_invitee-button_inline-container .ui-btn{
+    margin-top: 26px !important;    
+}
+
+
+.ui-icon-add_invitee-button_inline{
     background-image: url("add_recipients\@2x.png");
     background-size: 34px 34px !important;
     margin: -5px -5px !important;
