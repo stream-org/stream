@@ -942,16 +942,21 @@ For 3/13
 
 	<div data-role="footer" data-position="fixed" class="black-bg">
 		<div class="like_comment_div-container">
+
 			<div class="like_comment_div">
 				<a href="" class="link-no_decoration text-100 font-small" id="like_button-js_trigger" onclick="likephoto()">Like</a>
 			</div>
-			<!--  &bull; 
+
+			 &bull; 
+
 			<div class="like_comment_div">
 				<a href="#comments_modal" data-transition="slidedown" data-close-btn-text="back" data-rel="dialog" class="link-no_decoration text-100 font-small">Comment</a>
-			</div>	 -->
+			</div>	
+
 		</div>
 
 		<div class="likes_comments_div-container">
+
 			<div class="likes_div">
 				<a href="" class="link-no_decoration text-100 font-small">
 					<div class="likes_icon_div footer_div">
@@ -962,11 +967,13 @@ For 3/13
 					</div>
 				</a>
 			</div>
-			<!-- <div class="comments_div">
+
+			<div class="comments_div">
 				<a href="" class="link-no_decoration text-100 font-small">
 					<span class="comments_icon"></span>1
 				</a>
-			</div> -->	
+			</div>	
+
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -988,6 +995,7 @@ For 3/13
 				{
 					if(data['status'] == 'ok')
 					{
+						console.log(data);	
 						console.log("API called successfully.");
 						var first_name = data['uploader_first']
 						console.log(first_name);
