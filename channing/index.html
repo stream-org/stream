@@ -127,9 +127,9 @@ For 3/13
 		checkCookies();	
 		};
 
-		//////////////////
-		//getPictureCookie
-		//////////////////
+	//////////////////
+	//getPictureCookie
+	//////////////////
 
 		function checkPictureCookie()
 		{
@@ -145,16 +145,17 @@ For 3/13
 
 			else 
 		  	{
-		  		$.mobile.changePage( "#introPage", {
-						    transition: "pop",
-						    reverse: true
+		  		$.mobile.changePage( "#introPage", 
+		  		{
+				    transition: "pop",
+				    reverse: true
 				});
 		  	}
 		};
 
-		////////////////
-		//getPhoneCookie
-		////////////////
+	////////////////
+	//getPhoneCookie
+	////////////////
 
 		function checkPhoneCookie()
 		{
@@ -170,16 +171,17 @@ For 3/13
 
 			else 
 		  	{
-		  		$.mobile.changePage( "#sign_in", {
-						    transition: "pop",
-						    reverse: true
+		  		$.mobile.changePage( "#sign_in", 
+		  		{
+				    transition: "pop",
+				    reverse: true
 				});
 		  	}
 		};
 
-		////////////////
-		//getStreamIDCookie
-		////////////////
+	////////////////
+	//getStreamIDCookie
+	////////////////
 
 		function checkStreamIDCookie()
 		{
@@ -195,16 +197,17 @@ For 3/13
 
 			else 
 		  	{
-		  		$.mobile.changePage( "#introPage", {
-						    transition: "pop",
-						    reverse: true
+		  		$.mobile.changePage( "#introPage", 
+		  		{
+				    transition: "pop",
+				    reverse: true
 				});
 		  	}
 		};
 
-		////////////////
-		//getUploaderPhoneCookie
-		////////////////
+	////////////////
+	//getUploaderPhoneCookie
+	////////////////
 
 		function checkUploaderPhoneCookie()
 		{
@@ -220,17 +223,21 @@ For 3/13
 
 			else 
 		  	{
-		  		$.mobile.changePage( "#participant_list", {
+		  		$.mobile.changePage( "#participant_list", 
+		  		{
 						    transition: "pop",
 						    reverse: true
 				});
 		  	}
 		};		
 
-
+	////////////////
+	//get_latest_pic()
+	////////////////
 
 		// function for transition/pageload testing - gets the latest pic for a Stream 
-		function get_latest_pic() {
+		function get_latest_pic() 
+		{
 			var api_base = "http://75.101.134.112/stream/1.0/api/populate_user_streams.php?viewer_phone=";
 			var api_param = "16508420492";
 			var api_call = api_base + api_param;
@@ -239,7 +246,8 @@ For 3/13
 			var pic_url_array = []; 
 			var pic_url = "";
 
-			$.ajax({
+			$.ajax(
+			{
 				type: 'GET',
 				url: api_call,
 				dataType: "json",
@@ -249,19 +257,26 @@ For 3/13
 	           		pic_url_array.push(pic_url);
 	           		},
            		async: false
-	       		});
+	       	});
 
 			return pic_url_array;
 		};
 
+	////////////////
+	//getQueryParams
+	////////////////
+
+
 		// decode URL - grabbed off the internets
-		function getQueryParams(qs) {
+		function getQueryParams(qs) 
+		{
 		    qs = qs.split("+").join(" ");
 
 		    var params = {}, tokens,
 		        re = /[?&]?([^=]+)=([^&]*)/g;
 
-		    while (tokens = re.exec(qs)) {
+		    while (tokens = re.exec(qs)) 
+		    {
 		        params[decodeURIComponent(tokens[1])]
 		            = decodeURIComponent(tokens[2]);
 		    };
@@ -269,8 +284,13 @@ For 3/13
 		    return params;
 		};
 
+	////////////////
+	//inject_app_dl
+	////////////////
+
 		// function to dynamically injects the html that instructs iOS 6 users to download the app
-		function inject_app_dl(pic_url_array){
+		function inject_app_dl(pic_url_array)
+		{
 			$('#intro').html('<div data-role="content"> <div id="download_app"> <div class="ui-grid-b"> <div class="ui-block-a"> <div><img src="' + pic_url_array[0] + '"></div> </div> <div class="ui-block-b"> <div><img src="' + pic_url_array[0] + '"></div> </div> <div class="ui-block-c"> <div><img src="' + pic_url_array[0] + '"></div> </div> </div> <a href="" data-role="button" data-theme="oj" id="download_app_btn"> Download the App! </a> </div> </div>'
 			);
 		};		        
@@ -280,14 +300,17 @@ For 3/13
 	// routes user on initial navigation - CURRENTLY OFF FOR TESTING
 	////////////////////////////////////////////////////////////////
 
-		function arrival() {
+		function arrival() 
+		{
 
 			var query = getQueryParams(document.location.search);
 			console.log(query);
 
-			if(/(iPhone|iPod|iPad)/i.test(navigator.userAgent)) { 
+			if(/(iPhone|iPod|iPad)/i.test(navigator.userAgent)) 
+			{ 
 
-			    if(/OS [6]_\d(_\d)? like Mac OS X/i.test(navigator.userAgent)) {  
+			    if(/OS [6]_\d(_\d)? like Mac OS X/i.test(navigator.userAgent))
+			    {  
 			    	console.log("This device is running iOS 6");
 
 			    	// route to iPhone app
@@ -295,13 +318,17 @@ For 3/13
 			    	inject_app_dl(pic_url_array);
 					$('#intro').trigger('create');
 
-			    }else{    	
+			    }
+			    else
+			    {    	
 			    	console.log("This device is running iOS 5 or before");
 
 			    	//route to mobile web layer	
 			    };
 
-			}else{
+			}
+			else
+			{
 				console.log("This is not an iOS device.");
 				// route to mobile web layer
 
@@ -314,13 +341,17 @@ For 3/13
 
 		};
 
+
+
 		// removes corresponding input field/value on new_stream page; triggered by minus icon
-		function remove_participant(trigger_id){
+		function remove_participant(trigger_id)
+		{
 			$("#" + trigger_id + "-js_hook").html('');
 		};
 
 		// adds new participant on new_stream page & changes existing icon to minus; triggered by plus icon
-		function add_participant(trigger_id){
+		function add_participant(trigger_id)
+		{
 
 			// change the plus icon to minus & provide removal functionality trigger
 			$("#" + trigger_id + "-js_hook .icon-js_hook").html('<a onclick="remove_participant(this.id)" data-role="button" data-icon="minus" data-iconpos="notext" id="' + trigger_id + '">Kill</a>').trigger('create');
@@ -339,12 +370,14 @@ For 3/13
 
 
 		// removes corresponding input field/value on invite_participants page; triggered by minus icon
-		function remove_invitee(trigger_id){
+		function remove_invitee(trigger_id)
+		{
 			$("#" + trigger_id + "-js_hook").html('');
 		};
 
 		// adds new invitee on invite_invitees page & changes existing icon to minus; triggered by plus icon
-		function add_invitee(trigger_id){
+		function add_invitee(trigger_id)
+		{
 
 			// change the plus icon to minus & provide removal functionality trigger
 			$("#" + trigger_id + "-js_hook .icon-js_hook").html('<a onclick="remove_invitee(this.id)" data-role="button" data-icon="minus" data-iconpos="notext" id="' + trigger_id + '">Kill</a>').trigger('create');
@@ -359,6 +392,84 @@ For 3/13
 			$("#" + trigger_id + "-js_hook").after('<div id="invitee_'+ new_trigger_id_num +'_trigger-js_hook"> <label for="invitee'+ new_trigger_id_num +'" class="ui-hidden-accessible">Participant:</label> <div class="an_invitee_field"> <input type="text" name="invitee'+ new_trigger_id_num +'" data-clear-btn="true" class="an_invitee_field-input an_invitee_field-input-hook_js" id="invitee'+ new_trigger_id_num +'" value="" placeholder="Add a invitee"  /> <div class="add_invitee-button_inline-container icon-js_hook"> <a onclick="add_invitee(this.id)" data-role="button" data-icon="add_invitee-button_inline" data-iconpos="notext" id="invitee_'+ new_trigger_id_num +'_trigger">Add</a> </div> </div> </div>');
 
 			$("#invitee_" + new_trigger_id_num + "_trigger-js_hook").trigger('create');
+		};
+
+
+		function likephoto()
+		{
+			if ($("#like_button-js_trigger").text() == "Like")
+			{
+				console.log("Like this picture!")
+
+				// call like_picture.php
+				var picture_id = checkPictureCookie();
+				console.log(picture_id);
+				var liker_phone = checkPhoneCookie();
+				console.log(liker_phone);
+
+				var API_URL = 'http://75.101.134.112/stream/1.0/api/like_picture.php?liker_phone=' + liker_phone + '&picture_id=' + picture_id;
+				console.log(API_URL);
+
+				$.ajax(
+				{
+					type: 'GET',
+					url: API_URL,
+					dataType: "json",
+					success: function(data)
+					{
+						if(data['status'] == 'ok')
+						{
+							var picture_likecount = data['picture_likecount'];
+
+							$('.likecount-js_hook').text(picture_likecount).trigger('create');
+
+							$("#like_button-js_trigger").text("Liked").trigger('create');
+						}
+						else
+						{
+							alert(data['error_description']);
+						};
+		           	},
+	           		async: false
+		       	});
+			}
+			else if($("#like_button-js_trigger").text() == "Liked")
+			{
+				// call unlike_picture.php
+				var picture_id = checkPictureCookie();
+				console.log(picture_id);
+				var liker_phone = checkPhoneCookie();
+				console.log(liker_phone);
+
+				var API_URL2 = 'http://75.101.134.112/stream/1.0/api/unlike_picture.php?liker_phone=' + liker_phone + '&picture_id=' + picture_id;
+				console.log(API_URL);
+
+				$.ajax({
+					type: 'GET',
+					url: API_URL2,
+					dataType: "json",
+					success: function(data)
+					{
+						if(data['status'] == 'ok')
+						{
+							var picture_likecount = data['picture_likecount'];
+
+							$('.likecount-js_hook').text(picture_likecount).trigger('create');
+
+							$("#like_button-js_trigger").text("Like").trigger('create');
+						}
+						else
+						{
+							alert(data['error_description']);
+						};
+		           	},
+	           		async: false
+		       	});
+			}
+			else
+			{
+				alert("Browser isn't reading 'Like' OR 'Liked'");
+			}			
 		};
 
 
@@ -832,7 +943,7 @@ For 3/13
 	<div data-role="footer" data-position="fixed" class="black-bg">
 		<div class="like_comment_div-container">
 			<div class="like_comment_div">
-				<a href="" class="link-no_decoration text-100 font-small" id="like_button-js_trigger">Like</a>
+				<a href="" class="link-no_decoration text-100 font-small" id="like_button-js_trigger" onclick="likephoto()">Like</a>
 			</div>
 			<!--  &bull; 
 			<div class="like_comment_div">
@@ -877,11 +988,17 @@ For 3/13
 				{
 					if(data['status'] == 'ok')
 					{
-						var first_name = data['uploader_first'];
-						var last_name = data['uploader_last'];
-						var pic_url = data['picture_url'];
-						var viewer_hasLiked = data['viewer_hasLiked'];
-						var picture_likecount = data['picture_likecount'];
+						console.log("API called successfully.");
+						var first_name = data['uploader_first']
+						console.log(first_name);
+						var last_name = data['uploader_last']
+						console.log(last_name);
+						var pic_url = data['picture_url']
+						console.log(pic_url);
+						var viewer_hasLiked = data['viewer_hasLiked']
+						console.log(viewer_hasLiked);
+						var picture_likecount = data['picture_likecount']
+						console.log(picture_likecount);
 
 						$('#photo_owner_name').html(first_name + ' ' + last_name).trigger('create');
 
@@ -889,8 +1006,14 @@ For 3/13
 
 						if(viewer_hasLiked == "True")
 						{
-							$("#like_button-js_trigger").text("Unlike");
+							console.log("You have liked this photo!");
+							$("#like_button-js_trigger").text("Liked");
 						}
+						else
+						{
+							console.log("You have NOT liked this photo!");
+							$("#like_button-js_trigger").text("Like");
+						};
 
 						$('.likecount-js_hook').text(picture_likecount);
 					}
@@ -911,74 +1034,7 @@ For 3/13
 
 		$("#like_button-js_trigger").on("vclick", function(event, ui) 
 		{
-			if ($(this).text() == "Like")
-			{
-				// call like_picture.php
-				var picture_id = checkPictureCookie();
-				console.log(picture_id);
-				var liker_phone = checkPhoneCookie();
-				console.log(liker_phone);
-
-				var API_URL = 'http://75.101.134.112/stream/1.0/api/like_picture.php?liker_phone=' + liker_phone + '&picture_id=' + picture_id;
-				console.log(API_URL);
-
-				$.ajax({
-					type: 'GET',
-					url: API_URL,
-					dataType: "json",
-					success: function(data)
-					{
-						if(data['status'] == 'ok')
-						{
-							var picture_likecount = data['picture_likecount'];
-
-							$('.likecount-js_hook').text(picture_likecount);
-
-							$("#like_button-js_trigger").text("Unlike");
-						}
-						else
-						{
-							alert(data['error_description']);
-						};
-		           	},
-	           		async: false
-		       	});
-			}
-			else if($(this).text() == "Unlike")
-			{
-				// call unlike_picture.php
-				var picture_id = checkPictureCookie();
-				var liker_phone = checkPhoneCookie();
-
-				var API_URL = 'http://75.101.134.112/stream/1.0/api/unlike_picture.php?liker_phone=' + liker_phone + '&picture_id=' + picture_id;
-				console.log(API_URL);
-
-				$.ajax({
-					type: 'GET',
-					url: API_URL,
-					dataType: "json",
-					success: function(data)
-					{
-						if(data['status'] == 'ok')
-						{
-							var picture_likecount = data['picture_likecount'];
-
-							$('.likecount-js_hook').text(picture_likecount);
-
-							$("#like_button-js_trigger").text("Like");
-						}
-						else
-						{
-							alert(data['error_description']);
-						};
-		           	},
-	           		async: false
-		       	});
-			}
-			else
-			{
-				alert("Browser isn't reading 'Like' OR 'Unlike'");
-			}
+			
 		});
 	</script>
 </div>
