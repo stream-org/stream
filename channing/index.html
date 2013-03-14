@@ -509,7 +509,7 @@ For 3/13
 				if (comment_age_min < (60*24*7*4*12)){comment_age_nl = parseInt(comment_age_min/(60*24*7*4)) + " m"} else	
 					{comment_age_nl = "long ago"};
 
-				$('.comments_container-js_hook').append('<p><strong class="nav-left">' + commenter_name + '</strong><div class="nav-right">' + comment_age_nl + '</div> <br>' + comment + '</p>');
+				$('.comments_container-js_hook').append('<p><strong class="nav-left">' + commenter_name + '</strong><div class="nav-right">' + comment_age_nl + '</div> <br>' + comment + '</p>').trigger('create');
 				
 			});
 
